@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>UKM Rijal Dakwah STDIIS - Membentuk Pemuda Tangguh & Berilmu</title>
+  <meta name="description" content="Portal Resmi UKM Rijal Dakwah STDI Imam Syafi'i Jember. Wadah pembinaan pemuda islam, thalabul 'ilmi, dan khidmah dakwah." />
+  <link rel="icon" type="image/png" href="logo-rijal-dakwah.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepGreen: '#071A14',
+            forestGreen: '#0D2B21',
+            emeraldGreen: '#12372A',
+            gold: '#C59B27',
+            'gold-light': '#F3D58C',
+            'gold-dark': '#9A7818',
+            cream: {
+              50: '#FDFBF7',
+              100: '#F7F3EA',
+              200: '#EDE4D1',
+              300: '#DFD2B5',
+              400: '#C9B68F'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            arabic: ['"Amiri"', 'serif']
+          },
+          animation: {
+            'float-slow': 'float 6s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s infinite',
+            'wave-drift': 'waveDrift 8s ease-in-out infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(1deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+              '50%': { opacity: '0.65', transform: 'scale(1.12)' },
+            },
+            waveDrift: {
+              '0%, 100%': { transform: 'translateX(0%)' },
+              '50%': { transform: 'translateX(-4%)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #071A14; }
+    ::-webkit-scrollbar-thumb { background: #C59B27; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #F3D58C; }
+
+    /* Scroll progress bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #DFB76C, #C59B27, #FFFFFF);
+      z-index: 100;
+      transition: width 0.1s ease;
+    }
+
+    /* 3D Perspective Card Container */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+      will-change: transform;
+    }
+    .tilt-content {
+      transform: translateZ(30px);
+    }
+
+    /* Gold Buttons */
+    .btn-gold {
+      background: linear-gradient(135deg, #FBF6E9 0%, #DFB76C 45%, #C59B27 100%);
+      color: #071A14;
+      font-weight: 800;
+      box-shadow: 0 8px 28px rgba(197, 155, 39, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-gold:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 38px rgba(197, 155, 39, 0.55);
+    }
+
+    .btn-guidebook {
+      background: linear-gradient(135deg, rgba(223, 183, 108, 0.15) 0%, rgba(197, 155, 39, 0.25) 100%);
+      border: 1.5px solid rgba(223, 183, 108, 0.55);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-guidebook:hover {
+      background: linear-gradient(135deg, rgba(223, 183, 108, 0.3) 0%, rgba(197, 155, 39, 0.45) 100%);
+      border-color: #F3D58C;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(197, 155, 39, 0.35);
+    }
+
+    /* Gyroscope Indicator Pill on Mobile */
+    #gyroStatusBadge {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+  </style>
+</head>
+<body class="bg-deepGreen text-cream-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-gold selection:text-deepGreen touch-manipulation">
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scrollProgress" style="width: 0%;"></div>
+
+  <!-- Interactive Gravity & Fluid Canvas -->
+  <canvas id="gravityCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Glowing Orbs -->
+  <div id="ambientOrb1" class="fixed -top-40 -left-40 w-96 h-96 bg-gold/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow z-0"></div>
+  <div id="ambientOrb2" class="fixed top-1/2 -right-40 w-[500px] h-[500px] bg-emerald-500/15 rounded-full blur-[130px] pointer-events-none animate-pulse-glow z-0" style="animation-delay: 2s;"></div>
+  <div class="fixed -bottom-40 left-1/3 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+  <!-- Mobile Gyroscope Active Indicator Banner (Shows gently on mobile when tilted) -->
+  <div id="gyroStatusBadge" class="fixed top-24 left-1/2 -translate-x-1/2 z-40 pointer-events-none opacity-0 transform -translate-y-2 text-[10px] px-3.5 py-1 rounded-full bg-forestGreen/90 text-gold-light border border-gold/40 shadow-xl backdrop-blur-md flex items-center gap-1.5 font-bold">
+    <i class="fa-solid fa-compass animate-spin-slow text-gold"></i>
+    <span>Sensor Gravitasi Aktif</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. NAVIGATION BAR -->
+  <!-- ========================================================================= -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-deepGreen/85 backdrop-blur-xl border-b border-gold/20 transition-all duration-300" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+      <!-- Logo & Title -->
+      <a href="#beranda" class="flex items-center space-x-3.5 group">
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/95 p-1.5 flex items-center justify-center shadow-lg group-hover:scale-105 group-hover:rotate-3 transition-transform border border-gold/40 shrink-0">
+          <img src="logo-rijal-dakwah.png" alt="Logo UKM Rijal Dakwah" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <span id="siteNavName" class="font-bold text-sm sm:text-base text-white font-serif tracking-tight block group-hover:text-gold-light transition-colors leading-tight">
+            UKM Rijal Dakwah
+          </span>
+          <span id="siteNavPeriod" class="text-[10px] sm:text-[11px] text-gold-light tracking-wider font-semibold block uppercase">
+            STDI Imam Syafi'i Jember
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-6 text-xs font-bold uppercase tracking-wider text-cream-200">
+        <a href="#beranda" class="hover:text-gold transition-colors">Beranda</a>
+        <a href="#divisi" class="hover:text-gold transition-colors">8 Divisi</a>
+        <a href="#hitung-mundur" class="hover:text-gold transition-colors">Timeline</a>
+        <a href="#guidebook-section" class="text-gold-light hover:text-white transition-colors flex items-center gap-1">
+          <i class="fa-solid fa-book-bookmark text-gold"></i>
+          <span>Guidebook</span>
+        </a>
+        <a href="manager.html" target="_blank" class="text-slate-400 hover:text-gold transition-colors flex items-center gap-1" title="Panel Pengelola (Admin)">
+          <i class="fa-solid fa-lock text-[10px]"></i>
+          <span>Cockpit</span>
+        </a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center space-x-2.5">
+        <!-- Quick Guidebook Download in Nav -->
+        <a 
+          id="btnNavGuidebook" 
+          href="GUIDEBOOK FINAL.pdf" 
+          target="_blank" 
+          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-cream-100 border border-gold/30 backdrop-blur-sm transition-all hover:scale-105"
+          title="Unduh Panduan Pendaftaran Resmi (PDF)"
+        >
+          <i class="fa-solid fa-file-pdf text-rose-400"></i>
+          <span>Guidebook</span>
+        </a>
+
+        <!-- Result Check Button -->
+        <a 
+          href="pengumuman.html" 
+          class="btn-gold px-3.5 sm:px-5 py-2.5 rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 group"
+          id="btnNavPengumuman"
+        >
+          <i class="fa-solid fa-square-poll-vertical group-hover:scale-110 transition-transform text-xs"></i>
+          <span class="text-xs">Cek Hasil</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. HERO SECTION (Extreme Gravity & 3D Interactive) -->
+  <!-- ========================================================================= -->
+  <section id="beranda" class="relative pt-32 sm:pt-40 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 z-10 overflow-hidden">
+    <div class="max-w-5xl mx-auto text-center space-y-8">
+
+      <!-- Islamic Basmalah Banner -->
+      <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-forestGreen/70 border border-gold/40 shadow-xl backdrop-blur-md animate-float-slow">
+        <span class="font-arabic text-gold text-lg sm:text-2xl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+        <span id="heroPeriodBadge" class="text-[10px] sm:text-[11px] uppercase tracking-widest text-cream-200 font-bold">Periode 2026/2027</span>
+      </div>
+
+      <!-- Main Headline with 3D Depth & Gradient -->
+      <div class="space-y-4 max-w-4xl mx-auto">
+        <h1 class="font-serif font-bold text-3xl sm:text-5xl lg:text-6xl text-white leading-tight tracking-tight">
+          Membentuk Generasi Pemuda
+          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-cream-100 via-gold-light to-gold mt-1">
+            Tangguh, Berilmu & Berakhlak
+          </span>
+        </h1>
+        <p id="heroTagline" class="text-xs sm:text-base text-cream-200/80 max-w-2xl mx-auto font-normal leading-relaxed">
+          Wadah khidmah dakwah, kaderisasi penuntut ilmu, dan pengabdian umat berlandaskan Al-Qur'an dan As-Sunnah di STDI Imam Syafi'i Jember.
+        </p>
+      </div>
+
+      <!-- Dedicated 3 Action Buttons (Form, Guidebook, Pengumuman) -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4 max-w-2xl mx-auto">
+        
+        <!-- 1. Registration CTA Button -->
+        <a 
+          id="btnHeroForm" 
+          href="#" 
+          class="w-full sm:w-auto px-6 py-4 rounded-2xl text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-2.5 transition-all shadow-xl"
+        >
+          <i class="fa-solid fa-file-signature text-sm"></i>
+          <span id="btnHeroFormText">Formulir Pendaftaran</span>
+        </a>
+
+        <!-- 2. DEDICATED GUIDEBOOK BUTTON (Eye-Catching & Prominent) -->
+        <a 
+          id="btnHeroGuidebook" 
+          href="GUIDEBOOK FINAL.pdf" 
+          target="_blank" 
+          class="btn-guidebook w-full sm:w-auto px-6 py-4 rounded-2xl text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-2.5 text-white shadow-xl group"
+        >
+          <div class="w-6 h-6 rounded-lg bg-rose-500/20 text-rose-300 flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-file-pdf"></i>
+          </div>
+          <div class="text-left leading-tight">
+            <span class="block text-gold-light text-[11px] font-black">Unduh Guidebook</span>
+            <span class="block text-[9px] text-cream-200/70 font-semibold normal-case">Buku Panduan Seleksi (PDF)</span>
+          </div>
+          <i class="fa-solid fa-arrow-down text-gold text-xs group-hover:translate-y-0.5 transition-transform ml-1"></i>
+        </a>
+
+        <!-- 3. Announcement Check Button -->
+        <a 
+          href="pengumuman.html" 
+          class="w-full sm:w-auto px-6 py-4 rounded-2xl text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-2.5 bg-forestGreen/80 hover:bg-forestGreen text-white border border-gold/40 backdrop-blur-md shadow-lg transition-all hover:scale-105"
+        >
+          <i class="fa-solid fa-square-poll-vertical text-gold text-sm"></i>
+          <span>Hasil Seleksi</span>
+        </a>
+
+      </div>
+
+      <!-- Live Notice Bar if Registration Closed -->
+      <div id="heroNoticeBox" class="hidden max-w-xl mx-auto p-3.5 rounded-2xl bg-amber-500/15 border border-amber-400/30 text-xs text-cream-200 flex items-center gap-3 backdrop-blur-md text-left">
+        <i class="fa-solid fa-circle-info text-gold text-base shrink-0"></i>
+        <span id="heroNoticeText" class="font-medium"></span>
+      </div>
+
+      <!-- Mobile Gravity Hint Pill -->
+      <div class="sm:hidden text-[10px] text-gold-light/60 flex items-center justify-center gap-1.5 pt-2">
+        <i class="fa-solid fa-mobile-screen-button text-gold animate-bounce"></i>
+        <span>Miringkan layar ponsel untuk efek ombak & gravitasi</span>
+      </div>
+
+      <!-- Floating Stats Bar (Interactive 3D Tilt) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-8 max-w-4xl mx-auto">
+        <div class="tilt-card p-4 sm:p-5 rounded-3xl bg-forestGreen/70 border border-gold/30 backdrop-blur-xl shadow-xl hover:border-gold transition-all">
+          <div class="tilt-content space-y-1">
+            <span class="text-2xl sm:text-3xl font-bold text-gold font-serif block">109</span>
+            <span class="text-[10px] sm:text-[11px] uppercase tracking-wider text-cream-200/80 font-bold block">Pengurus Resmi</span>
+          </div>
+        </div>
+        <div class="tilt-card p-4 sm:p-5 rounded-3xl bg-forestGreen/70 border border-gold/30 backdrop-blur-xl shadow-xl hover:border-gold transition-all">
+          <div class="tilt-content space-y-1">
+            <span class="text-2xl sm:text-3xl font-bold text-gold font-serif block">74</span>
+            <span class="text-[10px] sm:text-[11px] uppercase tracking-wider text-cream-200/80 font-bold block">Anggota Biasa</span>
+          </div>
+        </div>
+        <div class="tilt-card p-4 sm:p-5 rounded-3xl bg-forestGreen/70 border border-gold/30 backdrop-blur-xl shadow-xl hover:border-gold transition-all">
+          <div class="tilt-content space-y-1">
+            <span class="text-2xl sm:text-3xl font-bold text-gold font-serif block">8</span>
+            <span class="text-[10px] sm:text-[11px] uppercase tracking-wider text-cream-200/80 font-bold block">Divisi Khidmah</span>
+          </div>
+        </div>
+        <div class="tilt-card p-4 sm:p-5 rounded-3xl bg-forestGreen/70 border border-gold/30 backdrop-blur-xl shadow-xl hover:border-gold transition-all">
+          <div class="tilt-content space-y-1">
+            <span class="text-2xl sm:text-3xl font-bold text-gold font-serif block">183</span>
+            <span class="text-[10px] sm:text-[11px] uppercase tracking-wider text-cream-200/80 font-bold block">Total Diterima</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. DEDICATED GUIDEBOOK SPOTLIGHT SECTION -->
+  <!-- ========================================================================= -->
+  <section id="guidebook-section" class="py-14 px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="max-w-4xl mx-auto bg-gradient-to-r from-forestGreen via-emeraldGreen to-forestGreen rounded-3xl p-6 sm:p-10 border-2 border-gold/40 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="space-y-3 text-center md:text-left z-10">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[10px] font-extrabold bg-gold/20 text-gold-light border border-gold/30 uppercase tracking-widest">
+          <i class="fa-solid fa-bookmark text-gold"></i>
+          <span>Pedoman Lengkap Pendaftar</span>
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white">
+          Guidebook Seleksi & Rekrutmen
+        </h2>
+        <p class="text-xs sm:text-sm text-cream-200/80 max-w-lg leading-relaxed">
+          Memuat visi misi UKM Rijal Dakwah, deskripsi amanah 8 divisi, alur wawancara, tata tertib, serta kriteria penilaian calon pengurus dan anggota.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 z-10 w-full md:w-auto">
+        <a 
+          id="spotlightGuidebookBtn" 
+          href="GUIDEBOOK FINAL.pdf" 
+          target="_blank" 
+          class="btn-gold w-full sm:w-auto px-6 py-3.5 rounded-2xl text-xs flex items-center justify-center gap-2.5 shadow-xl"
+        >
+          <i class="fa-solid fa-file-arrow-down text-base"></i>
+          <span>Unduh Berkas PDF</span>
+        </a>
+        <a 
+          href="#faq" 
+          class="w-full sm:w-auto px-5 py-3.5 rounded-2xl text-xs font-bold bg-white/10 hover:bg-white/20 text-cream-100 border border-white/20 flex items-center justify-center gap-2 transition-all"
+        >
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Baca FAQ</span>
+        </a>
+      </div>
+
+      <!-- Watermark Background Emblem -->
+      <div class="absolute -right-8 -bottom-8 w-48 h-48 opacity-10 pointer-events-none text-white text-9xl">
+        <i class="fa-solid fa-book-open-reader"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4. LIVE COUNTDOWN SECTION -->
+  <!-- ========================================================================= -->
+  <section id="hitung-mundur" class="py-16 px-4 sm:px-6 lg:px-8 relative z-10 border-y border-gold/20 bg-forestGreen/40">
+    <div class="max-w-4xl mx-auto text-center space-y-8">
+      <div>
+        <span class="text-xs font-bold text-gold-light uppercase tracking-widest block mb-1">
+          <i class="fa-solid fa-clock mr-1"></i> Agenda & Waktu Resmi
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white">
+          Hitung Mundur Pengumuman Seleksi
+        </h2>
+        <p id="countdownDateLabel" class="text-xs text-cream-200/70 mt-1">Target Rilis: 14 September 2026</p>
+      </div>
+
+      <!-- Countdown Blocks -->
+      <div class="grid grid-cols-4 gap-2.5 sm:gap-6 max-w-md sm:max-w-lg mx-auto">
+        <div class="p-3.5 sm:p-6 rounded-2xl bg-deepGreen/90 border border-gold/40 shadow-2xl space-y-1">
+          <span id="cd_days" class="text-xl sm:text-4xl font-bold text-gold font-mono block">00</span>
+          <span class="text-[9px] sm:text-xs uppercase text-cream-300 font-bold tracking-wider block">Hari</span>
+        </div>
+        <div class="p-3.5 sm:p-6 rounded-2xl bg-deepGreen/90 border border-gold/40 shadow-2xl space-y-1">
+          <span id="cd_hours" class="text-xl sm:text-4xl font-bold text-gold font-mono block">00</span>
+          <span class="text-[9px] sm:text-xs uppercase text-cream-300 font-bold tracking-wider block">Jam</span>
+        </div>
+        <div class="p-3.5 sm:p-6 rounded-2xl bg-deepGreen/90 border border-gold/40 shadow-2xl space-y-1">
+          <span id="cd_mins" class="text-xl sm:text-4xl font-bold text-gold font-mono block">00</span>
+          <span class="text-[9px] sm:text-xs uppercase text-cream-300 font-bold tracking-wider block">Menit</span>
+        </div>
+        <div class="p-3.5 sm:p-6 rounded-2xl bg-deepGreen/90 border border-gold/40 shadow-2xl space-y-1">
+          <span id="cd_secs" class="text-xl sm:text-4xl font-bold text-gold font-mono block">00</span>
+          <span class="text-[9px] sm:text-xs uppercase text-cream-300 font-bold tracking-wider block">Detik</span>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <a href="pengumuman.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold/20 hover:bg-gold/30 text-gold-light border border-gold/40 text-xs font-bold transition-all">
+          <span>Akses Portal Pengumuman Hasil</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5. STRUKTUR 8 DIVISI KHIDMAH (3D Tilt Cards) -->
+  <!-- ========================================================================= -->
+  <section id="divisi" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="max-w-7xl mx-auto space-y-12">
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <span class="text-xs font-bold text-gold-light uppercase tracking-widest block">
+          <i class="fa-solid fa-sitemap mr-1"></i> Struktur Amanah
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">
+          8 Divisi Khidmah Dakwah Kampus
+        </h2>
+        <p class="text-xs sm:text-sm text-cream-200/70">
+          Setiap divisi memiliki peran strategis dalam menopang dakwah, syiar sunnah, dan pembinaan mahasiswa.
+        </p>
+      </div>
+
+      <!-- Divisions Grid -->
+      <div id="divisionsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 6. PANDUAN & FAQ -->
+  <!-- ========================================================================= -->
+  <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-gold/20 bg-forestGreen/30">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-bold text-gold-light uppercase tracking-widest block">Informasi Penting</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white">Panduan Calon Anggota & Pengurus</h2>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm">
+        <details class="p-5 rounded-2xl bg-deepGreen/80 border border-gold/30 group cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>Bagaimana cara mengecek hasil seleksi wawancara?</span>
+            <i class="fa-solid fa-chevron-down text-gold group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-cream-200/80 mt-3 leading-relaxed">
+            Silakan buka menu <strong>"Cek Hasil Seleksi"</strong> atau kunjungi halaman <code>pengumuman.html</code>. Masukkan Nomor Induk Mahasiswa (NIM) Anda (misal: <code>2026.03.5100</code>). Sistem akan otomatis menampilkan surat kelulusan resmi, penempatan divisi, dan tautan masuk grup Telegram.
+          </p>
+        </details>
+
+        <details class="p-5 rounded-2xl bg-deepGreen/80 border border-gold/30 group cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>Apa isi berkas Guidebook Pendaftaran?</span>
+            <i class="fa-solid fa-chevron-down text-gold group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-cream-200/80 mt-3 leading-relaxed">
+            Guidebook memuat gambaran umum UKM Rijal Dakwah, kriteria penilaian wawancara, pembagian tugas 8 divisi, komitmen kehadiran, dan etika thalabul 'ilmi. Anda dapat mengunduhnya langsung melalui tombol <strong>"Unduh Guidebook"</strong> di atas.
+          </p>
+        </details>
+
+        <details class="p-5 rounded-2xl bg-deepGreen/80 border border-gold/30 group cursor-pointer">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>Apa perbedaan status "Pengurus Divisi" dan "Anggota Biasa"?</span>
+            <i class="fa-solid fa-chevron-down text-gold group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-cream-200/80 mt-3 leading-relaxed">
+            Sesuai aturan resmi UKM Rijal Dakwah: <em>Pengurus adalah bagian dari Anggota</em>. Pengurus mengemban amanah program kerja divisi spesifik, sedangkan Anggota Biasa (Keanggotaan Umum) mengikuti pembinaan rutin dan kepanitiaan bersama.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 7. FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="bg-deepGreen border-t border-gold/20 py-12 px-4 sm:px-6 lg:px-8 relative z-10 text-xs text-cream-200/60">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-white/90 p-1 flex items-center justify-center border border-gold/40">
+          <img src="logo-rijal-dakwah.png" alt="Logo" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <span class="font-bold text-white text-sm block">UKM Rijal Dakwah STDIIS</span>
+          <span class="text-[10px] text-gold-light">Membentuk Generasi Pemuda Tangguh & Berilmu</span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-6">
+        <a id="footerTelegramCoord" href="#" target="_blank" class="hover:text-gold transition-colors flex items-center gap-1.5">
+          <i class="fa-brands fa-telegram text-sky-400"></i>
+          <span>Telegram Panitia</span>
+        </a>
+        <a id="footerGuidebook" href="GUIDEBOOK FINAL.pdf" target="_blank" class="hover:text-gold transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-file-pdf text-rose-400"></i>
+          <span>Guidebook PDF</span>
+        </a>
+        <a href="manager.html" target="_blank" class="text-slate-500 hover:text-gold transition-colors" title="Panel Pengelola">
+          <i class="fa-solid fa-sliders"></i>
+        </a>
+      </div>
+    </div>
+    <div class="text-center pt-8 text-[11px] text-slate-500 border-t border-white/5 mt-8">
+      &copy; 2026 UKM Rijal Dakwah STDI Imam Syafi'i Jember. Dipersembahkan untuk dakwah dan kemaslahatan penuntut ilmu.
+    </div>
+  </footer>
+
+  <!-- Firebase SDK (Compat v10 for zero-build static hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- Runtime Script -->
+  <script src="runtime.js"></script>
+
+  <!-- ========================================================================= -->
+  <!-- 8. EXTREME ANIMATION ENGINE (Fluid Wave + Gyroscope Gravity + 3D Tilt) -->
+  <!-- ========================================================================= -->
+  <script>
+    // 1. Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scrollProgress').style.width = scrolled + '%';
+    });
+
+    // 2. Interactive Fluid Waves + Gyroscope Gravity Canvas
+    const canvas = document.getElementById('gravityCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    // Physics Gravity Vector (Driven by Gyroscope on Mobile, Mouse on Desktop)
+    let gravity = { x: 0, y: 0.15 };
+    let mouse = { x: null, y: null, down: false };
+    let shockwaves = []; // Wave ripples from touch/click
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Desktop Mouse Input
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      // Mouse creates slight acceleration vector
+      gravity.x = ((e.clientX / width) - 0.5) * 0.4;
+      gravity.y = ((e.clientY / height) - 0.5) * 0.3 + 0.1;
+    });
+
+    // Click / Touch Shockwave Ripple Effect
+    function createRipple(x, y) {
+      shockwaves.push({
+        x: x,
+        y: y,
+        radius: 5,
+        maxRadius: 180,
+        opacity: 0.7,
+        speed: 4.5
+      });
+    }
+
+    window.addEventListener('mousedown', (e) => createRipple(e.clientX, e.clientY));
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        mouse.x = touch.clientX;
+        mouse.y = touch.clientY;
+        createRipple(touch.clientX, touch.clientY);
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        mouse.x = touch.clientX;
+        mouse.y = touch.clientY;
+      }
+    }, { passive: true });
+
+    // MOBILE GYROSCOPE GRAVITY PHYSICS LISTENER (deviceorientation)
+    let gyroBadgeTimeout = null;
+    function handleOrientation(event) {
+      if (event.gamma !== null && event.beta !== null) {
+        // gamma: left-to-right tilt (-90 to 90)
+        // beta: front-to-back tilt (-180 to 180)
+        const tiltX = Math.min(Math.max(event.gamma / 35, -1), 1);
+        const tiltY = Math.min(Math.max((event.beta - 35) / 35, -1), 1);
+
+        // Apply to canvas particle gravity vector
+        gravity.x = tiltX * 0.8;
+        gravity.y = tiltY * 0.8;
+
+        // Apply 3D card tilt via gyroscope on mobile
+        tiltCardsWithGyro(tiltX, tiltY);
+
+        // Show subtle gyro indicator badge briefly
+        const badge = document.getElementById('gyroStatusBadge');
+        if (badge) {
+          badge.style.opacity = '0.9';
+          badge.style.transform = 'translate(-50%, 0px)';
+          clearTimeout(gyroBadgeTimeout);
+          gyroBadgeTimeout = setTimeout(() => {
+            badge.style.opacity = '0';
+            badge.style.transform = 'translate(-50%, -8px)';
+          }, 2500);
+        }
+      }
+    }
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation, true);
+    }
+
+    // Particle Object with Gravity & Air Resistance
+    class StarDust {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = initial ? Math.random() * height : (gravity.y > 0 ? 0 : height);
+        this.vx = (Math.random() - 0.5) * 1.5;
+        this.vy = (Math.random() - 0.5) * 1.5;
+        this.baseRadius = Math.random() * 2.2 + 0.8;
+        this.radius = this.baseRadius;
+        this.color = Math.random() > 0.4 ? '#C59B27' : '#F3D58C';
+        this.alpha = Math.random() * 0.7 + 0.3;
+        this.drag = 0.985;
+      }
+      update() {
+        // Apply Gravity Vector
+        this.vx += gravity.x * 0.08;
+        this.vy += gravity.y * 0.08;
+
+        // Apply Air Resistance
+        this.vx *= this.drag;
+        this.vy *= this.drag;
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Repel from mouse/touch
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            const force = (100 - dist) / 100;
+            this.x -= (dx / dist) * force * 4;
+            this.y -= (dy / dist) * force * 4;
+          }
+        }
+
+        // Repel from Shockwaves (Click/Tap Ripples)
+        for (const ripple of shockwaves) {
+          const dx = this.x - ripple.x;
+          const dy = this.y - ripple.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (Math.abs(dist - ripple.radius) < 25) {
+            const push = (1 - Math.abs(dist - ripple.radius) / 25) * 6;
+            this.x += (dx / (dist || 1)) * push;
+            this.y += (dy / (dist || 1)) * push;
+          }
+        }
+
+        // Screen wrap
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    // Spawn 65 Stardust Particles
+    const particles = Array.from({ length: 65 }, () => new StarDust());
+
+    // Fluid Wave Parameters
+    let waveStep = 0;
+
+    function drawFluidWaves() {
+      waveStep += 0.025;
+      const waveY = height * 0.88;
+
+      ctx.save();
+      // Wave 1: Deeper Emerald Wave
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      for (let x = 0; x <= width; x += 15) {
+        const tiltOffset = gravity.x * (x - width / 2) * 0.08;
+        const y = waveY + Math.sin(x * 0.005 + waveStep) * 18 + Math.cos(x * 0.003 - waveStep * 0.8) * 14 + tiltOffset;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(width, height);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(18, 55, 42, 0.35)';
+      ctx.fill();
+
+      // Wave 2: Golden Crest Wave
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      for (let x = 0; x <= width; x += 15) {
+        const tiltOffset = gravity.x * (x - width / 2) * 0.12;
+        const y = waveY + 12 + Math.sin(x * 0.007 - waveStep * 1.2) * 16 + Math.cos(x * 0.004 + waveStep) * 10 + tiltOffset;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(width, height);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(197, 155, 39, 0.09)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function renderLoop() {
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Draw Fluid Background Waves
+      drawFluidWaves();
+
+      // 2. Draw Ripples Shockwave
+      for (let i = shockwaves.length - 1; i >= 0; i--) {
+        const r = shockwaves[i];
+        r.radius += r.speed;
+        r.opacity -= 0.015;
+
+        if (r.opacity <= 0 || r.radius >= r.maxRadius) {
+          shockwaves.splice(i, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(223, 183, 108, ${r.opacity})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      // 3. Draw Golden Web Network (Geometric Constellations)
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 125) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(197, 155, 39, ${0.16 * (1 - dist / 125)})`;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 4. Update and Draw Particles
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(renderLoop);
+    }
+    renderLoop();
+
+    // 3. 3D Tilt Card Engine (Dual Desktop Mouse + Mobile Gyroscope)
+    function tiltCardsWithGyro(gx, gy) {
+      const cards = document.querySelectorAll('.tilt-card');
+      const rotX = -gy * 14;
+      const rotY = gx * 14;
+      cards.forEach(card => {
+        card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-4px)`;
+      });
+    }
+
+    // Desktop Mouse Parallax for Cards
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotateX = (-y / rect.height) * 16;
+        const rotateY = (x / rect.width) * 16;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(1)}deg) rotateY(${rotateY.toFixed(1)}deg) translateY(-6px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
+    });
+
+    // 4. Dynamic Data Binding from config.json
+    window.addEventListener('DOMContentLoaded', async () => {
+      const config = await RDRuntime.init();
+
+      // Set Metadata
+      if (config.site) {
+        document.getElementById('siteNavName').textContent = config.site.name || 'UKM Rijal Dakwah';
+        document.getElementById('siteNavPeriod').textContent = config.site.period ? `Periode ${config.site.period}` : 'STDI Imam Syafi\'i Jember';
+        document.getElementById('heroPeriodBadge').textContent = `Periode ${config.site.period || '2026/2027'}`;
+        if (config.site.tagline) document.getElementById('heroTagline').textContent = config.site.tagline;
+      }
+
+      // Guidebook URL binding to all dedicated buttons
+      const guidebookUrl = config.recruitment?.guidebookUrl || 'GUIDEBOOK FINAL.pdf';
+      document.getElementById('btnNavGuidebook').href = guidebookUrl;
+      document.getElementById('btnHeroGuidebook').href = guidebookUrl;
+      document.getElementById('spotlightGuidebookBtn').href = guidebookUrl;
+      document.getElementById('footerGuidebook').href = guidebookUrl;
+
+      // Registration Button State
+      const btnForm = document.getElementById('btnHeroForm');
+      const btnFormText = document.getElementById('btnHeroFormText');
+      const noticeBox = document.getElementById('heroNoticeBox');
+      const noticeText = document.getElementById('heroNoticeText');
+
+      if (config.recruitment?.isOpen) {
+        btnForm.className = "w-full sm:w-auto px-6 py-4 rounded-2xl text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-2.5 btn-gold shadow-xl";
+        btnForm.href = config.recruitment.formUrl || "#";
+        btnForm.target = "_blank";
+        btnFormText.textContent = "Daftar Sekarang (Google Form)";
+        noticeBox.classList.add('hidden');
+      } else {
+        btnForm.className = "w-full sm:w-auto px-6 py-4 rounded-2xl text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-2.5 bg-slate-800 text-slate-400 border border-slate-700 cursor-not-allowed shadow-inner";
+        btnForm.href = "javascript:void(0)";
+        btnForm.removeAttribute('target');
+        btnFormText.textContent = "Pendaftaran Ditutup";
+        
+        noticeBox.classList.remove('hidden');
+        noticeText.textContent = config.recruitment?.closedNotice || "Pendaftaran saat ini telah resmi ditutup.";
+      }
+
+      // Telegram links
+      if (config.telegram?.coordinator) {
+        document.getElementById('footerTelegramCoord').href = config.telegram.coordinator;
+      }
+
+      // Countdown Timer
+      const targetDate = new Date(config.announcement?.targetDate || '2026-09-14T10:00:00').getTime();
+      document.getElementById('countdownDateLabel').textContent = `Target Rilis: ${config.announcement?.targetDateLabel || '14 September 2026'}`;
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          document.getElementById('cd_days').textContent = '00';
+          document.getElementById('cd_hours').textContent = '00';
+          document.getElementById('cd_mins').textContent = '00';
+          document.getElementById('cd_secs').textContent = '00';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('cd_days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd_hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd_mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd_secs').textContent = String(secs).padStart(2, '0');
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // Render Divisions
+      renderDivisionsGrid(config.divisions);
+    });
+
+    // 5. Render Divisions
+    function renderDivisionsGrid(divisions) {
+      const grid = document.getElementById('divisionsGrid');
+      if (!grid) return;
+
+      const defaultDivs = [
+        { name: "Badan Pengurus Harian", icon: "fa-crown", desc: "Pimpinan eksekutif dan koordinasi umum roda organisasi" },
+        { name: "Divisi TPQ", icon: "fa-book-quran", desc: "Pengajaran Al-Qur'an, tahsin, dan pembinaan santri binaan" },
+        { name: "Divisi Keilmuan", icon: "fa-graduation-cap", desc: "Kajian ilmiah, daurah sunnah, dan halaqah thalabul 'ilmi" },
+        { name: "Divisi Acara", icon: "fa-calendar-check", desc: "Manajemen kepanitiaan dan operasional kegiatan dakwah" },
+        { name: "Divisi Humas", icon: "fa-bullhorn", desc: "Penghubung eksternal, ormawa, dan layanan informasi" },
+        { name: "Divisi Sarpras", icon: "fa-boxes-stacked", desc: "Logistik, fasilitas, dan inventarisasi perlengkapan dakwah" },
+        { name: "Divisi Dakwah Digital", icon: "fa-laptop-code", desc: "Pengembangan website, platform bot dakwah, dan sistem informasi" },
+        { name: "Divisi Media", icon: "fa-camera-retro", desc: "Desain grafis, produksi video dakwah, dan publikasi media sosial" }
+      ];
+
+      const list = (divisions && divisions.length > 0) ? divisions : defaultDivs;
+      grid.innerHTML = '';
+
+      list.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "tilt-card p-6 rounded-3xl bg-forestGreen/65 border border-gold/30 hover:border-gold backdrop-blur-xl shadow-xl space-y-3 transition-all";
+        card.innerHTML = `
+          <div class="tilt-content space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-gold/15 text-gold flex items-center justify-center text-xl border border-gold/30">
+              <i class="fa-solid ${item.icon || 'fa-star'}"></i>
+            </div>
+            <h3 class="font-bold text-base text-white font-serif">${item.name}</h3>
+            <p class="text-xs text-cream-200/70 leading-relaxed">${item.desc || ''}</p>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  </script>
+
+</body>
+</html>

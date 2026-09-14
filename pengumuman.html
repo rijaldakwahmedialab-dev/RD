@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengumuman Hasil Seleksi - UKM Rijal Dakwah STDIIS</title>
+  <meta name="description" content="Portal Pengecekan Hasil Seleksi Calon Anggota & Pengurus UKM Rijal Dakwah STDI Imam Syafi'i Jember." />
+  <link rel="icon" type="image/png" href="logo-rijal-dakwah.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepGreen: '#071A14',
+            forestGreen: '#0D2B21',
+            emeraldGreen: '#12372A',
+            gold: '#C59B27',
+            'gold-light': '#DFB76C',
+            cream: {
+              50: '#FDFBF7',
+              100: '#F7F3EA',
+              200: '#EDE4D1',
+              300: '#DFD2B5'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            arabic: ['"Amiri"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .btn-gold {
+      background: linear-gradient(135deg, #F5E6C8 0%, #DFB76C 50%, #C59B27 100%);
+      color: #071A14;
+      font-weight: 800;
+      transition: all 0.2s ease;
+    }
+    .btn-gold:hover {
+      box-shadow: 0 4px 20px rgba(197, 155, 39, 0.4);
+      transform: translateY(-2px);
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #printableResultCard, #printableResultCard * { visibility: visible; }
+      #printableResultCard { position: absolute; left: 0; top: 0; width: 100%; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-gold selection:text-deepGreen">
+
+  <!-- Header -->
+  <header class="bg-deepGreen text-white border-b border-gold/30 sticky top-0 z-40 shadow-md no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3.5 group">
+        <div class="w-11 h-11 rounded-2xl bg-white/95 p-1.5 flex items-center justify-center border border-gold/40 shadow">
+          <img src="logo-rijal-dakwah.png" alt="Logo" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <span class="font-bold text-base text-white font-serif block">UKM Rijal Dakwah</span>
+          <span class="text-[11px] text-gold-light tracking-wider font-semibold block">Portal Hasil Seleksi Resmi</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="px-4 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-cream-100 flex items-center gap-1.5 border border-white/20 transition-all">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          <span>Web Utama</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 flex-1 w-full space-y-8">
+
+    <!-- Hero Card -->
+    <div class="text-center space-y-4 no-print">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold">
+        <i class="fa-solid fa-certificate text-gold"></i>
+        <span id="badgeDataSource">SK Resmi Sekretariat (183 Mahasiswa Diterima)</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-serif font-bold text-deepGreen">
+        Pengecekan Hasil Seleksi Terbuka
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
+        Masukkan Nomor Induk Mahasiswa (NIM) Anda untuk memeriksa status penetapan amanah kepengurusan atau keanggotaan UKM Rijal Dakwah.
+      </p>
+
+      <!-- Search Box -->
+      <form onsubmit="handleSearch(event)" class="max-w-xl mx-auto pt-2 space-y-3">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-forestGreen text-base"></i>
+          <input 
+            type="text" 
+            id="nimInput"
+            required
+            autocomplete="off"
+            placeholder="Masukkan NIM cth: 2026.03.5100" 
+            class="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-300 focus:border-gold focus:ring-2 focus:ring-gold/30 outline-none text-base font-bold text-deepGreen shadow-inner transition-all bg-white"
+          />
+        </div>
+        <button type="submit" class="w-full btn-gold py-3.5 rounded-2xl text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-2 shadow-lg">
+          <i class="fa-solid fa-search"></i>
+          <span>Cek Hasil Seleksi</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Result Display Container -->
+    <div id="resultContainer" class="hidden animate-in">
+      <!-- Injected via JavaScript -->
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-deepGreen text-cream-200/70 border-t border-gold/20 py-8 text-center text-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>&copy; 2026 UKM Rijal Dakwah STDI Imam Syafi'i Jember. Hasil Keputusan SK Pleno Bersifat Final.</p>
+      <div class="flex items-center justify-center gap-4 text-[11px] text-gold-light">
+        <a id="footerTelegramHelp" href="#" target="_blank" class="hover:underline">Bantuan Telegram Panitia</a>
+        <span>•</span>
+        <a href="index.html" class="hover:underline">Kembali ke Beranda</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDK (Compat v10 for zero-build static hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- Runtime Engine Adapter -->
+  <script src="runtime.js"></script>
+
+  <script>
+    let siteConfig = null;
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      siteConfig = await RDRuntime.init();
+
+      if (siteConfig.telegram?.coordinator) {
+        document.getElementById('footerTelegramHelp').href = siteConfig.telegram.coordinator;
+      }
+      const isCloud = RDRuntime.isCloudActive;
+      document.getElementById('badgeDataSource').textContent = isCloud
+        ? 'Cloud Database Resmi Sekretariat (Verifikasi Terproteksi)'
+        : 'Basis Data Terverifikasi (SK Resmi Sekretariat)';
+    });
+
+    async function handleSearch(e) {
+      e.preventDefault();
+      const rawQuery = document.getElementById('nimInput').value.trim();
+      if (!rawQuery) return;
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Memeriksa SK...</span>';
+      }
+
+      try {
+        // Query aman 1 data secara presisi (mencegah scraping seluruh database)
+        const match = await RDRuntime.searchCandidateByNim(rawQuery);
+
+        if (match) {
+          renderAcceptedResult(match);
+        } else {
+          renderNotFoundResult(rawQuery);
+        }
+      } catch (err) {
+        console.error("Gagal melakukan pencarian:", err);
+        renderNotFoundResult(rawQuery);
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
+      }
+    }
+
+    function renderAcceptedResult(candidate) {
+      const container = document.getElementById('resultContainer');
+      container.classList.remove('hidden');
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const isPengurus = candidate.tipe === 'pengurus';
+      const tgLink = isPengurus 
+        ? (siteConfig?.telegram?.pengurusGroup || '#')
+        : (siteConfig?.telegram?.anggotaGroup || '#');
+
+      const statusBadge = isPengurus
+        ? `<span class="px-4 py-1.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300 inline-flex items-center gap-1.5 shadow-sm">
+             <i class="fa-solid fa-crown text-gold"></i>
+             <span>DINYATAKAN DITERIMA: PENGURUS</span>
+           </span>`
+        : `<span class="px-4 py-1.5 rounded-full text-xs font-extrabold bg-sky-100 text-sky-900 border border-sky-300 inline-flex items-center gap-1.5 shadow-sm">
+             <i class="fa-solid fa-shield-heart text-sky-600"></i>
+             <span>DINYATAKAN DITERIMA: ANGGOTA BIASA</span>
+           </span>`;
+
+      container.innerHTML = `
+        <div id="printableResultCard" class="bg-white rounded-3xl p-6 sm:p-10 border-2 border-gold/40 shadow-2xl space-y-6 relative overflow-hidden">
+          
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-100 pb-5 text-center sm:text-left">
+            <div class="flex items-center gap-3.5">
+              <div class="w-14 h-14 rounded-2xl bg-cream-100 p-2 flex items-center justify-center border border-gold/40 shadow">
+                <img src="logo-rijal-dakwah.png" alt="Logo" class="w-full h-full object-contain" />
+              </div>
+              <div>
+                <h3 class="font-bold text-lg text-deepGreen font-serif">Surat Keputusan Kelulusan</h3>
+                <span class="text-xs text-slate-500">UKM Rijal Dakwah STDIIS Periode 2026/2027</span>
+              </div>
+            </div>
+            <div>
+              ${statusBadge}
+            </div>
+          </div>
+
+          <div class="text-center space-y-2 py-2">
+            <div class="font-arabic text-xl sm:text-2xl text-forestGreen">بَارَكَ اللهُ فِيكُمْ</div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-deepGreen font-serif uppercase">
+              ${escapeHtml(candidate.nama)}
+            </h2>
+            <div class="font-mono text-sm text-slate-500 font-bold tracking-wider">
+              NIM: ${escapeHtml(candidate.nim)}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 bg-cream-50 rounded-2xl border border-cream-200">
+              <span class="text-[10px] text-slate-400 font-bold uppercase block">Penempatan Amanah</span>
+              <span class="text-sm font-bold text-deepGreen block mt-0.5">${escapeHtml(candidate.divisi)}</span>
+            </div>
+            <div class="p-4 bg-cream-50 rounded-2xl border border-cream-200">
+              <span class="text-[10px] text-slate-400 font-bold uppercase block">Keputusan Seleksi</span>
+              <span class="text-sm font-bold text-emerald-700 block mt-0.5">Diterima Resmi</span>
+            </div>
+          </div>
+
+          <div class="p-4 bg-emerald-50/80 rounded-2xl border border-emerald-200 text-xs text-emerald-900 leading-relaxed text-center">
+            ${escapeHtml(candidate.catatan)}
+          </div>
+
+          <!-- Telegram Group Join Box -->
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-deepGreen to-forestGreen text-white flex flex-col sm:flex-row items-center justify-between gap-4 no-print shadow-lg">
+            <div class="space-y-1 text-center sm:text-left">
+              <div class="font-bold text-sm flex items-center justify-center sm:justify-start gap-2">
+                <i class="fa-brands fa-telegram text-sky-400 text-lg"></i>
+                <span>Grup Koordinasi Resmi</span>
+              </div>
+              <p class="text-xs text-cream-200/80">Wajib bergabung ke grup koordinasi untuk briefing dan agenda perdana.</p>
+            </div>
+            <a href="${tgLink}" target="_blank" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2 shrink-0">
+              <span>Masuk Grup Telegram</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-100 no-print">
+            <span>Verifikasi Otentik Digital STDIIS</span>
+            <button onclick="window.print()" class="text-slate-600 hover:text-deepGreen font-semibold flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i>
+              <span>Cetak Hasil (PDF)</span>
+            </button>
+          </div>
+
+        </div>
+      `;
+    }
+
+    function renderNotFoundResult(searchNim) {
+      const container = document.getElementById('resultContainer');
+      container.classList.remove('hidden');
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const tgCoord = siteConfig?.telegram?.coordinator || 'https://t.me/aburobiah';
+
+      container.innerHTML = `
+        <div class="bg-white rounded-3xl p-8 border-2 border-rose-200 shadow-xl space-y-6 text-center">
+          <div class="w-16 h-16 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-3xl mx-auto border border-rose-200 shadow-sm">
+            <i class="fa-solid fa-user-xmark"></i>
+          </div>
+
+          <div class="space-y-2 max-w-md mx-auto">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200">
+              DATA TIDAK DITEMUKAN
+            </span>
+            <h3 class="text-xl sm:text-2xl font-bold text-slate-800 font-serif">
+              NIM Tidak Terdaftar dalam SK Resmi
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              NIM <strong>${escapeHtml(searchNim)}</strong> tidak tercantum dalam daftar kelulusan SK Sekretariat periode ini.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+            Jika Anda telah mengikuti tahapan wawancara dan merasa ada kekeliruan data, silakan konfirmasikan langsung ke narahubung panitia.
+          </div>
+
+          <div class="pt-2">
+            <a href="${tgCoord}" target="_blank" class="btn-gold px-6 py-3 rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow">
+              <i class="fa-brands fa-telegram text-base"></i>
+              <span>Hubungi Narahubung Panitia</span>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+      });
+    }
+  </script>
+
+</body>
+</html>

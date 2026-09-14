@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cockpit Pengelola Web UKM Rijal Dakwah STDIIS</title>
+  <link rel="icon" type="image/png" href="logo-rijal-dakwah.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <!-- SheetJS for Excel handling -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepGreen: '#0A251D',
+            forestGreen: '#12372A',
+            emeraldGreen: '#1B4D3E',
+            gold: '#C59B27',
+            'gold-light': '#DFB76C',
+            cream: {
+              50: '#FDFBF7',
+              100: '#F7F3EA',
+              200: '#EDE4D1',
+              300: '#DFD2B5'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            arabic: ['"Amiri"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .gold-gradient {
+      background: linear-gradient(135deg, #DFB76C 0%, #C59B27 100%);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #DFB76C 0%, #C59B27 100%);
+      color: #0A251D;
+      transition: all 0.2s ease;
+    }
+    .btn-gold:hover {
+      box-shadow: 0 4px 15px rgba(197, 155, 39, 0.4);
+      transform: translateY(-1px);
+    }
+    .active-tab {
+      background-color: #12372A;
+      color: #FDFBF7;
+      border-color: #C59B27;
+    }
+  </style>
+
+  <!-- Firebase SDK (Compat v10 for zero-build static hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+  <!-- ========================================================================= -->
+  <!-- 1. AUTHENTICATION OVERLAY (Firebase Auth Email/Password) -->
+  <!-- ========================================================================= -->
+  <div id="authGate" class="fixed inset-0 z-50 bg-deepGreen/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-gold/30 space-y-6 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-cream-100 p-2 mx-auto border border-gold/40 flex items-center justify-center shadow-md">
+        <img src="logo-rijal-dakwah.png" alt="Logo" class="w-full h-full object-contain" />
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-deepGreen font-serif">Cockpit Pengelola Web</h2>
+        <p class="text-xs text-slate-500 mt-1">Pusat Kendali Pengaturan & Basis Data UKM Rijal Dakwah</p>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cream-100 text-forestGreen border border-gold/30 text-[10px] font-bold mt-2.5">
+          <i class="fa-solid fa-shield-halved text-gold"></i>
+          <span>Firebase Protected (Tanpa Login Google)</span>
+        </div>
+      </div>
+      <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Email Pengurus / Admin</label>
+          <div class="relative">
+            <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            <input 
+              type="email" 
+              id="adminEmailInput" 
+              required 
+              placeholder="admin@rijaldakwah.com"
+              class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-gold focus:ring-2 focus:ring-gold/30 outline-none text-xs transition-all font-medium"
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Kata Sandi Akun</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            <input 
+              type="password" 
+              id="adminPasswordInput" 
+              required 
+              placeholder="••••••••••••"
+              class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-gold focus:ring-2 focus:ring-gold/30 outline-none text-xs transition-all font-medium"
+            />
+          </div>
+          <p id="loginError" class="text-xs text-rose-600 font-semibold mt-1.5 hidden flex items-center gap-1">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="loginErrorMsg">Email atau kata sandi tidak cocok!</span>
+          </p>
+        </div>
+        <button type="submit" id="btnLoginSubmit" class="w-full btn-gold py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow mt-2">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Masuk Panel Pengelola</span>
+        </button>
+      </form>
+      <div class="text-[11px] text-slate-400 pt-2 border-t border-slate-100 flex items-center justify-between">
+        <span>Aman & Terenkripsi</span>
+        <span id="authGateModeStatus" class="text-slate-500 font-mono text-[10px]">Memeriksa Cloud...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. TOP NAVIGATION BAR -->
+  <!-- ========================================================================= -->
+  <header class="bg-deepGreen text-white border-b border-gold/30 sticky top-0 z-40 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-white/90 p-1 flex items-center justify-center border border-gold/40">
+          <img src="logo-rijal-dakwah.png" alt="Logo" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <h1 class="font-bold text-sm sm:text-base leading-tight">Cockpit Pengelola Web</h1>
+          <div class="flex items-center gap-2 mt-0.5">
+            <span id="cloudStatusPill" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-gold-light border border-gold/30 flex items-center gap-1.5 font-mono">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+              <span>Memeriksa Cloud...</span>
+            </span>
+            <span id="adminUserDisplay" class="text-[11px] text-cream-200/80 hidden sm:inline truncate max-w-[200px]"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="index.html" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-cream-100 flex items-center gap-1.5 border border-white/20 transition-all" title="Lihat Website Utama">
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          <span class="hidden sm:inline">Web Utama</span>
+        </a>
+        <a href="pengumuman.html" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-cream-100 flex items-center gap-1.5 border border-white/20 transition-all" title="Lihat Halaman Pengumuman">
+          <i class="fa-solid fa-bullhorn text-[10px]"></i>
+          <span class="hidden sm:inline">Pengumuman</span>
+        </a>
+        <button onclick="handleLogout()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600/80 hover:bg-rose-600 text-white flex items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-right-from-bracket text-[10px]"></i>
+          <span>Keluar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 3. MAIN COCKPIT WORKSPACE -->
+  <!-- ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 w-full space-y-6">
+
+    <!-- Notification Toast Container -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-gold/40 text-sm">
+      <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+      <span id="toastMsg">Tindakan berhasil!</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap gap-2 p-1.5 bg-slate-200/80 rounded-2xl max-w-2xl border border-slate-300">
+      <button onclick="switchTab('settings')" id="tabBtn_settings" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all active-tab shadow-sm">
+        <i class="fa-solid fa-sliders"></i>
+        <span>Pengaturan Situs</span>
+      </button>
+      <button onclick="switchTab('database')" id="tabBtn_database" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all text-slate-700 hover:bg-white/50">
+        <i class="fa-solid fa-database"></i>
+        <span>Basis Data (183 Data)</span>
+      </button>
+      <button onclick="switchTab('deploy')" id="tabBtn_deploy" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all text-slate-700 hover:bg-white/50">
+        <i class="fa-solid fa-cloud"></i>
+        <span>Cloud & Firebase</span>
+      </button>
+    </nav>
+
+    <!-- ======================================================================= -->
+    <!-- TAB 1: PENGATURAN SITUS (Zero-Code Visual Editor) -->
+    <!-- ======================================================================= -->
+    <section id="tab_settings" class="space-y-6 animate-in">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-deepGreen flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-gold"></i>
+              <span>Kendali Fitur & Tampilan Website</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">Ubah status pendaftaran, tanggal pengumuman, dan tautan tanpa menulis kode sama sekali.</p>
+          </div>
+          <button onclick="saveSettingsForm()" class="btn-gold px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 self-start sm:self-auto shadow">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>Simpan Pengaturan</span>
+          </button>
+        </div>
+
+        <form id="settingsForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Kolom 1: Status Pendaftaran -->
+          <div class="bg-cream-50 p-5 rounded-2xl border border-cream-200 space-y-4">
+            <h3 class="font-bold text-sm text-deepGreen flex items-center gap-2">
+              <i class="fa-solid fa-user-plus text-forestGreen"></i>
+              <span>Status Formulir Pendaftaran</span>
+            </h3>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Status Pendaftaran Calon Anggota</label>
+              <select id="cfg_reg_isOpen" class="w-full p-2.5 rounded-xl border border-slate-300 text-sm font-semibold focus:border-gold outline-none">
+                <option value="true">🟢 Buka Pendaftaran (Tombol Aktif)</option>
+                <option value="false">🔴 Pendaftaran Ditutup (Tombol Diabu-abukan)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Tautan Google Form Pendaftaran</label>
+              <input type="url" id="cfg_reg_formUrl" placeholder="https://docs.google.com/forms/..." class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none" />
+            </div>
+
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Pesan Saat Pendaftaran Ditutup</label>
+              <textarea id="cfg_reg_closedNotice" rows="2" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none"></textarea>
+            </div>
+          </div>
+
+          <!-- Kolom 2: Status Pengumuman & Hitung Mundur -->
+          <div class="bg-cream-50 p-5 rounded-2xl border border-cream-200 space-y-4">
+            <h3 class="font-bold text-sm text-deepGreen flex items-center gap-2">
+              <i class="fa-solid fa-bullhorn text-forestGreen"></i>
+              <span>Status Pengumuman Hasil Seleksi</span>
+            </h3>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Akses Pencarian NIM Pengumuman</label>
+              <select id="cfg_ann_isOpen" class="w-full p-2.5 rounded-xl border border-slate-300 text-sm font-semibold focus:border-gold outline-none">
+                <option value="true">🟢 Buka Akses Hasil Seleksi (Pencarian Terbuka)</option>
+                <option value="false">🔒 Kunci Hasil Seleksi (Tampilkan Hitung Mundur)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Tanggal & Jam Buka (Countdown)</label>
+                <input type="datetime-local" id="cfg_ann_targetDate" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-semibold" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Label Tanggal (Teks di Layar)</label>
+                <input type="text" id="cfg_ann_targetDateLabel" placeholder="14 September 2026" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-semibold" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Pesan Peringatan Sebelum Tanggal Buka</label>
+              <textarea id="cfg_ann_closedNotice" rows="2" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none"></textarea>
+            </div>
+          </div>
+
+          <!-- Dedicated Guidebook Upload & Management -->
+          <div class="bg-white p-6 rounded-2xl border-2 border-gold/40 shadow-sm space-y-4 md:col-span-2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-sm text-deepGreen">Pengelolaan & Unggah Guidebook PDF</h3>
+                  <p class="text-[11px] text-slate-500">Ganti berkas buku panduan pendaftaran secara langsung tanpa coding.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <a id="previewCurrentGuidebookBtn" href="GUIDEBOOK FINAL.pdf" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center gap-1.5 transition-colors">
+                  <i class="fa-solid fa-eye text-slate-500"></i>
+                  <span>Lihat PDF Saat Ini</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+              <!-- Detail Berkas & Tautan -->
+              <div class="space-y-3 text-xs">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Nama / Tautan Berkas Guidebook Aktif</label>
+                  <input type="text" id="cfg_reg_guidebookUrl" placeholder="GUIDEBOOK FINAL.pdf" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-semibold" />
+                  <p class="text-[10px] text-slate-400 mt-1">Bisa berupa nama berkas lokal (contoh: <code>GUIDEBOOK FINAL.pdf</code>) atau link Google Drive/Cloud.</p>
+                </div>
+
+                <div class="p-3.5 bg-cream-50 rounded-xl border border-cream-200 space-y-1 text-[11px] text-slate-600">
+                  <div class="font-bold text-deepGreen flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-info text-gold"></i>
+                    <span>Status Berkas Guidebook</span>
+                  </div>
+                  <div id="guidebookFileInfo">File aktif: <strong class="text-deepGreen font-mono">GUIDEBOOK FINAL.pdf</strong></div>
+                  <div class="text-[10px] text-slate-400">Pengunjung dapat mengunduh berkas ini melalui tombol guidebook di halaman depan.</div>
+                </div>
+              </div>
+
+              <!-- Upload Drag & Drop Zone -->
+              <div class="space-y-2">
+                <label class="block text-xs font-bold text-slate-700">Unggah Berkas PDF Baru</label>
+                <div 
+                  id="guidebookDropZone" 
+                  onclick="document.getElementById('guidebookFileInput').click()"
+                  class="border-2 border-dashed border-slate-300 hover:border-gold rounded-2xl p-4 text-center cursor-pointer transition-colors bg-slate-50/60 flex flex-col items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-file-pdf text-rose-500 text-2xl"></i>
+                  <div class="text-xs text-slate-600">
+                    <span class="font-bold text-deepGreen">Klik untuk memilih file PDF</span> atau seret file ke sini
+                  </div>
+                  <span class="text-[10px] text-slate-400">Format .pdf • Otomatis tersimpan</span>
+                  <input type="file" id="guidebookFileInput" accept=".pdf" class="hidden" onchange="handleGuidebookFileSelect(event)" />
+                </div>
+
+                <div id="selectedPdfInfo" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2 truncate">
+                    <i class="fa-solid fa-file-circle-check text-emerald-600 text-base shrink-0"></i>
+                    <span id="selectedPdfName" class="font-semibold truncate"></span>
+                    <span id="selectedPdfSize" class="text-slate-400 text-[10px] shrink-0"></span>
+                  </div>
+                  <button type="button" onclick="uploadGuidebookToCloud()" id="btnUploadGuidebookGh" class="btn-gold px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 shadow flex items-center gap-1.5">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Upload ke Firebase Storage</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kolom 3: Komunitas & Tautan Telegram Resmi -->
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4 md:col-span-2">
+            <h3 class="font-bold text-sm text-deepGreen flex items-center gap-2">
+              <i class="fa-brands fa-telegram text-sky-500"></i>
+              <span>Tautan Jalur Telegram Resmi (Otomatis Masuk di Kartu Hasil)</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Akun Telegram Koordinator / Bantuan</label>
+                <input type="text" id="cfg_tg_coord" placeholder="https://t.me/aburobiah" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Tautan Undangan Grup Pengurus Baru</label>
+                <input type="text" id="cfg_tg_pengurus" placeholder="https://t.me/+rd_pengurus..." class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Tautan Undangan Grup Anggota Biasa</label>
+                <input type="text" id="cfg_tg_anggota" placeholder="https://t.me/+rd_anggota..." class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Kolom 4: Identitas Umum -->
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4 md:col-span-2">
+            <h3 class="font-bold text-sm text-deepGreen flex items-center gap-2">
+              <i class="fa-solid fa-tag text-gold"></i>
+              <span>Identitas Organisasi & Periode</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Nama Organisasi</label>
+                <input type="text" id="cfg_site_name" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-semibold" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Periode Kepengurusan</label>
+                <input type="text" id="cfg_site_period" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-semibold" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Slogan / Tagline</label>
+                <input type="text" id="cfg_site_tagline" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none" />
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- TAB 2: MANAJEMEN BASIS DATA (Full CRUD Table + Excel Support) -->
+    <!-- ======================================================================= -->
+    <section id="tab_database" class="space-y-6 hidden animate-in">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+
+        <!-- Top Bar: Stats and Action Buttons -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div>
+            <h2 class="text-xl font-bold text-deepGreen flex items-center gap-2">
+              <i class="fa-solid fa-users text-gold"></i>
+              <span>Kelola Daftar Mahasiswa Diterima</span>
+            </h2>
+            <div class="flex flex-wrap items-center gap-2.5 mt-1.5 text-xs">
+              <span id="badgeTotalAll" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold border">Total: 183</span>
+              <span id="badgeTotalPengurus" class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">Pengurus: 109</span>
+              <span id="badgeTotalAnggota" class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold border border-sky-300">Anggota Biasa: 74</span>
+            </div>
+          </div>
+
+          <!-- Tools: Add / Import / Export / Save -->
+          <!-- Tools: Add / Import / Export / Sync Cloud / Save -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="openCandidateModal()" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
+              <i class="fa-solid fa-user-plus"></i>
+              <span>Tambah Calon</span>
+            </button>
+            <label class="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1.5 cursor-pointer shadow transition-colors">
+              <i class="fa-solid fa-file-excel"></i>
+              <span>Impor Excel/CSV</span>
+              <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleExcelUpload(event)" />
+            </label>
+            <button onclick="syncLocalDataToFirestore()" id="btnSyncLocalCloud" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-1.5 shadow transition-colors" title="Unggah 183 data pendaftar lokal ke Cloud Firestore">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Sync Lokal ke Cloud</span>
+            </button>
+            <button onclick="exportToExcel()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-700 hover:bg-slate-800 text-white flex items-center gap-1.5 shadow transition-colors">
+              <i class="fa-solid fa-download"></i>
+              <span>Ekspor</span>
+            </button>
+            <button onclick="saveDatabaseChanges()" class="px-4 py-2 rounded-xl text-xs font-bold bg-forestGreen hover:bg-deepGreen text-white flex items-center gap-1.5 shadow transition-colors">
+              <i class="fa-solid fa-floppy-disk text-gold"></i>
+              <span>Simpan ke Cloud</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div class="sm:col-span-6 relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            <input 
+              type="text" 
+              id="tableSearchInput" 
+              oninput="filterTable()" 
+              placeholder="Cari berdasarkan NIM atau Nama Mahasiswa..." 
+              class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none"
+            />
+          </div>
+          <div class="sm:col-span-3">
+            <select id="roleFilter" onchange="filterTable()" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:border-gold outline-none">
+              <option value="ALL">Semua Jalur (Pengurus & Anggota)</option>
+              <option value="pengurus">Pengurus Divisi / BPH Saja</option>
+              <option value="anggota">Anggota Biasa Saja</option>
+            </select>
+          </div>
+          <div class="sm:col-span-3">
+            <select id="divisiFilter" onchange="filterTable()" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:border-gold outline-none">
+              <option value="ALL">Semua Divisi</option>
+              <option value="BPH">BPH</option>
+              <option value="TPQ">Divisi TPQ</option>
+              <option value="Keilmuan">Divisi Keilmuan</option>
+              <option value="Acara">Divisi Acara</option>
+              <option value="Humas">Divisi Humas</option>
+              <option value="Sarpras">Divisi Sarpras</option>
+              <option value="Dakwah Digital">Divisi Dakwah Digital</option>
+              <option value="Media">Divisi Media</option>
+              <option value="Dana Usaha">Divisi Dana Usaha</option>
+              <option value="Keanggotaan Umum">Keanggotaan Umum</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Interactive Candidates Table -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="w-full text-left text-xs text-slate-600">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] border-b border-slate-200">
+              <tr>
+                <th class="py-3.5 px-4 w-12 text-center">No</th>
+                <th class="py-3.5 px-4 w-36">NIM</th>
+                <th class="py-3.5 px-4">Nama Lengkap</th>
+                <th class="py-3.5 px-4">Status & Divisi Penempatan</th>
+                <th class="py-3.5 px-4 w-28 text-center">Jalur</th>
+                <th class="py-3.5 px-4 w-28 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="candidatesTableBody" class="divide-y divide-slate-100 font-medium">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table pagination / status bar -->
+        <div class="flex items-center justify-between text-xs text-slate-500 pt-2">
+          <span id="showingCountText">Menampilkan 183 data</span>
+          <button onclick="resetToSKBaseline()" class="text-rose-600 hover:text-rose-700 font-semibold underline text-[11px]">
+            Kembalikan ke Baseline SK Resmi (183 Data)
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- TAB 3: DEPLOY & RILIS (One-Click Handover Hub) -->
+    <!-- ======================================================================= -->
+    <!-- TAB 3: STATUS CLOUD & KONFIGURASI FIREBASE -->
+    <!-- ======================================================================= -->
+    <section id="tab_deploy" class="space-y-6 hidden animate-in">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Card 1: Status & Konfigurasi Kredensial Firebase -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl shadow">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-deepGreen">Konfigurasi Cloud Firebase</h3>
+              <p class="text-xs text-slate-500">Hubungkan web ke backend Google Firebase (Auth, Firestore, Storage).</p>
+            </div>
+          </div>
+
+          <!-- Cloud Status Indicator Box -->
+          <div id="cloudConnectionDetails" class="p-4 rounded-2xl border space-y-2 text-xs">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Form Kredensial Firebase -->
+          <div class="space-y-3 pt-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">API Key</label>
+                <input type="text" id="fb_apiKey" placeholder="AIzaSy..." class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-mono" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Project ID</label>
+                <input type="text" id="fb_projectId" placeholder="rijal-dakwah-portal" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-mono" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Auth Domain</label>
+                <input type="text" id="fb_authDomain" placeholder="rijal-dakwah.firebaseapp.com" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-mono" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Storage Bucket</label>
+                <input type="text" id="fb_storageBucket" placeholder="rijal-dakwah.appspot.com" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-mono" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Messaging Sender ID</label>
+                <input type="text" id="fb_messagingSenderId" placeholder="123456789" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-mono" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">App ID</label>
+                <input type="text" id="fb_appId" placeholder="1:123456:web:abcd" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs focus:border-gold outline-none font-mono" />
+              </div>
+            </div>
+
+            <button onclick="saveFirebaseCredentialsFromUI()" class="w-full btn-gold py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow mt-2">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>Simpan & Terapkan Konfigurasi Firebase</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Security Rules & Cadangan Arsip -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl shadow-sm border border-emerald-300">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-deepGreen">Aturan Keamanan & Cadangan</h3>
+              <p class="text-xs text-slate-500">Aturan Firestore (Security Rules) & Backup berkas lokal.</p>
+            </div>
+          </div>
+
+          <div class="p-4 bg-cream-50 rounded-2xl border border-cream-200 space-y-2 text-xs">
+            <div class="font-bold text-deepGreen flex items-center justify-between">
+              <span>Aturan Firestore (Pencarian Aman per-NIM)</span>
+              <button onclick="copyFirestoreRules()" class="text-gold hover:underline text-[11px] font-bold">
+                <i class="fa-regular fa-copy mr-1"></i>Salin Rules
+              </button>
+            </div>
+            <pre class="bg-slate-900 text-emerald-400 p-3 rounded-xl text-[10px] font-mono overflow-x-auto leading-relaxed max-h-36"><code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /settings/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /kelulusan/{nim} {
+      allow get: if true;
+      allow list, write: if request.auth != null;
+    }
+  }
+}</code></pre>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <button onclick="downloadConfigFile()" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left transition-colors group">
+              <i class="fa-solid fa-file-code text-gold text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+              <div class="font-bold text-xs text-deepGreen">Unduh config.json</div>
+              <div class="text-[10px] text-slate-500">Kredensial & setelan web</div>
+            </button>
+            <button onclick="downloadDataJsonFile()" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left transition-colors group">
+              <i class="fa-solid fa-database text-emerald-600 text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+              <div class="font-bold text-xs text-deepGreen">Unduh data.json</div>
+              <div class="text-[10px] text-slate-500">Arsip offline 183 data</div>
+            </button>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 space-y-2">
+            <h4 class="font-bold text-xs text-slate-700">Backup Cadangan Seluruh Sistem (.json)</h4>
+            <div class="flex items-center gap-2">
+              <button onclick="backupWholeSystem()" class="flex-1 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-300 transition-colors">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>Cadangkan</span>
+              </button>
+              <label class="flex-1 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-300 cursor-pointer transition-colors">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Pulihkan</span>
+                <input type="file" accept=".json" class="hidden" onchange="restoreSystemBackup(event)" />
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 4. MODAL TAMBAH / EDIT MAHASISWA -->
+  <!-- ========================================================================= -->
+  <div id="candidateModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-5 animate-in">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 id="modalCandidateTitle" class="font-bold text-lg text-deepGreen">Tambah Calon Mahasiswa</h3>
+        <button onclick="closeCandidateModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="candidateForm" onsubmit="handleCandidateFormSubmit(event)" class="space-y-4 text-xs text-slate-700">
+        <input type="hidden" id="editCandidateOriginalNim" value="" />
+        
+        <div>
+          <label class="block font-bold mb-1">Nomor Induk Mahasiswa (NIM)</label>
+          <input type="text" id="modalNim" required placeholder="Contoh: 2026.03.5100" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold focus:border-gold outline-none" />
+        </div>
+
+        <div>
+          <label class="block font-bold mb-1">Nama Lengkap</label>
+          <input type="text" id="modalNama" required placeholder="Nama lengkap mahasiswa..." class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold focus:border-gold outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">Jalur Kelulusan</label>
+            <select id="modalTipe" onchange="handleModalTipeChange()" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold focus:border-gold outline-none">
+              <option value="pengurus">Pengurus Divisi / BPH</option>
+              <option value="anggota">Anggota Biasa</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Divisi Penempatan</label>
+            <select id="modalDivisi" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold focus:border-gold outline-none">
+              <option value="Pengurus BPH">Pengurus BPH</option>
+              <option value="Pengurus Divisi TPQ">Divisi TPQ</option>
+              <option value="Pengurus Divisi Keilmuan">Divisi Keilmuan</option>
+              <option value="Pengurus Divisi Acara">Divisi Acara</option>
+              <option value="Pengurus Divisi Humas">Divisi Humas</option>
+              <option value="Pengurus Divisi Sarpras">Divisi Sarpras</option>
+              <option value="Pengurus Divisi Dakwah Digital">Divisi Dakwah Digital</option>
+              <option value="Pengurus Divisi Media">Divisi Media</option>
+              <option value="Pengurus Divisi Dana Usaha">Divisi Dana Usaha</option>
+              <option value="Keanggotaan Umum">Keanggotaan Umum (Anggota)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold mb-1">Catatan / Ucapan Khusus</label>
+          <textarea id="modalCatatan" rows="2" placeholder="Barakallahu fiikum. Selamat bergabung..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:border-gold outline-none"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeCandidateModal()" class="px-4 py-2 rounded-xl font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
+            Batal
+          </button>
+          <button type="submit" class="btn-gold px-5 py-2 rounded-xl font-bold shadow">
+            Simpan Calon
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Runtime Logic Adapter -->
+  <script src="runtime.js"></script>
+
+  <script>
+    // State Variables
+    let currentConfig = null;
+    let currentDataset = [];
+    let currentFiltered = [];
+
+    // Inisialisasi Saat Halaman Dimuat
+    window.addEventListener('DOMContentLoaded', async () => {
+      await loadInitialData();
+      initAuthAndCloudStatus();
+      renderSettingsForm();
+      renderDatasetTable();
+      renderFirebaseConfigForm();
+    });
+
+    // 1. Auth & Cloud Status Guard
+    function initAuthAndCloudStatus() {
+      const isCloud = RDRuntime.isCloudActive;
+      const statusPill = document.getElementById('cloudStatusPill');
+      const authModeStatus = document.getElementById('authGateModeStatus');
+      const detailsBox = document.getElementById('cloudConnectionDetails');
+
+      if (isCloud) {
+        const projId = currentConfig?.firebase?.projectId || 'Terkoneksi';
+        statusPill.className = "text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/50 flex items-center gap-1.5 font-mono";
+        statusPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Cloud Aktif: ${escapeHtml(projId)}</span>`;
+        if (authModeStatus) authModeStatus.textContent = `Cloud: ${projId}`;
+
+        if (detailsBox) {
+          detailsBox.className = "p-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-900 space-y-1 text-xs";
+          detailsBox.innerHTML = `
+            <div class="font-bold flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-600"></i>
+              <span>Backend Firebase Terhubung Aktif</span>
+            </div>
+            <p class="text-[11px] text-emerald-800">Project ID: <code class="font-mono font-bold">${escapeHtml(projId)}</code>. Data dan otentikasi tersimpan aman di Google Cloud.</p>
+          `;
+        }
+      } else {
+        statusPill.className = "text-[10px] px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-500/50 flex items-center gap-1.5 font-mono";
+        statusPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>Mode Lokal (Belum Setup)</span>`;
+        if (authModeStatus) authModeStatus.textContent = "Mode Pengujian Lokal (admin2026)";
+
+        if (detailsBox) {
+          detailsBox.className = "p-4 rounded-2xl border border-amber-200 bg-amber-50 text-amber-900 space-y-1 text-xs";
+          detailsBox.innerHTML = `
+            <div class="font-bold flex items-center gap-2 text-amber-900">
+              <i class="fa-solid fa-circle-exclamation text-amber-600"></i>
+              <span>Firebase Belum Dikonfigurasi</span>
+            </div>
+            <p class="text-[11px] text-amber-800">Isi parameter Firebase pada form di bawah ini agar web beralih dari penyimpanan lokal ke Cloud Firebase.</p>
+          `;
+        }
+      }
+
+      // Listener Auth State
+      RDRuntime.onAuthStateChanged((user) => {
+        if (user) {
+          document.getElementById('authGate').classList.add('hidden');
+          document.getElementById('adminUserDisplay').textContent = user.email || 'Pengurus RD';
+        } else {
+          document.getElementById('authGate').classList.remove('hidden');
+          document.getElementById('adminUserDisplay').textContent = '';
+        }
+      });
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmailInput').value.trim();
+      const pw = document.getElementById('adminPasswordInput').value;
+      const btn = document.getElementById('btnLoginSubmit');
+      const errElem = document.getElementById('loginError');
+      const errMsg = document.getElementById('loginErrorMsg');
+
+      errElem.classList.add('hidden');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Memverifikasi Akun...</span>`;
+
+      try {
+        await RDRuntime.loginAdmin(email, pw);
+        document.getElementById('authGate').classList.add('hidden');
+        showToast("Alhamdulillah, akses pengelola berhasil dibuka!");
+        // Refresh data dari cloud jika baru login
+        await loadInitialData();
+        renderDatasetTable();
+      } catch (err) {
+        errElem.classList.remove('hidden');
+        let cleanMsg = err.message || "Gagal masuk.";
+        if (cleanMsg.includes('invalid-credential') || cleanMsg.includes('wrong-password')) {
+          cleanMsg = "Kata sandi atau email admin tidak cocok.";
+        } else if (cleanMsg.includes('user-not-found')) {
+          cleanMsg = "Email admin belum terdaftar di Firebase Auth.";
+        } else if (cleanMsg.includes('too-many-requests')) {
+          cleanMsg = "Terlalu banyak percobaan. Mohon tunggu beberapa saat.";
+        }
+        errMsg.textContent = cleanMsg;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i><span>Masuk Panel Pengelola</span>`;
+      }
+    }
+
+    async function handleLogout() {
+      if (confirm("Kunci dan keluar dari panel pengelola?")) {
+        await RDRuntime.logoutAdmin();
+        location.reload();
+      }
+    }
+
+    // 2. Load Initial Data
+    async function loadInitialData() {
+      currentConfig = await RDRuntime.init();
+      if (RDRuntime.isCloudActive && RDRuntime.getAuthUser()) {
+        currentDataset = await RDRuntime.loadAllCandidatesAdmin();
+      } else {
+        currentDataset = await RDRuntime.loadDataset();
+      }
+      currentFiltered = [...currentDataset];
+    }
+
+    // 3. Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active-tab');
+        b.classList.add('text-slate-700');
+      });
+      document.getElementById('tabBtn_' + tabId).classList.add('active-tab');
+      document.getElementById('tabBtn_' + tabId).classList.remove('text-slate-700');
+
+      document.getElementById('tab_settings').classList.add('hidden');
+      document.getElementById('tab_database').classList.add('hidden');
+      document.getElementById('tab_deploy').classList.add('hidden');
+      document.getElementById('tab_' + tabId).classList.remove('hidden');
+    }
+
+    // 4. Render Settings
+    function renderSettingsForm() {
+      if (!currentConfig) return;
+      document.getElementById('cfg_reg_isOpen').value = String(currentConfig.recruitment?.isOpen ?? false);
+      document.getElementById('cfg_reg_formUrl').value = currentConfig.recruitment?.formUrl || '';
+      document.getElementById('cfg_reg_guidebookUrl').value = currentConfig.recruitment?.guidebookUrl || '';
+      document.getElementById('cfg_reg_closedNotice').value = currentConfig.recruitment?.closedNotice || '';
+
+      document.getElementById('cfg_ann_isOpen').value = String(currentConfig.announcement?.isOpen ?? true);
+      document.getElementById('cfg_ann_targetDate').value = currentConfig.announcement?.targetDate || '2026-09-14T10:00:00';
+      document.getElementById('cfg_ann_targetDateLabel').value = currentConfig.announcement?.targetDateLabel || '14 September 2026';
+      document.getElementById('cfg_ann_closedNotice').value = currentConfig.announcement?.closedNotice || '';
+
+      document.getElementById('cfg_tg_coord').value = currentConfig.telegram?.coordinator || '';
+      document.getElementById('cfg_tg_pengurus').value = currentConfig.telegram?.pengurusGroup || '';
+      document.getElementById('cfg_tg_anggota').value = currentConfig.telegram?.anggotaGroup || '';
+      document.getElementById('cfg_site_name').value = currentConfig.site?.name || 'UKM Rijal Dakwah STDIIS';
+      document.getElementById('cfg_site_period').value = currentConfig.site?.period || '2026/2027';
+      document.getElementById('cfg_site_tagline').value = currentConfig.site?.tagline || '';
+
+      // Update Guidebook preview & info
+      const gbUrl = currentConfig.recruitment?.guidebookUrl || 'GUIDEBOOK FINAL.pdf';
+      document.getElementById('cfg_reg_guidebookUrl').value = gbUrl;
+      document.getElementById('previewCurrentGuidebookBtn').href = gbUrl;
+      document.getElementById('guidebookFileInfo').innerHTML = `File aktif: <strong class="text-deepGreen font-mono">${gbUrl}</strong>`;
+    }
+
+    // Guidebook Upload Logic (Firebase Storage)
+    let selectedGuidebookFile = null;
+
+    function handleGuidebookFileSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        alert("Mohon pilih berkas dengan format PDF (.pdf)");
+        return;
+      }
+
+      selectedGuidebookFile = file;
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+      document.getElementById('selectedPdfName').textContent = file.name;
+      document.getElementById('selectedPdfSize').textContent = `(${sizeMb} MB)`;
+      document.getElementById('selectedPdfInfo').classList.remove('hidden');
+    }
+
+    async function uploadGuidebookToCloud() {
+      if (!selectedGuidebookFile) {
+        alert("Pilih file PDF terlebih dahulu.");
+        return;
+      }
+
+      const btn = document.getElementById('btnUploadGuidebookGh');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Mengunggah ke Storage...</span>`;
+
+      try {
+        const downloadUrl = await RDRuntime.uploadGuidebookPdf(selectedGuidebookFile, (progress) => {
+          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>${progress.toFixed(0)}% Diunggah...</span>`;
+        });
+
+        document.getElementById('cfg_reg_guidebookUrl').value = downloadUrl;
+        document.getElementById('previewCurrentGuidebookBtn').href = downloadUrl;
+        document.getElementById('guidebookFileInfo').innerHTML = `File aktif: <strong class="text-deepGreen font-mono">Firebase Storage (Tersinkron)</strong>`;
+        showToast("Alhamdulillah! Guidebook PDF berhasil diunggah ke Firebase Storage & aktif live!");
+      } catch (err) {
+        alert("Gagal mengunggah ke Cloud Storage: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>Upload ke Firebase Storage</span>`;
+      }
+    }
+
+    async function saveSettingsForm() {
+      if (!currentConfig) currentConfig = {};
+      currentConfig.recruitment = {
+        isOpen: document.getElementById('cfg_reg_isOpen').value === 'true',
+        formUrl: document.getElementById('cfg_reg_formUrl').value.trim(),
+        guidebookUrl: document.getElementById('cfg_reg_guidebookUrl').value.trim(),
+        closedNotice: document.getElementById('cfg_reg_closedNotice').value.trim()
+      };
+      currentConfig.announcement = {
+        isOpen: document.getElementById('cfg_ann_isOpen').value === 'true',
+        targetDate: document.getElementById('cfg_ann_targetDate').value,
+        targetDateLabel: document.getElementById('cfg_ann_targetDateLabel').value.trim(),
+        closedNotice: document.getElementById('cfg_ann_closedNotice').value.trim()
+      };
+      currentConfig.telegram = {
+        coordinator: document.getElementById('cfg_tg_coord').value.trim(),
+        pengurusGroup: document.getElementById('cfg_tg_pengurus').value.trim(),
+        anggotaGroup: document.getElementById('cfg_tg_anggota').value.trim()
+      };
+      currentConfig.site = {
+        name: document.getElementById('cfg_site_name').value.trim(),
+        period: document.getElementById('cfg_site_period').value.trim(),
+        tagline: document.getElementById('cfg_site_tagline').value.trim(),
+        description: currentConfig.site?.description || ''
+      };
+
+      const isCloud = await RDRuntime.saveConfigToCloud(currentConfig);
+      if (isCloud) {
+        showToast("Alhamdulillah! Pengaturan disimpan ke Cloud Firestore (Aktif Live).");
+      } else {
+        showToast("Pengaturan disimpan secara lokal di browser.");
+      }
+    }
+
+    // 5. Database CRUD Table
+    function renderDatasetTable() {
+      const tbody = document.getElementById('candidatesTableBody');
+      tbody.innerHTML = '';
+
+      const pengurusCount = currentDataset.filter(x => x.tipe === 'pengurus').length;
+      const anggotaCount = currentDataset.filter(x => x.tipe === 'anggota').length;
+
+      document.getElementById('badgeTotalAll').textContent = `Total: ${currentDataset.length}`;
+      document.getElementById('badgeTotalPengurus').textContent = `Pengurus: ${pengurusCount}`;
+      document.getElementById('badgeTotalAnggota').textContent = `Anggota Biasa: ${anggotaCount}`;
+      document.getElementById('showingCountText').textContent = `Menampilkan ${currentFiltered.length} dari ${currentDataset.length} mahasiswa`;
+
+      if (currentFiltered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 font-semibold">Tidak ada data mahasiswa.</td></tr>`;
+        return;
+      }
+
+      currentFiltered.forEach((item, idx) => {
+        const isPengurus = item.tipe === 'pengurus';
+        const roleBadge = isPengurus 
+          ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300">PENGURUS</span>`
+          : `<span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold border border-sky-300">ANGGOTA</span>`;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/80 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-4 text-center text-slate-400 text-xs">${idx + 1}</td>
+          <td class="py-3 px-4 font-mono font-bold text-deepGreen">${escapeHtml(item.nim)}</td>
+          <td class="py-3 px-4 font-semibold text-slate-800">${escapeHtml(item.nama)}</td>
+          <td class="py-3 px-4 text-xs text-slate-600">${escapeHtml(item.divisi)}</td>
+          <td class="py-3 px-4 text-center">${roleBadge}</td>
+          <td class="py-3 px-4 text-center">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="editCandidate('${escapeHtml(item.nim)}')" class="w-7 h-7 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center justify-center transition-colors" title="Edit Data">
+                <i class="fa-solid fa-pencil text-xs"></i>
+              </button>
+              <button onclick="deleteCandidate('${escapeHtml(item.nim)}')" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 flex items-center justify-center transition-colors" title="Hapus Data">
+                <i class="fa-solid fa-trash text-xs"></i>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Search & Filter
+    function filterTable() {
+      const query = (document.getElementById('searchCandidateInput')?.value || '').toLowerCase().trim();
+      const filterJalur = document.getElementById('filterJalur')?.value || '';
+      const filterDivisi = document.getElementById('filterDivisi')?.value || '';
+
+      currentFiltered = currentDataset.filter(item => {
+        const matchQuery = !query || 
+          item.nama.toLowerCase().includes(query) || 
+          item.nim.toLowerCase().includes(query);
+        const matchJalur = !filterJalur || item.tipe === filterJalur;
+        const matchDivisi = !filterDivisi || item.divisi === filterDivisi;
+        return matchQuery && matchJalur && matchDivisi;
+      });
+
+      renderDatasetTable();
+    }
+
+    // Candidate Add / Edit Modal
+    function openCandidateModal(nimToEdit = null) {
+      const modal = document.getElementById('candidateModal');
+      const title = document.getElementById('modalCandidateTitle');
+      const form = document.getElementById('candidateForm');
+
+      if (nimToEdit) {
+        const c = currentDataset.find(x => x.nim === nimToEdit);
+        if (!c) return;
+        title.textContent = `Edit Calon: ${c.nama}`;
+        document.getElementById('editCandidateOriginalNim').value = c.nim;
+        document.getElementById('modalNim').value = c.nim;
+        document.getElementById('modalNama').value = c.nama;
+        document.getElementById('modalTipe').value = c.tipe;
+        document.getElementById('modalDivisi').value = c.divisi;
+        document.getElementById('modalCatatan').value = c.catatan || '';
+      } else {
+        title.textContent = "Tambah Calon Mahasiswa";
+        form.reset();
+        document.getElementById('editCandidateOriginalNim').value = '';
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeCandidateModal() {
+      document.getElementById('candidateModal').classList.add('hidden');
+    }
+
+    function handleModalTipeChange() {
+      const tipe = document.getElementById('modalTipe').value;
+      const divSelect = document.getElementById('modalDivisi');
+      if (tipe === 'anggota') {
+        divSelect.value = 'Keanggotaan Umum';
+      } else if (divSelect.value === 'Keanggotaan Umum') {
+        divSelect.value = 'Pengurus Divisi TPQ';
+      }
+    }
+
+    async function handleCandidateFormSubmit(e) {
+      e.preventDefault();
+      const origNim = document.getElementById('editCandidateOriginalNim').value;
+      const nim = document.getElementById('modalNim').value.trim();
+      const nama = document.getElementById('modalNama').value.trim();
+      const tipe = document.getElementById('modalTipe').value;
+      const divisi = document.getElementById('modalDivisi').value;
+      const catatan = document.getElementById('modalCatatan').value.trim();
+
+      const candidateObj = {
+        nim,
+        nama,
+        prodi: "-",
+        divisi,
+        status: "DITERIMA",
+        tipe,
+        recommendation: tipe,
+        catatan: catatan || (tipe === 'anggota' 
+          ? "Barakallahu fiikum. Selamat bergabung sebagai Anggota UKM Rijal Dakwah STDIIS."
+          : `Barakallahu fiikum. Selamat bergabung sebagai ${divisi} UKM Rijal Dakwah STDIIS.`)
+      };
+
+      try {
+        if (origNim && origNim !== nim) {
+          await RDRuntime.deleteCandidateAdmin(origNim);
+        }
+        await RDRuntime.saveCandidateAdmin(candidateObj);
+
+        // Update local array
+        if (origNim) {
+          const idx = currentDataset.findIndex(x => x.nim === origNim);
+          if (idx !== -1) currentDataset[idx] = candidateObj;
+        } else {
+          currentDataset.push(candidateObj);
+        }
+
+        currentDataset.sort((a, b) => a.nama.localeCompare(b.nama));
+        filterTable();
+        closeCandidateModal();
+        showToast("Data calon berhasil disimpan ke Cloud!");
+      } catch (err) {
+        alert("Gagal menyimpan data calon: " + err.message);
+      }
+    }
+
+    function editCandidate(nim) {
+      openCandidateModal(nim);
+    }
+
+    async function deleteCandidate(nim) {
+      if (confirm(`Yakin ingin menghapus calon dengan NIM ${nim}?`)) {
+        try {
+          await RDRuntime.deleteCandidateAdmin(nim);
+          currentDataset = currentDataset.filter(x => x.nim !== nim);
+          filterTable();
+          showToast(`Calon NIM ${nim} berhasil dihapus.`);
+        } catch (err) {
+          alert("Gagal menghapus: " + err.message);
+        }
+      }
+    }
+
+    // 1-Click Sync Local 183 dataset ke Cloud Firestore
+    async function syncLocalDataToFirestore() {
+      if (!RDRuntime.isCloudActive) {
+        alert("Firebase belum aktif. Buka tab 'Cloud & Firebase' untuk menghubungkan proyek Firebase Anda terlebih dahulu.");
+        switchTab('deploy');
+        return;
+      }
+
+      const localList = await RDRuntime.loadDataset();
+      if (!localList || localList.length === 0) {
+        alert("Tidak ada dataset lokal yang ditemukan.");
+        return;
+      }
+
+      if (!confirm(`Apakah Anda yakin ingin mengunggah ${localList.length} data calon lokal ke Cloud Firestore?`)) {
+        return;
+      }
+
+      const btn = document.getElementById('btnSyncLocalCloud');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Sinkronisasi...</span>`;
+
+      try {
+        const count = await RDRuntime.batchImportCandidatesAdmin(localList, (current, total) => {
+          btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>${current}/${total} Terunggah...</span>`;
+        });
+
+        currentDataset = [...localList];
+        filterTable();
+        showToast(`Alhamdulillah! ${count} data mahasiswa berhasil disinkronkan ke Cloud Firestore.`);
+      } catch (err) {
+        alert("Gagal sinkronisasi ke Firestore: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>Sync Lokal ke Cloud</span>`;
+      }
+    }
+
+    async function saveDatabaseChanges() {
+      if (RDRuntime.isCloudActive) {
+        showToast("Basis data di Cloud Firestore sudah tersimpan realtime per transaksi.");
+      } else {
+        RDRuntime.saveDatasetLocally(currentDataset);
+        showToast(`Basis data ${currentDataset.length} calon tersimpan lokal.`);
+      }
+    }
+
+    async function resetToSKBaseline() {
+      if (confirm("Kembalikan seluruh basis data ke 183 SK resmi bawaan?")) {
+        const resp = await fetch('data.json?t=' + Date.now());
+        if (resp.ok) {
+          currentDataset = await resp.json();
+          RDRuntime.saveDatasetLocally(currentDataset);
+          filterTable();
+          showToast("Basis data dikembalikan ke 183 SK Resmi.");
+        }
+      }
+    }
+
+    // 6. Excel / CSV Impor & Ekspor
+    async function handleExcelUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async function(evt) {
+        try {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          const jsonRows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+
+          if (!jsonRows || jsonRows.length === 0) {
+            alert("File Excel kosong atau format tidak sesuai.");
+            return;
+          }
+
+          const importedList = [];
+          jsonRows.forEach(row => {
+            const nim = String(row.NIM || row.nim || '').trim();
+            const nama = String(row.Nama || row.nama || '').trim();
+            const divisi = String(row.Divisi || row.divisi || 'Keanggotaan Umum').trim();
+            const jalur = String(row.Jalur || row.jalur || '').toLowerCase();
+            const tipe = (jalur.includes('pengurus') || divisi.toLowerCase().includes('pengurus')) ? 'pengurus' : 'anggota';
+
+            if (nim && nama) {
+              importedList.push({
+                nim,
+                nama,
+                prodi: "-",
+                divisi,
+                status: "DITERIMA",
+                tipe,
+                recommendation: tipe,
+                catatan: `Barakallahu fiikum. Selamat bergabung sebagai ${divisi} UKM Rijal Dakwah STDIIS.`
+              });
+            }
+          });
+
+          if (RDRuntime.isCloudActive) {
+            await RDRuntime.batchImportCandidatesAdmin(importedList);
+            currentDataset = await RDRuntime.loadAllCandidatesAdmin();
+          } else {
+            currentDataset = importedList;
+            RDRuntime.saveDatasetLocally(currentDataset);
+          }
+
+          currentDataset.sort((a, b) => a.nama.localeCompare(b.nama));
+          filterTable();
+          showToast(`Impor tuntas: ${importedList.length} calon tersimpan!`);
+        } catch (err) {
+          alert("Gagal membaca file: " + err.message);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function exportToExcel() {
+      const rows = currentDataset.map((item, idx) => ({
+        "No": idx + 1,
+        "NIM": item.nim,
+        "Nama Lengkap": item.nama,
+        "Jalur": item.tipe === 'pengurus' ? 'Pengurus' : 'Anggota',
+        "Divisi Penempatan": item.divisi,
+        "Status": item.status,
+        "Catatan Resmi": item.catatan
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(rows);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Hasil_Seleksi_Resmi");
+      XLSX.writeFile(workbook, `Rekap_Kelulusan_Rijal_Dakwah_${Date.now()}.xlsx`);
+      showToast("File Excel berhasil diunduh.");
+    }
+
+    // 7. Firebase Config Form Management
+    function renderFirebaseConfigForm() {
+      const fb = currentConfig?.firebase || {};
+      document.getElementById('fb_apiKey').value = fb.apiKey && !fb.apiKey.includes('PASTE_') ? fb.apiKey : '';
+      document.getElementById('fb_projectId').value = fb.projectId && !fb.projectId.includes('PASTE_') ? fb.projectId : '';
+      document.getElementById('fb_authDomain').value = fb.authDomain && !fb.authDomain.includes('PASTE_') ? fb.authDomain : '';
+      document.getElementById('fb_storageBucket').value = fb.storageBucket && !fb.storageBucket.includes('PASTE_') ? fb.storageBucket : '';
+      document.getElementById('fb_messagingSenderId').value = fb.messagingSenderId && !fb.messagingSenderId.includes('PASTE_') ? fb.messagingSenderId : '';
+      document.getElementById('fb_appId').value = fb.appId && !fb.appId.includes('PASTE_') ? fb.appId : '';
+    }
+
+    function saveFirebaseCredentialsFromUI() {
+      const apiKey = document.getElementById('fb_apiKey').value.trim();
+      const projectId = document.getElementById('fb_projectId').value.trim();
+      const authDomain = document.getElementById('fb_authDomain').value.trim() || `${projectId}.firebaseapp.com`;
+      const storageBucket = document.getElementById('fb_storageBucket').value.trim() || `${projectId}.appspot.com`;
+      const messagingSenderId = document.getElementById('fb_messagingSenderId').value.trim();
+      const appId = document.getElementById('fb_appId').value.trim();
+
+      if (!apiKey || !projectId) {
+        alert("API Key dan Project ID wajib diisi.");
+        return;
+      }
+
+      const fbConfig = {
+        apiKey,
+        projectId,
+        authDomain,
+        storageBucket,
+        messagingSenderId,
+        appId
+      };
+
+      RDRuntime.saveFirebaseConfig(fbConfig);
+      showToast("Konfigurasi Firebase disimpan! Memuat ulang sistem...");
+      setTimeout(() => location.reload(), 1200);
+    }
+
+    function copyFirestoreRules() {
+      const rules = `rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /settings/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /kelulusan/{nim} {
+      allow get: if true;
+      allow list, write: if request.auth != null;
+    }
+  }
+}`;
+      navigator.clipboard.writeText(rules).then(() => {
+        showToast("Aturan Firestore berhasil disalin ke clipboard!");
+      }).catch(() => {
+        alert("Gagal menyalin otomatis, silakan salin teks di kotak.");
+      });
+    }
+
+    function downloadConfigFile() {
+      const jsonStr = JSON.stringify(currentConfig, null, 2);
+      RDRuntime.downloadFile('config.json', jsonStr, 'application/json');
+    }
+
+    function downloadDataJsonFile() {
+      const jsonStr = JSON.stringify(currentDataset, null, 2);
+      RDRuntime.downloadFile('data.json', jsonStr, 'application/json');
+    }
+
+    function backupWholeSystem() {
+      const bundle = {
+        meta: { organization: "UKM Rijal Dakwah STDIIS", exportedAt: new Date().toISOString() },
+        config: currentConfig,
+        dataset: currentDataset
+      };
+      RDRuntime.downloadFile(`BACKUP_PORTAL_RIJAL_DAKWAH_${Date.now()}.json`, JSON.stringify(bundle, null, 2), 'application/json');
+      showToast("Cadangan sistem berhasil diunduh.");
+    }
+
+    function restoreSystemBackup(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const bundle = JSON.parse(evt.target.result);
+          if (bundle.config && bundle.dataset) {
+            currentConfig = bundle.config;
+            currentDataset = bundle.dataset;
+            RDRuntime.saveConfigLocally(currentConfig);
+            RDRuntime.saveDatasetLocally(currentDataset);
+            renderSettingsForm();
+            filterTable();
+            showToast("Cadangan sistem berhasil dipulihkan total!");
+          } else {
+            alert("Format berkas cadangan tidak valid.");
+          }
+        } catch (err) {
+          alert("Gagal membaca cadangan: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Helper Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+      });
+    }
+  </script>
+
+</body>
+</html>

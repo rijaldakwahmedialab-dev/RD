@@ -1,0 +1,53 @@
+{
+  "firebase": {
+    "apiKey": "PASTE_FIREBASE_API_KEY_HERE",
+    "authDomain": "PASTE_PROJECT_ID.firebaseapp.com",
+    "projectId": "PASTE_PROJECT_ID",
+    "storageBucket": "PASTE_PROJECT_ID.appspot.com",
+    "messagingSenderId": "PASTE_MESSAGING_SENDER_ID",
+    "appId": "PASTE_APP_ID"
+  },
+  "site": {
+    "name": "UKM Rijal Dakwah STDIIS",
+    "period": "2026/2027",
+    "tagline": "Membentuk Generasi Pemuda Tangguh, Berilmu & Berakhlak Mulia",
+    "description": "Portal Resmi Pendaftaran, Wawancara, dan Pengumuman Seleksi Calon Pengurus & Anggota UKM Rijal Dakwah STDI Imam Syafi'i Jember."
+  },
+  "recruitment": {
+    "isOpen": false,
+    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSf...",
+    "guidebookUrl": "GUIDEBOOK FINAL.pdf",
+    "closedNotice": "Pendaftaran calon anggota dan pengurus periode 2026/2027 saat ini telah resmi ditutup."
+  },
+  "announcement": {
+    "isOpen": true,
+    "targetDate": "2026-09-14T10:00:00",
+    "targetDateLabel": "14 September 2026",
+    "closedNotice": "Pengumuman hasil seleksi akan dibuka secara resmi pada tanggal 14 September 2026."
+  },
+  "telegram": {
+    "coordinator": "https://t.me/aburobiah",
+    "pengurusGroup": "https://t.me/c/pengurus_rijal_dakwah",
+    "anggotaGroup": "https://t.me/c/anggota_rijal_dakwah"
+  },
+  "dataSource": {
+    "mode": "hybrid",
+    "localJsonPath": "data.json",
+    "spreadsheetFormId": "1bcFa1yY4dOuFxsw2Y5aNy3osYjGtBK34bmcIiUEm0YY",
+    "appsScriptUrl": "https://script.google.com/macros/s/AKfycbw7qZCz_tlKyaKL3pV8IlIIEbk6-YNzjNgpUGL_JWFdFboNtP_HGEFKUmNlo_3eQDE/exec"
+  },
+  "divisions": [
+    { "id": "bph", "name": "Badan Pengurus Harian", "icon": "fa-crown", "desc": "Pimpinan eksekutif dan koordinasi umum organisasi" },
+    { "id": "tpq", "name": "Divisi TPQ", "icon": "fa-book-quran", "desc": "Pengajaran Al-Qur'an, tahsin, dan pembinaan santri binaan" },
+    { "id": "keilmuan", "name": "Divisi Keilmuan", "icon": "fa-graduation-cap", "desc": "Penyelenggaraan kajian ilmiah, daurah, dan halaqah thalabul 'ilmi" },
+    { "id": "acara", "name": "Divisi Acara", "icon": "fa-calendar-check", "desc": "Manajemen acara, kepanitiaan, dan operasional kegiatan dakwah" },
+    { "id": "humas", "name": "Divisi Humas", "icon": "fa-bullhorn", "desc": "Penghubung eksternal kampus, ormawa, dan layanan informasi" },
+    { "id": "sarpras", "name": "Divisi Sarpras & Inventaris", "icon": "fa-boxes-stacked", "desc": "Logistik, perlengkapan, dan inventarisasi fasilitas organisasi" },
+    { "id": "digital", "name": "Divisi Dakwah Digital", "icon": "fa-laptop-code", "desc": "Website, platform teknologi, bot dakwah, dan sistem informasi" },
+    { "id": "media", "name": "Divisi Media", "icon": "fa-camera-retro", "desc": "Desain grafis, produksi video dakwah, dan publikasi media sosial" },
+    { "id": "danus", "name": "Divisi Dana Usaha", "icon": "fa-sack-dollar", "desc": "Kemandirian finansial, merchandise dakwah, dan kewirausahaan" }
+  ],
+  "security": {
+    "adminHash": "6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6"
+  }
+}

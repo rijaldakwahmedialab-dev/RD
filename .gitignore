@@ -1,0 +1,16 @@
+# Data Rahasia / Sensitif Seleksi (Dilarang push ke Public GitHub)
+data.json
+*.csv
+*.xlsx
+*.xls
+
+# Environment & Credentials
+.env
+.env.*
+*.local
+firebase-debug.log*
+firestore-debug.log*
+
+# System
+.DS_Store
+Thumbs.db
