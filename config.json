@@ -1,11 +1,11 @@
 {
   "firebase": {
-    "apiKey": "PASTE_FIREBASE_API_KEY_HERE",
-    "authDomain": "PASTE_PROJECT_ID.firebaseapp.com",
-    "projectId": "PASTE_PROJECT_ID",
-    "storageBucket": "PASTE_PROJECT_ID.appspot.com",
-    "messagingSenderId": "PASTE_MESSAGING_SENDER_ID",
-    "appId": "PASTE_APP_ID"
+    "apiKey": "AIzaSyBuYpiqn65YUrs4kzeByHS6uHVYTZt1vTU",
+    "authDomain": "rijal-dakwah-portal.firebaseapp.com",
+    "projectId": "rijal-dakwah-portal",
+    "storageBucket": "rijal-dakwah-portal.firebasestorage.app",
+    "messagingSenderId": "638998738133",
+    "appId": "1:638998738133:web:073e95ded4108ea3ce1e5c"
   },
   "site": {
     "name": "UKM Rijal Dakwah STDIIS",
