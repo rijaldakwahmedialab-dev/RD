@@ -1007,16 +1007,27 @@ service cloud.firestore {
 
     // Search & Filter
     function filterTable() {
-      const query = (document.getElementById('searchCandidateInput')?.value || '').toLowerCase().trim();
-      const filterJalur = document.getElementById('filterJalur')?.value || '';
-      const filterDivisi = document.getElementById('filterDivisi')?.value || '';
+      const query = (document.getElementById('tableSearchInput')?.value || '').toLowerCase().trim();
+      const rawCleanQuery = query.replace(/[\s\-\.]/g, '');
+      const filterJalur = document.getElementById('roleFilter')?.value || 'ALL';
+      const filterDivisi = document.getElementById('divisiFilter')?.value || 'ALL';
 
       currentFiltered = currentDataset.filter(item => {
+        const itemNimRaw = String(item.nim || '').toLowerCase().replace(/[\s\-\.]/g, '');
+        const itemNama = String(item.nama || '').toLowerCase();
+        const itemDivisi = String(item.divisi || '').toLowerCase();
+
         const matchQuery = !query || 
-          item.nama.toLowerCase().includes(query) || 
-          item.nim.toLowerCase().includes(query);
-        const matchJalur = !filterJalur || item.tipe === filterJalur;
-        const matchDivisi = !filterDivisi || item.divisi === filterDivisi;
+          itemNama.includes(query) || 
+          itemNimRaw.includes(rawCleanQuery) || 
+          itemDivisi.includes(query);
+
+        const matchJalur = !filterJalur || filterJalur === 'ALL' || item.tipe === filterJalur;
+
+        const matchDivisi = !filterDivisi || filterDivisi === 'ALL' ||
+          itemDivisi.includes(filterDivisi.toLowerCase()) ||
+          (filterDivisi === 'BPH' && (itemDivisi.includes('bph') || itemDivisi.includes('harian')));
+
         return matchQuery && matchJalur && matchDivisi;
       });
 
