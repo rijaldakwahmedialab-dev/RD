@@ -282,10 +282,16 @@
         <span id="heroNoticeText" class="font-medium"></span>
       </div>
 
-      <!-- Mobile Gravity Hint Pill -->
-      <div class="sm:hidden text-[10px] text-gold-light/60 flex items-center justify-center gap-1.5 pt-2">
-        <i class="fa-solid fa-mobile-screen-button text-gold animate-bounce"></i>
-        <span>Miringkan layar ponsel untuk efek ombak & gravitasi</span>
+      <!-- Mobile Gravity Hint Pill (Interactive & iOS Permission Aware) -->
+      <div 
+        id="mobileGravityPill" 
+        role="button" 
+        tabindex="0"
+        aria-label="Sensor Gravitasi Ponsel"
+        class="sm:hidden inline-flex items-center justify-center gap-1.5 pt-2 px-3.5 py-1.5 rounded-full text-[10px] text-gold-light/90 hover:text-gold transition-all duration-300 cursor-pointer select-none border border-gold/20 bg-forestGreen/40 backdrop-blur-md shadow-md active:scale-95"
+      >
+        <i id="mobileGravityIcon" class="fa-solid fa-mobile-screen-button text-gold animate-bounce"></i>
+        <span id="mobileGravityText">Miringkan layar ponsel untuk efek ombak & gravitasi</span>
       </div>
 
       <!-- Floating Stats Bar (Interactive 3D Tilt) -->
@@ -589,8 +595,27 @@
 
     // MOBILE GYROSCOPE GRAVITY PHYSICS LISTENER (deviceorientation)
     let gyroBadgeTimeout = null;
+    let gyroActive = false;
+
+    function showGyroBadge(text = 'Sensor Gravitasi Aktif') {
+      const badge = document.getElementById('gyroStatusBadge');
+      if (badge) {
+        const textSpan = badge.querySelector('span');
+        if (textSpan) textSpan.textContent = text;
+        badge.style.opacity = '0.95';
+        badge.style.transform = 'translate(-50%, 0px)';
+        clearTimeout(gyroBadgeTimeout);
+        gyroBadgeTimeout = setTimeout(() => {
+          badge.style.opacity = '0';
+          badge.style.transform = 'translate(-50%, -8px)';
+        }, 2500);
+      }
+    }
+
     function handleOrientation(event) {
       if (event.gamma !== null && event.beta !== null) {
+        gyroActive = true;
+
         // gamma: left-to-right tilt (-90 to 90)
         // beta: front-to-back tilt (-180 to 180)
         const tiltX = Math.min(Math.max(event.gamma / 35, -1), 1);
@@ -604,22 +629,99 @@
         tiltCardsWithGyro(tiltX, tiltY);
 
         // Show subtle gyro indicator badge briefly
-        const badge = document.getElementById('gyroStatusBadge');
-        if (badge) {
-          badge.style.opacity = '0.9';
-          badge.style.transform = 'translate(-50%, 0px)';
-          clearTimeout(gyroBadgeTimeout);
-          gyroBadgeTimeout = setTimeout(() => {
-            badge.style.opacity = '0';
-            badge.style.transform = 'translate(-50%, -8px)';
-          }, 2500);
+        showGyroBadge('Sensor Gravitasi Aktif');
+      }
+    }
+
+    // iOS 13+ & Cross-Platform Gyroscope Initializer
+    let isRequestingPermission = false;
+
+    async function requestIOSPermission() {
+      if (gyroActive || isRequestingPermission) return;
+
+      const pill = document.getElementById('mobileGravityPill');
+      const pillText = document.getElementById('mobileGravityText');
+      const pillIcon = document.getElementById('mobileGravityIcon');
+
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        isRequestingPermission = true;
+        try {
+          const state = await DeviceOrientationEvent.requestPermission();
+          if (state === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation, true);
+            if (pill) {
+              pill.classList.remove('animate-pulse', 'border-gold/60');
+              pill.classList.add('border-emerald-400/40');
+            }
+            if (pillIcon) pillIcon.className = 'fa-solid fa-circle-check text-emerald-400';
+            if (pillText) pillText.textContent = 'Gravitasi aktif: miringkan ponsel Anda';
+            showGyroBadge('Sensor Gravitasi iOS Aktif');
+          } else {
+            if (pill) pill.classList.remove('animate-pulse');
+            if (pillIcon) pillIcon.className = 'fa-solid fa-triangle-exclamation text-amber-400';
+            if (pillText) pillText.textContent = 'Izin sensor gerak dinonaktifkan di iOS';
+          }
+        } catch (err) {
+          console.warn('DeviceOrientation permission request error:', err);
+        } finally {
+          isRequestingPermission = false;
+        }
+      } else if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', handleOrientation, true);
+      }
+    }
+
+    function initDeviceOrientation() {
+      const pill = document.getElementById('mobileGravityPill');
+      const pillText = document.getElementById('mobileGravityText');
+      const pillIcon = document.getElementById('mobileGravityIcon');
+
+      const isIOSWithPermission = typeof DeviceOrientationEvent !== 'undefined' && 
+                                  typeof DeviceOrientationEvent.requestPermission === 'function';
+
+      if (isIOSWithPermission) {
+        // iOS 13+ requires explicit user gesture to prompt permission
+        if (pill) {
+          pill.classList.add('animate-pulse', 'border-gold/60', 'bg-forestGreen/80');
+          pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            requestIOSPermission();
+          });
+          pill.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              requestIOSPermission();
+            }
+          });
+        }
+        if (pillText) {
+          pillText.textContent = 'Ketuk untuk aktifkan gravitasi di iPhone/iOS';
+        }
+        if (pillIcon) {
+          pillIcon.className = 'fa-solid fa-hand-pointer text-gold animate-bounce';
+        }
+
+        // Also allow first tap on Hero section to trigger permission seamlessly
+        const triggerOnGesture = (e) => {
+          if (e.target.closest('a, button, input, select, textarea')) return;
+          requestIOSPermission();
+        };
+        const heroSection = document.getElementById('beranda');
+        if (heroSection) {
+          heroSection.addEventListener('click', triggerOnGesture, { passive: true });
+        }
+      } else if (window.DeviceOrientationEvent) {
+        // Android & standard browsers: direct listener on load
+        window.addEventListener('deviceorientation', handleOrientation, true);
+        if (pill) {
+          pill.addEventListener('click', () => {
+            showGyroBadge('Sensor Gravitasi Aktif');
+          });
         }
       }
     }
 
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', handleOrientation, true);
-    }
+    initDeviceOrientation();
 
     // Particle Object with Gravity & Air Resistance
     class StarDust {
