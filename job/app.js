@@ -76,25 +76,41 @@
 
   // --- 3. STORAGE & DATA SYNC ENGINE ---
   function loadData() {
-    const localProjects = localStorage.getItem('rd_gantt_projects');
-    const localTasks = localStorage.getItem('rd_gantt_tasks');
+    try {
+      const localProjects = localStorage.getItem('rd_gantt_projects');
+      const localTasks = localStorage.getItem('rd_gantt_tasks');
 
-    if (localProjects && localTasks) {
-      try {
-        state.projects = JSON.parse(localProjects);
-        state.tasks = JSON.parse(localTasks);
-      } catch (e) {
-        state.projects = window.INITIAL_SAMPLE.projects;
-        state.tasks = window.INITIAL_SAMPLE.tasks;
+      if (localProjects && localTasks) {
+        try {
+          const p = JSON.parse(localProjects);
+          const t = JSON.parse(localTasks);
+          if (Array.isArray(p) && p.length > 0) {
+            state.projects = p;
+            state.tasks = Array.isArray(t) ? t : [];
+          } else {
+            throw new Error("Invalid local projects");
+          }
+        } catch (e) {
+          if (window.INITIAL_SAMPLE) {
+            state.projects = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.projects));
+            state.tasks = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.tasks));
+          }
+        }
+      } else if (window.INITIAL_SAMPLE) {
+        state.projects = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.projects));
+        state.tasks = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.tasks));
+        persistData();
       }
-    } else if (window.INITIAL_SAMPLE) {
-      state.projects = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.projects));
-      state.tasks = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.tasks));
-      persistData();
-    }
 
-    if (state.projects.length > 0) {
-      state.currentProjectId = state.projects[0].id;
+      if (state.projects && state.projects.length > 0) {
+        state.currentProjectId = state.projects[0].id;
+      }
+    } catch (err) {
+      console.warn("loadData error:", err);
+      if (window.INITIAL_SAMPLE) {
+        state.projects = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.projects));
+        state.tasks = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.tasks));
+      }
     }
 
     // Attempt Firebase initial sync if online
@@ -195,15 +211,29 @@
 
   // --- 4. DATE & TIMELINE MATH ---
   function getCurrentProject() {
+    if (!state.projects || state.projects.length === 0) {
+      if (window.INITIAL_SAMPLE && window.INITIAL_SAMPLE.projects && window.INITIAL_SAMPLE.projects.length > 0) {
+        state.projects = JSON.parse(JSON.stringify(window.INITIAL_SAMPLE.projects));
+      } else {
+        return null;
+      }
+    }
     return state.projects.find(p => p.id === state.currentProjectId) || state.projects[0];
   }
 
   function parseDate(dateStr) {
+    if (!dateStr || typeof dateStr !== 'string') return new Date();
     const parts = dateStr.split('-');
-    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    if (parts.length < 3) return new Date();
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const d = parseInt(parts[2], 10);
+    const dt = new Date(y, m, d);
+    return isNaN(dt.getTime()) ? new Date() : dt;
   }
 
   function formatDate(d) {
+    if (!d || !(d instanceof Date) || isNaN(d.getTime())) return "2026-10-15";
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
@@ -212,27 +242,27 @@
 
   function addDays(dateStr, days) {
     const d = parseDate(dateStr);
-    d.setDate(d.getDate() + days);
+    d.setDate(d.getDate() + (parseInt(days, 10) || 0));
     return formatDate(d);
   }
 
   function getDaysDifference(dateStr1, dateStr2) {
     const d1 = parseDate(dateStr1);
     const d2 = parseDate(dateStr2);
-    const diffTime = d2 - d1;
-    return Math.round(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime = d2.getTime() - d1.getTime();
+    return Math.round(diffTime / (1000 * 60 * 60 * 24)) || 0;
   }
 
   function formatDisplayDate(dateStr) {
     const d = parseDate(dateStr);
     const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-    return `${d.getDate()} ${months[d.getMonth()]}`;
+    return `${d.getDate()} ${months[d.getMonth()] || 'Okt'}`;
   }
 
   function formatDayName(dateStr) {
     const d = parseDate(dateStr);
     const days = ["Ahd", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
-    return days[d.getDay()];
+    return days[d.getDay()] || 'Sen';
   }
 
   function getProjectDDayDuration(proj) {
@@ -294,13 +324,13 @@
 
   // --- 5. INITIAL RENDERING & UI SETUP ---
   function init() {
-    loadData();
-    populateProjectSelector();
-    populateDivisionSelector();
-    setupEventListeners();
-    setupToolKeyboardShortcuts();
-    setupContextMenu();
-    renderAll();
+    try { loadData(); } catch (e) { console.error("loadData error:", e); }
+    try { populateProjectSelector(); } catch (e) { console.error("populateProjectSelector error:", e); }
+    try { populateDivisionSelector(); } catch (e) { console.error("populateDivisionSelector error:", e); }
+    try { setupEventListeners(); } catch (e) { console.error("setupEventListeners error:", e); }
+    try { setupToolKeyboardShortcuts(); } catch (e) { console.error("setupToolKeyboardShortcuts error:", e); }
+    try { setupContextMenu(); } catch (e) { console.error("setupContextMenu error:", e); }
+    try { renderAll(); } catch (e) { console.error("renderAll error:", e); }
   }
 
   function renderAll() {
@@ -1260,6 +1290,23 @@
         document.getElementById('editTaskProgressDisplay').innerText = `${e.target.value}%`;
       });
     }
+
+    // Explicit click listeners for Event Baru & Kalender Event buttons
+    const btnNewProj = document.getElementById('btnOpenNewProject');
+    if (btnNewProj) {
+      btnNewProj.onclick = (e) => {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        window.openNewProjectModal();
+      };
+    }
+
+    const btnCal = document.getElementById('btnOpenCalendar');
+    if (btnCal) {
+      btnCal.onclick = (e) => {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        window.openEventCalendarModal();
+      };
+    }
   }
 
   function setActiveTool(tool) {
@@ -1458,30 +1505,34 @@
   // --- 18. CUSTOM CONTEXT MENU (WINDOWS 11 / NLE STYLE) ---
   let contextMenuTargetData = null;
 
+  let _lastContextMenuTime = 0;
+
   function setupContextMenu() {
     const menuEl = document.getElementById('customContextMenu');
     if (!menuEl) return;
 
-    document.addEventListener('contextmenu', (e) => {
-      // If user holds Shift key, fallback to native browser menu
+    window.addEventListener('contextmenu', (e) => {
       if (e.shiftKey) return;
-
-      // Do not intercept inside text inputs
-      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
-
-      const clipEl = e.target.closest('.nle-clip');
-      const trackHeader = e.target.closest('#trackHeadersContainer .timeline-track-row');
-      const trackRow = e.target.closest('#timelineCanvas .timeline-track-row');
+      if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
 
       e.preventDefault();
-      showContextMenu(e, clipEl, trackRow, trackHeader);
-    });
+      e.stopPropagation();
 
-    document.addEventListener('pointerdown', (e) => {
-      if (!e.target.closest('#customContextMenu')) {
-        hideContextMenu();
-      }
-    });
+      const clipEl = e.target && e.target.closest ? e.target.closest('.nle-clip') : null;
+      const trackHeader = e.target && e.target.closest ? e.target.closest('#trackHeadersContainer .timeline-track-row') : null;
+      const trackRow = e.target && e.target.closest ? e.target.closest('#timelineCanvas .timeline-track-row') : null;
+
+      _lastContextMenuTime = Date.now();
+      showContextMenu(e, clipEl, trackRow, trackHeader);
+    }, true);
+
+    window.addEventListener('pointerdown', (e) => {
+      if (e.button === 2) return; // NEVER close on right click!
+      if (e.target && e.target.closest && e.target.closest('#customContextMenu')) return;
+      if (Date.now() - _lastContextMenuTime < 250) return; // Touchpad bounce guard
+
+      hideContextMenu();
+    }, true);
   }
 
   function showContextMenu(e, clipEl, trackRow, trackHeader) {
@@ -1620,10 +1671,10 @@
     menuEl.style.visibility = 'visible';
 
     // Positioning with boundary checking
-    const menuWidth = 230;
-    const menuHeight = menuEl.offsetHeight || 260;
-    let posX = e.clientX;
-    let posY = e.clientY;
+    const menuWidth = 240;
+    const menuHeight = menuEl.offsetHeight || 280;
+    let posX = (e && typeof e.clientX === 'number') ? e.clientX : 200;
+    let posY = (e && typeof e.clientY === 'number') ? e.clientY : 200;
 
     if (posX + menuWidth > window.innerWidth) {
       posX = Math.max(10, window.innerWidth - menuWidth - 15);
@@ -1634,6 +1685,7 @@
 
     menuEl.style.left = `${posX}px`;
     menuEl.style.top = `${posY}px`;
+    menuEl.style.zIndex = '999999';
   }
 
   function hideContextMenu() {
@@ -1718,18 +1770,30 @@
   window.openNewProjectModal = function () {
     const modal = document.getElementById('newProjectModal');
     if (!modal) return;
-    const today = formatDate(new Date());
-    document.getElementById('newEventTitle').value = '';
-    document.getElementById('newEventDesc').value = '';
+    try {
+      const today = formatDate(new Date());
+      const titleInput = document.getElementById('newEventTitle');
+      const descInput = document.getElementById('newEventDesc');
+      if (titleInput) titleInput.value = '';
+      if (descInput) descInput.value = '';
 
-    // Default: D-Day 20 days ahead, 1 day duration, 20 days prep, 7 days post
-    const defaultDDay = addDays(today, 20);
-    document.getElementById('newEventDDay').value = defaultDDay;
-    document.getElementById('newEventDDayDuration').value = 1;
-    document.getElementById('newEventPreDays').value = 20;
-    document.getElementById('newEventPostDays').value = 7;
+      const defaultDDay = addDays(today, 20);
+      const dDayInput = document.getElementById('newEventDDay');
+      const dDayDurInput = document.getElementById('newEventDDayDuration');
+      const preInput = document.getElementById('newEventPreDays');
+      const postInput = document.getElementById('newEventPostDays');
 
-    window.updateNewProjectDatePreviews();
+      if (dDayInput) dDayInput.value = defaultDDay;
+      if (dDayDurInput) dDayDurInput.value = 1;
+      if (preInput) preInput.value = 20;
+      if (postInput) postInput.value = 7;
+
+      if (typeof window.updateNewProjectDatePreviews === 'function') {
+        window.updateNewProjectDatePreviews();
+      }
+    } catch (err) {
+      console.warn("openNewProjectModal error:", err);
+    }
     modal.classList.remove('hidden');
     modal.style.display = 'flex';
     modal.style.zIndex = '99999';
@@ -1850,13 +1914,17 @@
   window.openEventCalendarModal = function () {
     const modal = document.getElementById('eventCalendarModal');
     if (!modal) return;
-    const curProj = getCurrentProject();
-    if (curProj && curProj.dDayDate) {
-      state.calendarCurrentDate = parseDate(curProj.dDayDate);
-      state.calendarCurrentDate.setDate(1);
+    try {
+      const curProj = getCurrentProject();
+      if (curProj && curProj.dDayDate) {
+        state.calendarCurrentDate = parseDate(curProj.dDayDate);
+        state.calendarCurrentDate.setDate(1);
+      }
+      renderCalendarGrid();
+      renderCalendarEventList();
+    } catch (err) {
+      console.warn("openEventCalendarModal error:", err);
     }
-    renderCalendarGrid();
-    renderCalendarEventList();
     modal.classList.remove('hidden');
     modal.style.display = 'flex';
     modal.style.zIndex = '99999';

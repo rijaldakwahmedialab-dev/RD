@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Custom NLE Styling -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2.5" />
 
   <!-- Tailwind Configuration -->
   <script>
@@ -257,7 +257,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: KADIV / BPH EDITOR PASSCODE GATE                                   -->
   <!-- ========================================================================= -->
-  <div id="passcodeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="passcodeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="window.closeEditorPasscodeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -306,7 +306,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: CLIP INSPECTOR / EDIT TASK DRAWER                                  -->
   <!-- ========================================================================= -->
-  <div id="inspectorModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="inspectorModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
       <button onclick="window.closeInspectorModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -391,7 +391,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: D-DAY TRANSITION RUNWAY CHECKLIST                                  -->
   <!-- ========================================================================= -->
-  <div id="dDayChecklistModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="dDayChecklistModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-[#0A221A] rounded-2xl border border-rose-500/40 max-w-lg w-full p-6 shadow-2xl relative">
       <button onclick="window.closeDDayModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -447,7 +447,7 @@
   <!-- ========================================================================= -->
   <!-- FLOATING DRAG GHOST BADGE (Attached to cursor during clip drag)           -->
   <!-- ========================================================================= -->
-  <div id="dragGhostBadge" class="hidden fixed z-[99999] pointer-events-none px-3 py-1.5 rounded-xl shadow-2xl border border-amber-400 bg-[#061611]/95 text-white font-sans text-xs flex items-center gap-2.5 transform rotate-2 scale-105 backdrop-blur-md transition-transform duration-75">
+  <div id="dragGhostBadge" class="hidden fixed z-[99999] pointer-events-none px-3 py-1.5 rounded-xl shadow-2xl border border-amber-400 bg-[#061611]/95 text-white font-sans text-xs flex items-center gap-2.5 transform rotate-2 scale-105 backdrop-blur-md transition-transform duration-75" style="display: none;">
     <div class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center font-bold text-xs flex-shrink-0">
       <i class="fa-solid fa-film"></i>
     </div>
@@ -459,14 +459,14 @@
 
   <!-- CUSTOM CONTEXT MENU (WINDOWS 11 / NLE STYLE)                             -->
   <!-- ========================================================================= -->
-  <div id="customContextMenu" class="hidden fixed win11-menu p-1.5 z-[9999] min-w-[220px] select-none text-xs">
+  <div id="customContextMenu" class="hidden fixed win11-menu p-1.5 z-[999999] min-w-[220px] select-none text-xs" style="display: none;">
     <!-- Populated dynamically by app.js -->
   </div>
 
   <!-- ========================================================================= -->
   <!-- MODAL: TAMBAH EVENT / PROKER BARU                                         -->
   <!-- ========================================================================= -->
-  <div id="newProjectModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="newProjectModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="window.closeNewProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -560,7 +560,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: KALENDER EVENT & MILESTONE HARI-H                                  -->
   <!-- ========================================================================= -->
-  <div id="eventCalendarModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="eventCalendarModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-3xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
       <button onclick="window.closeEventCalendarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -618,6 +618,6 @@
   </div>
 
   <!-- Core App Logic -->
-  <script src="app.js?v=2.4"></script>
+  <script src="app.js?v=2.5"></script>
 </body>
 </html>
