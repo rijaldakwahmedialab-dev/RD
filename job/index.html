@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rijal Dakwah Gantt Studio - NLE Timeline & Resource Management</title>
+  <meta name="description" content="Sistem Manajemen Resource Anggota & Proker UKM Rijal Dakwah dengan UI NLE Timeline ala DaVinci Resolve & Premiere Pro." />
+  <link rel="icon" type="image/png" href="logo-rijal-dakwah.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom NLE Styling -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            deepGreen: '#061611',
+            forestGreen: '#0A221A',
+            surfaceGreen: '#0F2F24',
+            trackGreen: '#0B251D',
+            gold: '#C59B27',
+            'gold-light': '#F3D58C',
+            'gold-dark': '#9A7818'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            serif: ['"Playfair Display"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Firebase SDK (Compat v10 for zero-build static hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Auto-generated Data Provider (109 Pengurus SK Sekretaris & Sample Proker) -->
+  <script src="data.js"></script>
+</head>
+
+<body class="bg-[#061611] text-slate-200 font-sans min-h-screen flex flex-col select-none overflow-x-hidden antialiased">
+
+  <!-- ========================================================================= -->
+  <!-- TOP WORKSPACE NAVBAR (NLE MASTER HEADER)                                   -->
+  <!-- ========================================================================= -->
+  <header class="bg-[#0A221A] border-b border-[#C59B27]/25 px-4 py-2 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-50 shadow-xl">
+    
+    <!-- Branding & Proker Selector -->
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-[#0F2F24] p-1.5 border border-[#C59B27]/40 flex items-center justify-center shadow-md">
+        <img src="logo-rijal-dakwah.png" alt="Logo Rijal Dakwah" class="w-full h-full object-contain" />
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-serif font-bold text-amber-300 text-sm tracking-wide">RIJAL DAKWAH</span>
+          <span class="text-[9px] font-mono font-bold bg-[#C59B27]/20 text-[#F3D58C] border border-[#C59B27]/40 px-1.5 py-0.2 rounded uppercase">
+            GANTT STUDIO v2.0
+          </span>
+        </div>
+        <div class="text-[10px] text-slate-400 font-medium">NLE Resource & Project Management System</div>
+      </div>
+
+      <div class="h-6 w-px bg-slate-700/60 mx-1"></div>
+
+      <!-- Proker Selector Dropdown -->
+      <!-- Proker Selector Dropdown & New Event Button -->
+      <div class="flex items-center gap-1.5 flex-shrink-0">
+        <div class="flex items-center gap-1.5 bg-[#061611] px-2.5 py-1.5 rounded-lg border border-[#C59B27]/30 shadow-inner">
+          <i class="fa-solid fa-folder-tree text-xs text-amber-400"></i>
+          <select id="projectSelector" class="bg-transparent text-xs font-bold text-slate-200 focus:outline-none cursor-pointer max-w-[140px] sm:max-w-[200px] truncate">
+            <!-- Populated by app.js -->
+          </select>
+        </div>
+        <button id="btnOpenNewProject" onclick="window.openNewProjectModal()" class="px-3 py-1.5 bg-amber-500/25 hover:bg-amber-500/40 text-amber-300 border border-amber-500/50 rounded-lg text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow cursor-pointer" title="Tambah Event / Proker Baru">
+          <i class="fa-solid fa-plus text-xs text-amber-400"></i>
+          <span class="font-bold whitespace-nowrap">Event Baru</span>
+        </button>
+      </div>
+
+      <!-- Division View Scope Switcher & Calendar Button -->
+      <div class="flex items-center gap-1.5 flex-shrink-0">
+        <div class="flex items-center gap-1.5 bg-[#061611] px-2.5 py-1.5 rounded-lg border border-[#C59B27]/30 shadow-inner">
+          <i class="fa-solid fa-layer-group text-xs text-emerald-400"></i>
+          <select id="divisionSelector" class="bg-transparent text-xs font-bold text-slate-200 focus:outline-none cursor-pointer max-w-[130px] sm:max-w-[180px] truncate">
+            <!-- Populated by app.js -->
+          </select>
+        </div>
+        <button id="btnOpenCalendar" onclick="window.openEventCalendarModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-[#0F2F24] hover:bg-[#1B4D3E] text-amber-300 border border-[#C59B27]/40 rounded-lg text-xs font-bold transition shadow active:scale-95 cursor-pointer" title="Buka Kalender Event & Milestone Hari-H">
+          <i class="fa-solid fa-calendar-days text-xs text-amber-400"></i>
+          <span class="font-bold whitespace-nowrap">Kalender Event</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Timecode Scrubber HUD -->
+    <div class="flex items-center gap-3 bg-[#061611] px-3 py-1 rounded-xl border border-[#C59B27]/30 shadow-inner">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+        <span class="text-[10px] font-mono uppercase text-slate-400 font-bold">PLAYHEAD</span>
+      </div>
+      <div id="timecodeDisplay" class="font-mono text-xs font-bold tracking-wider">
+        <!-- Populated by app.js -->
+      </div>
+    </div>
+
+    <!-- Right Controls: Mode Badge, Unlock Button, Zoom Slider -->
+    <div class="flex items-center gap-3">
+      <!-- Sync Status Badge -->
+      <div id="syncStatusBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-600/40">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Mengecek...</span>
+      </div>
+
+      <!-- Zoom Slider -->
+      <div class="hidden sm:flex items-center gap-2 bg-[#061611] px-2.5 py-1 rounded-lg border border-[#C59B27]/25 text-xs text-slate-400 font-mono">
+        <i class="fa-solid fa-magnifying-glass-minus text-[10px]"></i>
+        <input id="zoomSlider" type="range" min="28" max="100" value="46" class="w-20 accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg" />
+        <i class="fa-solid fa-magnifying-glass-plus text-[10px]"></i>
+      </div>
+
+      <!-- Editor Unlock Button -->
+      <button id="unlockEditorBtn" onclick="window.openEditorPasscodeModal()" class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-gradient-to-r from-[#DFB76C] to-[#C59B27] text-black shadow-lg hover:shadow-amber-500/20 hover:brightness-110 transition active:scale-95">
+        <i class="fa-solid fa-lock"></i>
+        <span>Buka Editor Kadiv</span>
+      </button>
+
+      <!-- Editor Lock Button (Hidden when locked) -->
+      <button id="lockEditorBtn" onclick="window.lockEditor()" class="hidden flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-rose-900/80 text-rose-200 border border-rose-500/40 shadow-lg hover:bg-rose-800 transition active:scale-95">
+        <i class="fa-solid fa-lock-open"></i>
+        <span>Kunci Editor</span>
+      </button>
+
+      <!-- Backup / Reset Dropdown -->
+      <button onclick="window.exportGanttData()" title="Backup Data JSON" class="w-7 h-7 rounded-lg bg-[#0F2F24] border border-[#C59B27]/30 text-amber-300 hover:text-white hover:bg-amber-600/30 flex items-center justify-center text-xs transition">
+        <i class="fa-solid fa-download"></i>
+      </button>
+      <button onclick="window.resetSampleData()" title="Reset Sample Data" class="w-7 h-7 rounded-lg bg-[#0F2F24] border border-[#C59B27]/30 text-rose-400 hover:text-white hover:bg-rose-600/30 flex items-center justify-center text-xs transition">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+      <a href="../" title="Kembali ke Portal RD v2" class="w-7 h-7 rounded-lg bg-[#0F2F24] border border-[#C59B27]/30 text-amber-300 hover:text-white hover:bg-amber-600/30 flex items-center justify-center text-xs transition">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- NLE ACTION TOOLBAR (SELECT, TRIM, RAZOR, ADD)                              -->
+  <!-- ========================================================================= -->
+  <div class="bg-[#0A221A]/80 border-b border-[#C59B27]/15 px-4 py-1.5 flex items-center justify-between text-xs">
+    <!-- Left: Status Banner -->
+    <div id="editorAuthBanner" class="flex items-center gap-2">
+      <!-- Populated by app.js -->
+    </div>
+
+    <!-- Right: NLE Tools Palette -->
+    <div id="nleToolsBar" class="flex items-center gap-1 bg-[#061611] p-1 rounded-lg border border-[#C59B27]/25 shadow-inner">
+      <button data-tool="select" class="px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-black flex items-center gap-1.5 transition" title="Selection Tool (V)">
+        <i class="fa-solid fa-arrow-pointer text-[10px]"></i>
+        <span>(V) Select</span>
+      </button>
+      <button data-tool="trim" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition" title="Trim Tool (T)">
+        <i class="fa-solid fa-arrows-left-right-to-line text-[10px]"></i>
+        <span>(T) Trim</span>
+      </button>
+      <button data-tool="razor" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition" title="Razor Split Tool (C)">
+        <i class="fa-solid fa-scissors text-[10px]"></i>
+        <span>(C) Razor</span>
+      </button>
+      <div class="h-4 w-px bg-slate-700 mx-1"></div>
+      <button onclick="window.focusPhase('pre')" class="px-2 py-1 rounded text-[11px] font-mono text-emerald-400 hover:bg-emerald-950/50 transition">
+        ⏩ Pre-Acara
+      </button>
+      <button onclick="window.openDDayModal()" class="px-2 py-1 rounded text-[11px] font-mono text-rose-400 hover:bg-rose-950/50 transition">
+        ⚡ Hari-H
+      </button>
+      <button onclick="window.focusPhase('post')" class="px-2 py-1 rounded text-[11px] font-mono text-indigo-400 hover:bg-indigo-950/50 transition">
+        ⏩ Pasca
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TIMELINE WORKSPACE CANVAS                                                  -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 flex overflow-hidden relative">
+    
+    <!-- LEFT COLUMN: TRACK HEADERS (FIXED WIDTH) -->
+    <div class="w-64 sm:w-72 bg-[#0A221A] border-r border-[#C59B27]/25 flex flex-col flex-shrink-0 z-30 shadow-2xl">
+      <!-- Master Sequence Track Label -->
+      <div class="h-10 border-b border-[#C59B27]/20 flex items-center justify-between px-3 bg-[#081D17]">
+        <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-mono uppercase tracking-wider">
+          <i class="fa-solid fa-film"></i> MASTER SEQUENCE
+        </span>
+        <span class="text-[10px] text-slate-400 font-mono">PHASE</span>
+      </div>
+
+      <!-- Time Ruler Track Label Header -->
+      <div class="h-12 border-b border-[#C59B27]/20 flex items-center justify-between px-3 bg-[#061611]">
+        <span class="text-xs font-bold text-slate-300 font-mono">TRACKS / ANGGOTA</span>
+        <span class="text-[10px] text-slate-500 font-mono">CONTROLS</span>
+      </div>
+
+      <!-- Scrollable Track Headers List -->
+      <div id="trackHeadersContainer" class="flex-1 overflow-y-auto">
+        <!-- Populated by app.js -->
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: HORIZONTALLY SCROLLABLE TIMELINE CANVAS -->
+    <div id="timelineScrollWrapper" class="flex-1 overflow-auto relative bg-[#061611]">
+      
+      <!-- 1. MASTER SEQUENCE FOOTAGE BAR (TOP) -->
+      <div class="h-10 border-b border-[#C59B27]/20 flex sticky top-0 z-20 bg-[#081D17]">
+        <div id="masterSequenceContainer" class="flex h-full relative">
+          <!-- Populated by app.js (Footage 1 Pre-Acara, Dissolve D-Day, Footage 2 Pasca) -->
+        </div>
+      </div>
+
+      <!-- 2. TIME RULER (DAY/DATE GRID) -->
+      <div class="h-12 border-b border-[#C59B27]/20 sticky top-10 z-20 bg-[#061611] shadow">
+        <div id="timelineRuler" class="flex h-full relative">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+
+      <!-- 3. TIMELINE TRACK ROWS CANVAS -->
+      <div id="timelineCanvas" class="relative">
+        <!-- Populated by app.js -->
+      </div>
+
+      <!-- 4. PLAYHEAD VERTICAL LINE & SCRUBBER HANDLE -->
+      <div id="playheadContainer" class="absolute top-0 bottom-0 pointer-events-none z-40 transition-all duration-75" style="left: 200px;">
+        <!-- Playhead Top Marker (Clickable / Draggable) -->
+        <div id="playheadHandle" class="w-4 h-4 -ml-2 bg-rose-500 border border-white rotate-45 pointer-events-auto shadow-md absolute top-14 hover:scale-125 transition-transform" title="Playhead Pointer"></div>
+        <!-- Vertical Red Line through all tracks -->
+        <div id="playheadLine" class="w-0.5 h-full bg-rose-500/80 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: KADIV / BPH EDITOR PASSCODE GATE                                   -->
+  <!-- ========================================================================= -->
+  <div id="passcodeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="window.closeEditorPasscodeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-5">
+        <div class="w-14 h-14 rounded-2xl bg-[#0F2F24] p-2 mx-auto border border-[#C59B27]/40 flex items-center justify-center shadow-lg mb-3">
+          <i class="fa-solid fa-key text-2xl text-amber-400"></i>
+        </div>
+        <h3 class="text-lg font-bold text-amber-300 font-serif">Autentikasi Editor Kadiv</h3>
+        <p class="text-xs text-slate-300 mt-1">
+          Masukkan Password Divisi atau Master PIN BPH untuk membuka akses modifikasi timeline.
+        </p>
+      </div>
+
+      <div class="space-y-3 mb-5">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Passcode / PIN:</label>
+          <input id="passcodeInput" type="password" placeholder="Contoh: media2026 atau bph2026" class="w-full bg-[#061611] border border-[#C59B27]/40 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 font-mono tracking-wider text-center" onkeydown="if(event.key==='Enter') window.submitEditorPasscode()" />
+        </div>
+
+        <!-- Testing Cheat Sheet Helper -->
+        <div class="bg-[#061611]/80 rounded-xl p-3 border border-amber-500/20 text-[11px] text-slate-400 space-y-1">
+          <div class="font-bold text-amber-400 flex items-center gap-1">
+            <i class="fa-solid fa-circle-info"></i> Panduan Uji Coba Prototyping:
+          </div>
+          <div>• <strong>Master BPH (Semua Divisi):</strong> <code class="text-amber-200 font-mono">bph2026</code> atau PIN <code class="text-amber-200 font-mono">123456</code></div>
+          <div>• <strong>Kadiv Media:</strong> <code class="text-amber-200 font-mono">media2026</code></div>
+          <div>• <strong>Kadiv Acara:</strong> <code class="text-amber-200 font-mono">acara2026</code></div>
+          <div>• <strong>Kadiv Humas:</strong> <code class="text-amber-200 font-mono">humas2026</code></div>
+          <div>• <strong>Kadiv Lainnya:</strong> <code class="text-amber-200 font-mono">sarpras2026</code>, <code class="text-amber-200 font-mono">tpq2026</code>, <code class="text-amber-200 font-mono">ilmu2026</code>, <code class="text-amber-200 font-mono">digital2026</code>, <code class="text-amber-200 font-mono">danus2026</code></div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="window.closeEditorPasscodeModal()" class="flex-1 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+          Batal
+        </button>
+        <button onclick="window.submitEditorPasscode()" class="flex-1 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#DFB76C] to-[#C59B27] text-black shadow hover:brightness-110 transition">
+          Buka Akses
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: CLIP INSPECTOR / EDIT TASK DRAWER                                  -->
+  <!-- ========================================================================= -->
+  <div id="inspectorModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <button onclick="window.closeInspectorModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-sm">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-amber-300">Clip Inspector (Detail Tugas)</h3>
+          <p class="text-[11px] text-slate-400">Atur penanggung jawab dari 109 pengurus SK, progres, dan timeline.</p>
+        </div>
+      </div>
+
+      <input type="hidden" id="editTaskId" />
+
+      <div class="space-y-3.5 overflow-y-auto pr-1 flex-1 text-xs">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">Judul Tugas / Jobdesc:</label>
+          <input id="editTaskTitle" type="text" class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-400" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">Penanggung Jawab (PIC - 109 Pengurus SK):</label>
+          <select id="editTaskMember" class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-400">
+            <!-- Populated by app.js with real 109 pengurus -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Status Pengerjaan:</label>
+            <select id="editTaskStatus" class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-400">
+              <option value="todo">Belum Berjalan (Todo)</option>
+              <option value="in_progress">Sedang Dikerjakan (In Progress)</option>
+              <option value="completed">Selesai (Completed)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Warna Clip:</label>
+            <input id="editTaskColor" type="color" class="w-full h-8 bg-[#061611] border border-[#C59B27]/30 rounded-lg cursor-pointer px-1 py-1" />
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between font-bold text-slate-300 mb-1">
+            <span>Persentase Progres:</span>
+            <span id="editTaskProgressDisplay" class="text-amber-400 font-mono">0%</span>
+          </div>
+          <input id="editTaskProgress" type="range" min="0" max="100" step="5" class="w-full accent-amber-400 cursor-pointer" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Tanggal Mulai:</label>
+            <input id="editTaskStartDate" type="date" class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-1.5 text-slate-100 focus:outline-none font-mono" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Durasi (Hari):</label>
+            <input id="editTaskDuration" type="number" min="1" max="60" class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-1.5 text-slate-100 focus:outline-none font-mono" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between gap-2 mt-5 pt-3 border-t border-slate-700/50">
+        <button id="inspectorDeleteBtn" onclick="window.deleteTaskInspector()" class="px-3 py-2 rounded-xl text-xs font-bold bg-rose-950/80 text-rose-300 border border-rose-600/40 hover:bg-rose-900 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-trash-can"></i> Hapus
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="window.closeInspectorModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+            Tutup
+          </button>
+          <button id="inspectorSaveBtn" onclick="window.saveTaskInspector()" class="px-5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#DFB76C] to-[#C59B27] text-black shadow hover:brightness-110 transition">
+            Simpan Perubahan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: D-DAY TRANSITION RUNWAY CHECKLIST                                  -->
+  <!-- ========================================================================= -->
+  <div id="dDayChecklistModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0A221A] rounded-2xl border border-rose-500/40 max-w-lg w-full p-6 shadow-2xl relative">
+      <button onclick="window.closeDDayModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-rose-600/30 text-rose-400 border border-rose-500/50 flex items-center justify-center font-bold text-lg animate-pulse">
+          <i class="fa-solid fa-bolt"></i>
+        <div>
+          <h3 class="text-base font-bold text-rose-300">Runway Checklist: Eksekusi Hari-H</h3>
+          <p class="text-xs text-slate-300">Puncak Acara: <span id="dDayModalDateLabel" class="font-mono font-bold text-amber-300">-</span></p>
+        </div>
+      </div>
+
+      <!-- Multi-day execution tabs container (e.g. Day 1, Day 2, Day 3) -->
+      <div id="dDayModalDaysTabs" class="flex items-center gap-1.5 mb-3 overflow-x-auto pb-1">
+        <!-- Populated dynamically by app.js -->
+      </div>
+      <div class="space-y-2 text-xs mb-5">
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-[#061611] border border-slate-700/50 hover:border-amber-500/30 cursor-pointer">
+          <input type="checkbox" class="accent-amber-400 w-4 h-4 rounded" checked />
+          <span>Briefing Koordinasi Pagi Seluruh Panitia (H-3 Jam)</span>
+        </label>
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-[#061611] border border-slate-700/50 hover:border-amber-500/30 cursor-pointer">
+          <input type="checkbox" class="accent-amber-400 w-4 h-4 rounded" checked />
+          <span>Cek Final Sound System, Genset & Mic Pemateri (Sarpras)</span>
+        </label>
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-[#061611] border border-slate-700/50 hover:border-amber-500/30 cursor-pointer">
+          <input type="checkbox" class="accent-amber-400 w-4 h-4 rounded" />
+          <span>Live Streaming Setup & Multi-Cam Ready (Media)</span>
+        </label>
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-[#061611] border border-slate-700/50 hover:border-amber-500/30 cursor-pointer">
+          <input type="checkbox" class="accent-amber-400 w-4 h-4 rounded" />
+          <span>Penyambutan Pemateri & Tamu VIP (Humas & BPH)</span>
+        </label>
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-[#061611] border border-slate-700/50 hover:border-amber-500/30 cursor-pointer">
+          <input type="checkbox" class="accent-amber-400 w-4 h-4 rounded" />
+          <span>Distribusi Konsumsi & Snack Jamaah (Danus)</span>
+        </label>
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-[#061611] border border-slate-700/50 hover:border-amber-500/30 cursor-pointer">
+          <input type="checkbox" class="accent-amber-400 w-4 h-4 rounded" />
+          <span>Evaluasi Singkat & Rapat Pembubaran Panitia Lapangan</span>
+        </label>
+      </div>
+
+      <button onclick="window.closeDDayModal()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-[#DFB76C] to-[#C59B27] text-black shadow hover:brightness-110 transition">
+        Selesai / Tutup Checklist
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- FLOATING DRAG GHOST BADGE (Attached to cursor during clip drag)           -->
+  <!-- ========================================================================= -->
+  <div id="dragGhostBadge" class="hidden fixed z-[99999] pointer-events-none px-3 py-1.5 rounded-xl shadow-2xl border border-amber-400 bg-[#061611]/95 text-white font-sans text-xs flex items-center gap-2.5 transform rotate-2 scale-105 backdrop-blur-md transition-transform duration-75">
+    <div class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center font-bold text-xs flex-shrink-0">
+      <i class="fa-solid fa-film"></i>
+    </div>
+    <div class="truncate max-w-[220px]">
+      <div id="dragGhostTitle" class="font-bold text-amber-200 truncate leading-tight">Judul Tugas</div>
+      <div id="dragGhostSubtitle" class="text-[10px] text-slate-300 font-mono truncate">4 Hari • Memindahkan...</div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONTEXT MENU (WINDOWS 11 / NLE STYLE)                             -->
+  <!-- ========================================================================= -->
+  <div id="customContextMenu" class="hidden fixed win11-menu p-1.5 z-[9999] min-w-[220px] select-none text-xs">
+    <!-- Populated dynamically by app.js -->
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: TAMBAH EVENT / PROKER BARU                                         -->
+  <!-- ========================================================================= -->
+  <div id="newProjectModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="window.closeNewProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center font-bold text-base">
+          <i class="fa-solid fa-folder-plus"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-amber-300 font-serif">Tambah Event / Proker Baru</h3>
+          <p class="text-xs text-slate-400">Buat jadwal proyek baru untuk timeline Rijal Dakwah.</p>
+        </div>
+      </div>
+
+      <div class="space-y-3.5 text-xs mb-5">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">Nama Event / Proker:</label>
+          <input id="newEventTitle" type="text" placeholder="Contoh: Safari Dakwah Ramadhan 1448H" class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-400" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">Deskripsi Singkat:</label>
+          <textarea id="newEventDesc" rows="2" placeholder="Tujuan, lokasi, atau target peserta proker..." class="w-full bg-[#061611] border border-[#C59B27]/30 rounded-lg px-3 py-1.5 text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+        <!-- D-Day Anchor & Duration (Multi-day support, e.g. Rihlah 3 Hari) -->
+        <div class="bg-[#061611] p-3 rounded-xl border border-rose-500/40 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <label class="font-bold text-rose-300 flex items-center gap-1.5 text-xs">
+              <i class="fa-solid fa-bolt text-rose-400"></i> Hari-H Acara (D-Day Anchor):
+            </label>
+            <span id="newEventDDayRangePreview" class="text-[11px] font-mono text-rose-300 font-bold bg-rose-950/80 px-2 py-0.5 rounded border border-rose-500/30">
+              1 Hari Acara
+            </span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <span class="block text-[10px] text-slate-400 font-bold mb-1">Tanggal Mulai Hari-H:</span>
+              <input id="newEventDDay" type="date" class="w-full bg-[#0A221A] border border-rose-500/50 rounded-lg px-2.5 py-1.5 text-rose-200 focus:outline-none font-mono font-bold" oninput="window.updateNewProjectDatePreviews()" />
+            </div>
+            <div>
+              <span class="block text-[10px] text-slate-400 font-bold mb-1">Durasi Hari-H (Hari):</span>
+              <input id="newEventDDayDuration" type="number" min="1" max="30" value="1" class="w-full bg-[#0A221A] border border-rose-500/50 rounded-lg px-2.5 py-1.5 text-rose-200 focus:outline-none font-mono font-bold" oninput="window.updateNewProjectDatePreviews()" />
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-400 italic">
+            *Untuk acara berhari-hari (misal Rihlah/Makrab 3 hari), atur durasi &gt; 1 hari agar tiap hari bisa di-assign peran terpisah.
+          </p>
+        </div>
+
+        <!-- Relative Preparation & Post-Event Days -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-[#061611] p-3 rounded-xl border border-emerald-500/30 space-y-1.5">
+            <label class="block font-bold text-emerald-300 flex items-center gap-1">
+              <i class="fa-solid fa-hourglass-start text-xs text-emerald-400"></i> Masa Persiapan:
+            </label>
+            <div class="flex items-center gap-2">
+              <input id="newEventPreDays" type="number" min="1" max="180" value="20" class="w-20 bg-[#0A221A] border border-emerald-500/40 rounded-lg px-2 py-1 text-slate-100 font-mono font-bold text-center focus:outline-none" oninput="window.updateNewProjectDatePreviews()" />
+              <span class="text-xs text-slate-300 font-semibold">Hari sblm</span>
+            </div>
+            <div id="newEventPrePreview" class="text-[10px] text-emerald-400 font-mono font-semibold pt-1 truncate">
+              Mulai: -
+            </div>
+          </div>
+
+          <div class="bg-[#061611] p-3 rounded-xl border border-indigo-500/30 space-y-1.5">
+            <label class="block font-bold text-indigo-300 flex items-center gap-1">
+              <i class="fa-solid fa-flag-checkered text-xs text-indigo-400"></i> Masa LPJ & Evaluasi:
+            </label>
+            <div class="flex items-center gap-2">
+              <input id="newEventPostDays" type="number" min="1" max="90" value="7" class="w-20 bg-[#0A221A] border border-indigo-500/40 rounded-lg px-2 py-1 text-slate-100 font-mono font-bold text-center focus:outline-none" oninput="window.updateNewProjectDatePreviews()" />
+              <span class="text-xs text-slate-300 font-semibold">Hari stlh</span>
+            </div>
+            <div id="newEventPostPreview" class="text-[10px] text-indigo-400 font-mono font-semibold pt-1 truncate">
+              Selesai: -
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="window.closeNewProjectModal()" class="flex-1 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+          Batal
+        </button>
+        <button onclick="window.submitNewProject()" class="flex-1 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#DFB76C] to-[#C59B27] text-black shadow hover:brightness-110 transition">
+          Buat Event & Buka
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: KALENDER EVENT & MILESTONE HARI-H                                  -->
+  <!-- ========================================================================= -->
+  <div id="eventCalendarModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-3xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <button onclick="window.closeEventCalendarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#0F2F24] text-amber-300 border border-[#C59B27]/40 flex items-center justify-center font-bold text-lg shadow-md">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-amber-300 font-serif">Kalender Event & Milestone Hari-H</h3>
+          <p class="text-xs text-slate-300">Pantau jadwal seluruh proker Rijal Dakwah, titik puncak acara, dan hitung mundur.</p>
+        </div>
+      </div>
+
+      <!-- Calendar Body: 2 Columns (Interactive Month Grid & Event List) -->
+      <div class="flex-1 grid grid-cols-1 md:grid-cols-12 gap-5 overflow-y-auto pr-1">
+        <!-- Left: Month Grid (7 cols) -->
+        <div class="md:col-span-7 bg-[#061611] p-4 rounded-xl border border-[#C59B27]/20 flex flex-col">
+          <div class="flex items-center justify-between mb-3">
+            <button onclick="window.prevCalendarMonth()" class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center justify-center text-xs transition">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span id="calendarMonthTitle" class="font-bold text-amber-300 text-sm font-serif">Oktober 2026</span>
+            <button onclick="window.nextCalendarMonth()" class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center justify-center text-xs transition">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- Day of Week Headers -->
+          <div class="grid grid-cols-7 gap-1 text-center font-mono text-[10px] text-slate-400 font-bold mb-1">
+            <span>Ahd</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+          </div>
+
+          <!-- Calendar Days Grid -->
+          <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1 text-xs flex-1">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+
+        <!-- Right: Event List & Countdown Badges (5 cols) -->
+        <div class="md:col-span-5 flex flex-col space-y-3">
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+            <i class="fa-solid fa-list-check"></i> Proker Terjadwal
+          </div>
+          <div id="calendarEventList" class="flex-1 space-y-2.5 overflow-y-auto pr-1">
+            <!-- Populated by app.js -->
+          </div>
+          <button onclick="window.openNewProjectModal(); window.closeEventCalendarModal();" class="w-full py-2.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow">
+            <i class="fa-solid fa-plus"></i> Tambah Event Baru
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core App Logic -->
+  <script src="app.js?v=2.4"></script>
+</body>
+</html>

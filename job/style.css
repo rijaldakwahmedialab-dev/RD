@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Rijal Dakwah Gantt Studio - NLE Timeline Styling
+   Theme: Deep Forest Green (#071A14) x Royal Gold (#C59B27) x Premiere Dark
+   ========================================================================== */
+
+:root {
+  --bg-main: #061611;
+  --bg-panel: #0A221A;
+  --bg-surface: #0F2F24;
+  --bg-track: #0B251D;
+  --bg-track-alt: #081D17;
+  --border-dim: rgba(197, 155, 39, 0.18);
+  --border-bright: rgba(197, 155, 39, 0.6);
+  --gold-primary: #C59B27;
+  --gold-light: #F3D58C;
+  --gold-dark: #9A7818;
+  --gold-glow: rgba(197, 155, 39, 0.25);
+  --playhead-color: #EF4444;
+  --playhead-gold: #F59E0B;
+  --timecode-font: 'JetBrains Mono', monospace;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #061611;
+}
+::-webkit-scrollbar-thumb {
+  background: #1B4D3E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C59B27;
+}
+
+/* NLE Timecode Display */
+.font-timecode {
+  font-family: var(--timecode-font);
+  letter-spacing: 0.05em;
+}
+
+/* Filmstrip Perforation Decoration */
+.filmstrip-border {
+  position: relative;
+  background-image: radial-gradient(circle, rgba(197, 155, 39, 0.35) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  background-repeat: repeat-x;
+  background-position: top 2px center;
+}
+
+.filmstrip-border-bottom {
+  position: relative;
+  background-image: radial-gradient(circle, rgba(197, 155, 39, 0.35) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  background-repeat: repeat-x;
+  background-position: bottom 2px center;
+}
+
+/* NLE Track Strip */
+.timeline-track-row {
+  height: 52px;
+  border-bottom: 1px solid rgba(197, 155, 39, 0.12);
+  transition: background-color 0.15s ease;
+}
+.timeline-track-row:hover {
+  background-color: rgba(197, 155, 39, 0.04);
+}
+
+/* Task Clip Styling */
+.nle-clip {
+  position: absolute;
+  top: 6px;
+  height: 40px;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+  cursor: grab;
+  overflow: hidden;
+}
+
+.nle-clip:active {
+  cursor: grabbing;
+}
+
+.nle-clip.selected {
+  border-color: #F3D58C !important;
+  box-shadow: 0 0 0 2px #C59B27, 0 8px 24px rgba(197, 155, 39, 0.4) !important;
+  z-index: 25 !important;
+}
+
+/* Hazard Stripes for Overloaded Member Clips */
+.clash-warning-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(239, 68, 68, 0.15),
+    rgba(239, 68, 68, 0.15) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+/* Clip Trim Handles */
+.trim-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.3);
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+  z-index: 10;
+}
+
+.nle-clip:hover .trim-handle {
+  opacity: 0.7;
+}
+
+.trim-handle:hover {
+  opacity: 1 !important;
+  background: #F3D58C !important;
+}
+
+.trim-handle-left {
+  left: 0;
+  cursor: w-resize;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.trim-handle-right {
+  right: 0;
+  cursor: e-resize;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+/* Playhead Scrubber */
+#playheadLine {
+  pointer-events: none;
+  z-index: 40;
+}
+
+#playheadHandle {
+  cursor: ew-resize;
+  z-index: 45;
+}
+
+/* Razor Cut Cursor Mode */
+.cursor-razor, .cursor-razor * {
+  cursor: crosshair !important;
+}
+
+/* Transition Block Styling (D-Day Moment) */
+.transition-block {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.25) 0%, rgba(197, 155, 39, 0.35) 100%);
+  border: 1px dashed rgba(243, 213, 140, 0.7);
+  box-shadow: 0 0 20px rgba(225, 29, 72, 0.3);
+}
+
+/* Pulsing Badge for Live Synced / Active State */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Windows 11 / NLE Acrylic Context Menu */
+.win11-menu {
+  background: rgba(10, 34, 26, 0.98) !important;
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(197, 155, 39, 0.5) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(197, 155, 39, 0.3) !important;
+  border-radius: 14px;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 99999 !important;
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.win11-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #E2E8F0;
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease, transform 0.1s ease;
+}
+
+.win11-item:hover {
+  background: rgba(197, 155, 39, 0.2);
+  color: #FDFBF7;
+  transform: translateX(2px);
+}
+
+.win11-item.danger:hover {
+  background: rgba(225, 29, 72, 0.25);
+  color: #FDA4AF;
+}
+
+/* Drop Target Highlight for Drag and Drop Task Creation */
+.drag-over-active {
+  background-color: rgba(197, 155, 39, 0.2) !important;
+  outline: 2px dashed rgba(243, 213, 140, 0.8) !important;
+  outline-offset: -2px;
+}
+
+/* Draggable Member Card in Track Header */
+.member-drag-card {
+  cursor: grab;
+}
+.member-drag-card:active {
+  cursor: grabbing;
+}

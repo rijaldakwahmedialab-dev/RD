@@ -1,0 +1,942 @@
+{
+  "divisions": [
+    {
+      "id": "bph",
+      "name": "Badan Pengurus Harian",
+      "icon": "fa-crown",
+      "color": "#C59B27",
+      "pass": "bph2026"
+    },
+    {
+      "id": "tpq",
+      "name": "Divisi TPQ",
+      "icon": "fa-book-quran",
+      "color": "#10B981",
+      "pass": "tpq2026"
+    },
+    {
+      "id": "keilmuan",
+      "name": "Divisi Keilmuan",
+      "icon": "fa-graduation-cap",
+      "color": "#6366F1",
+      "pass": "ilmu2026"
+    },
+    {
+      "id": "acara",
+      "name": "Divisi Acara",
+      "icon": "fa-calendar-check",
+      "color": "#F59E0B",
+      "pass": "acara2026"
+    },
+    {
+      "id": "humas",
+      "name": "Divisi Humas",
+      "icon": "fa-bullhorn",
+      "color": "#06B6D4",
+      "pass": "humas2026"
+    },
+    {
+      "id": "sarpras",
+      "name": "Divisi Sarpras & Inventaris",
+      "icon": "fa-boxes-stacked",
+      "color": "#8B5CF6",
+      "pass": "sarpras2026"
+    },
+    {
+      "id": "digital",
+      "name": "Divisi Dakwah Digital",
+      "icon": "fa-laptop-code",
+      "color": "#3B82F6",
+      "pass": "digital2026"
+    },
+    {
+      "id": "media",
+      "name": "Divisi Media",
+      "icon": "fa-camera-retro",
+      "color": "#EC4899",
+      "pass": "media2026"
+    },
+    {
+      "id": "danus",
+      "name": "Divisi Dana Usaha",
+      "icon": "fa-sack-dollar",
+      "color": "#14B8A6",
+      "pass": "danus2026"
+    }
+  ],
+  "totalMembers": 109,
+  "members": [
+    {
+      "id": "m_2024_03_3385",
+      "nama": "Akhmad Dzaqi Mustofa",
+      "nim": "2024.03.3385",
+      "divisionId": "bph",
+      "role": "Wakil Ketua 2",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_38_3072",
+      "nama": "Dzaki Rasendriya",
+      "nim": "2024.38.3072",
+      "divisionId": "bph",
+      "role": "Bendahara Umum",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_38_3238",
+      "nama": "Fasya Ramadhan",
+      "nim": "2024.38.3238",
+      "divisionId": "bph",
+      "role": "Ketua Umum",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2025_03_3777",
+      "nama": "Fawwaz Azzaki",
+      "nim": "2025.03.3777",
+      "divisionId": "bph",
+      "role": "Wakil Ketua 1",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_38_3393",
+      "nama": "Fazli Aljabbaar Fujiyono Putra",
+      "nim": "2024.38.3393",
+      "divisionId": "bph",
+      "role": "Sekretaris Umum",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_38_3474",
+      "nama": "Muhammad Alqindi",
+      "nim": "2024.38.3474",
+      "divisionId": "bph",
+      "role": "Wakil Ketua 3",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2025_03_4499",
+      "nama": "Abdurrahman Azzaid",
+      "nim": "2025.03.4499",
+      "divisionId": "tpq",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2025_03_4325",
+      "nama": "Akbar Noorfaiz",
+      "nim": "2025.03.4325",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4683",
+      "nama": "Alvin Saiful Jihad",
+      "nim": "2026.38.4683",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4371",
+      "nama": "Farid Febrian",
+      "nim": "2025.03.4371",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3457",
+      "nama": "Irbadh Muhammad Yusuf",
+      "nim": "2024.03.3457",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4210",
+      "nama": "M. Khikam Muzadi",
+      "nim": "2025.03.4210",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_4175",
+      "nama": "Muhamad Salwan Haekal Nizami",
+      "nim": "2025.38.4175",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_03_4639",
+      "nama": "Muhammad Abdullah Rizqy Faza",
+      "nim": "2026.03.4639",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4249",
+      "nama": "Nailul Athar Asyaukani",
+      "nim": "2025.03.4249",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3911",
+      "nama": "Rafi Dzafran Saputra",
+      "nim": "2025.03.3911",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3854",
+      "nama": "Rakha Riskillah",
+      "nim": "2025.03.3854",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_3957",
+      "nama": "Roshan Kalevi",
+      "nim": "2025.38.3957",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3251",
+      "nama": "Rosyid Nashrulloh Ar Rofif",
+      "nim": "2024.03.3251",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4611",
+      "nama": "Savero Rami",
+      "nim": "2026.38.4611",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_03_4814",
+      "nama": "Sayyid Fadhil Al Fajr",
+      "nim": "2026.03.4814",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3910",
+      "nama": "Ubaidillah",
+      "nim": "2025.03.3910",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2023_03_2782",
+      "nama": "Umair",
+      "nim": "2023.03.2782",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3769",
+      "nama": "Yahya Abdullah",
+      "nim": "2025.03.3769",
+      "divisionId": "tpq",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_MB_4390",
+      "nama": "Muhammad Rafi Syahid Putra",
+      "nim": "2025.MB.4390",
+      "divisionId": "keilmuan",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2026_03_4970",
+      "nama": "Abdullah Hanafi",
+      "nim": "2026.03.4970",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4823",
+      "nama": "Abdurahman Al Bana",
+      "nim": "2026.38.4823",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3824",
+      "nama": "Ahmad Haidar Amanullah",
+      "nim": "2025.03.3824",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_38_3172",
+      "nama": "Anggi Sibgotalloh Mujaddid",
+      "nim": "2024.38.3172",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_MB_4687",
+      "nama": "Diguna Nata Anggara",
+      "nim": "2026.MB.4687",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_03_5165",
+      "nama": "Jihadul Akhbar",
+      "nim": "2026.03.5165",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_13_5000",
+      "nama": "Muhamad Puang Respati",
+      "nim": "2026.13.5000",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_5383",
+      "nama": "Muhammad Abdul Khaliq",
+      "nim": "2026.38.5383",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3543",
+      "nama": "Muhammad Abdurrohman",
+      "nim": "2024.03.3543",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_5025",
+      "nama": "Muhammad Fasha Aprian",
+      "nim": "2026.38.5025",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4250",
+      "nama": "Muhammad Firdaus",
+      "nim": "2025.03.4250",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_33_5071",
+      "nama": "Muhammad Iqbal Zulfahmi",
+      "nim": "2026.33.5071",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_03_5217",
+      "nama": "Muhammad Ridho",
+      "nim": "2026.03.5217",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_3770",
+      "nama": "Rifki Kamaludin",
+      "nim": "2025.38.3770",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4803",
+      "nama": "Sulthan Bahabazy",
+      "nim": "2026.38.4803",
+      "divisionId": "keilmuan",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4247",
+      "nama": "Pigo Sulaiman",
+      "nim": "2025.03.4247",
+      "divisionId": "acara",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2025_03_4258",
+      "nama": "Agung Putra Wijaya",
+      "nim": "2025.03.4258",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3714",
+      "nama": "Ahmad",
+      "nim": "2025.03.3714",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4478",
+      "nama": "Ahmad Rizal Izzi",
+      "nim": "2025.03.4478",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3604",
+      "nama": "Alwan Habib",
+      "nim": "2024.03.3604",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_5074",
+      "nama": "Arga Luthfi Abdan Syakuro",
+      "nim": "2026.38.5074",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_5440",
+      "nama": "Habib Huwaidi Salam",
+      "nim": "2026.38.5440",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3781",
+      "nama": "Haekal Lutfi",
+      "nim": "2025.03.3781",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3123",
+      "nama": "Ismail H. Laniang",
+      "nim": "2024.03.3123",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_33_3902",
+      "nama": "Muhammad Alifya",
+      "nim": "2025.33.3902",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_3659",
+      "nama": "Rafly Muhammad Padilah",
+      "nim": "2025.38.3659",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_03_5178",
+      "nama": "Senandung Mubarok",
+      "nim": "2026.03.5178",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3370",
+      "nama": "Yusuf",
+      "nim": "2024.03.3370",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4109",
+      "nama": "Yusuf Abdilah",
+      "nim": "2025.03.4109",
+      "divisionId": "acara",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4107",
+      "nama": "Abdul Hakim",
+      "nim": "2025.03.4107",
+      "divisionId": "humas",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_03_3328",
+      "nama": "Abdul Malik Ramadhan",
+      "nim": "2024.03.3328",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_33_4796",
+      "nama": "Adis Vedry Rakha Maulana",
+      "nim": "2026.33.4796",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_3686",
+      "nama": "Affan Sholih Addaffa",
+      "nim": "2025.38.3686",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_33_3963",
+      "nama": "Aiman Wahidin Basyarahil",
+      "nim": "2025.33.3963",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4333",
+      "nama": "Juhdan Benzema Alrabbani Iswandi",
+      "nim": "2025.03.4333",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_38_3124",
+      "nama": "Mohamad Axel Wicaksono",
+      "nim": "2024.38.3124",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_33_4645",
+      "nama": "Muhammad Bintang Kautsar",
+      "nim": "2026.33.4645",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3080",
+      "nama": "Muhammad Maqdum Nafi’",
+      "nim": "2024.03.3080",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_MB_4726",
+      "nama": "Muhammad Rasyah Rafif",
+      "nim": "2026.MB.4726",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3204",
+      "nama": "Ramzy Syamlan",
+      "nim": "2024.03.3204",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4198",
+      "nama": "Rofi Suarmadani",
+      "nim": "2025.03.4198",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4541",
+      "nama": "Thaariq Dzaki Razaan",
+      "nim": "2026.38.4541",
+      "divisionId": "humas",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3339",
+      "nama": "Muhammad Mu'adz Harits",
+      "nim": "2024.03.3339",
+      "divisionId": "sarpras",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2026_03_5100",
+      "nama": "Abdul Ghofur",
+      "nim": "2026.03.5100",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_33_4573",
+      "nama": "Abdul Rosyad Fahrudin",
+      "nim": "2026.33.4573",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3297",
+      "nama": "Ananda Azka Arsyad",
+      "nim": "2024.03.3297",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3397",
+      "nama": "Fahmi Irkhamna",
+      "nim": "2024.03.3397",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3453",
+      "nama": "Meko Alyoga",
+      "nim": "2024.03.3453",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3336",
+      "nama": "Muhammad Falih Asyabib",
+      "nim": "2024.03.3336",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3301",
+      "nama": "Muhammad Fauzan Ihza Santosa",
+      "nim": "2024.03.3301",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3605",
+      "nama": "Muhammad Ibrahim",
+      "nim": "2024.03.3605",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3530",
+      "nama": "Ukkasyah",
+      "nim": "2024.03.3530",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3799",
+      "nama": "Wahid Rafiqi Ramadhan",
+      "nim": "2025.03.3799",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_33_4316",
+      "nama": "Wildan Hakim Alfin",
+      "nim": "2025.33.4316",
+      "divisionId": "sarpras",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3874",
+      "nama": "Naufal Zahran Daffa",
+      "nim": "2025.03.3874",
+      "divisionId": "digital",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2025_03_4195",
+      "nama": "Haikal Baihakki",
+      "nim": "2025.03.4195",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_4038",
+      "nama": "Hikam A’thoillah Al Hakim",
+      "nim": "2025.38.4038",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4553",
+      "nama": "Khairul Fajri Ardani",
+      "nim": "2026.38.4553",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_03_5410",
+      "nama": "Maslamah",
+      "nim": "2026.03.5410",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3932",
+      "nama": "Muhammad Aldran Adiwangsa Yayin",
+      "nim": "2025.03.3932",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3139",
+      "nama": "Muhammad Dzaki Ali Syifaa",
+      "nim": "2024.03.3139",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4337",
+      "nama": "Muhammad Haikal",
+      "nim": "2025.03.4337",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3613",
+      "nama": "Muhammad Jundi Fakhrudin Ismail",
+      "nim": "2024.03.3613",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_13_4387",
+      "nama": "Muhammad Rafi Aulia",
+      "nim": "2025.13.4387",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_38_3577",
+      "nama": "Tsaqif ibrahimovic",
+      "nim": "2024.38.3577",
+      "divisionId": "digital",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3585",
+      "nama": "Farid Abdillah Maulana",
+      "nim": "2024.03.3585",
+      "divisionId": "media",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_03_3500",
+      "nama": "Ahmad Farohat Al Murshofi",
+      "nim": "2024.03.3500",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3218",
+      "nama": "Ahmad Zaky Krisnamurti",
+      "nim": "2024.03.3218",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3232",
+      "nama": "Ahmad Zikri Khotibul Umam",
+      "nim": "2024.03.3232",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4863",
+      "nama": "Grara Isa Muhammad",
+      "nim": "2026.38.4863",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3269",
+      "nama": "Habib Arrasyid",
+      "nim": "2024.03.3269",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3695",
+      "nama": "Mohammad Talent Gendicha Wagih Rusyidi",
+      "nim": "2025.03.3695",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3973",
+      "nama": "Muhammad Ali Saifuddin Izharul Haq Saphiro",
+      "nim": "2025.03.3973",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_38_4010",
+      "nama": "Muhammad Daffa Ramadhan",
+      "nim": "2025.38.4010",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_3433",
+      "nama": "Muhammad Faris Zuhair",
+      "nim": "2024.03.3433",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_03_2740",
+      "nama": "Muhammad Hikam Zainuri",
+      "nim": "2024.03.2740",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_38_4564",
+      "nama": "Putra Bintang Fadhilah",
+      "nim": "2026.38.4564",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2026_MB_4888",
+      "nama": "Sajid Fathan Yudistira",
+      "nim": "2026.MB.4888",
+      "divisionId": "media",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_38_3121",
+      "nama": "Hafidz Rizki Indiarto",
+      "nim": "2024.38.3121",
+      "divisionId": "danus",
+      "role": "Kepala Divisi",
+      "isKadiv": true
+    },
+    {
+      "id": "m_2024_03_3235",
+      "nama": "Abdul Aziz",
+      "nim": "2024.03.3235",
+      "divisionId": "danus",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_4383",
+      "nama": "Fathir Shihab",
+      "nim": "2025.03.4383",
+      "divisionId": "danus",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2023_38_2747",
+      "nama": "Muhammad Arif Wakiilaa",
+      "nim": "2023.38.2747",
+      "divisionId": "danus",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2024_38_3246",
+      "nama": "Muhammad Zahreno Fajrul Falah",
+      "nim": "2024.38.3246",
+      "divisionId": "danus",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    },
+    {
+      "id": "m_2025_03_3794",
+      "nama": "Pandu Gea Wardika",
+      "nim": "2025.03.3794",
+      "divisionId": "danus",
+      "role": "Anggota Divisi",
+      "isKadiv": false
+    }
+  ]
+}

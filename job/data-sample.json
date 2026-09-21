@@ -1,0 +1,451 @@
+{
+  "projects": [
+    {
+      "id": "proker-kajian-akbar-2026",
+      "title": "Kajian Akbar Pemuda & Tabligh Ilmiah 1448H",
+      "description": "Tabligh akbar tahunan mengundang da'i nasional, target 1.000 jamaah di Masjid Al-Ittihad.",
+      "startDate": "2026-10-18",
+      "dDayDate": "2026-11-15",
+      "dDayDuration": 1,
+      "endDate": "2026-11-22",
+      "status": "in_progress",
+      "phases": {
+        "pre": {
+          "label": "Pre-Acara (Persiapan & Syiar)",
+          "start": "2026-10-18",
+          "end": "2026-11-14"
+        },
+        "dday": {
+          "label": "Hari-H (Kajian Akbar)",
+          "date": "2026-11-15",
+          "duration": 1
+        },
+        "post": {
+          "label": "Pasca-Acara (Evaluasi & LPJ)",
+          "start": "2026-11-16",
+          "end": "2026-11-22"
+        }
+      }
+    },
+    {
+      "id": "proker-rihlah-makrab-3hari-2026",
+      "title": "Rihlah Alam & Malam Keakraban 109 Pengurus (3 Hari)",
+      "description": "Acara 3 hari camping, upgrading kepemimpinan, tadabbur alam, dan konsolidasi pengurus baru di Coban Rondo.",
+      "startDate": "2026-12-01",
+      "dDayDate": "2026-12-18",
+      "dDayDuration": 3,
+      "endDate": "2026-12-26",
+      "status": "planned",
+      "phases": {
+        "pre": {
+          "label": "Pre-Acara (Logistik Tenda & Materi)",
+          "start": "2026-12-01",
+          "end": "2026-12-17"
+        },
+        "dday": {
+          "label": "Hari-H (Rihlah 3 Hari: 18-20 Des)",
+          "date": "2026-12-18",
+          "duration": 3
+        },
+        "post": {
+          "label": "Pasca-Acara (Retur Sarpras & LPJ)",
+          "start": "2026-12-21",
+          "end": "2026-12-26"
+        }
+      }
+    },
+    {
+      "id": "proker-daurah-pengurus-2026",
+      "title": "Daurah Ilmiah Metodologi Dakwah (2 Hari)",
+      "description": "Pelatihan manhaj dakwah dan fiqih thalabul 'ilmi intensif selama 2 hari.",
+      "startDate": "2026-09-25",
+      "dDayDate": "2026-10-10",
+      "dDayDuration": 2,
+      "endDate": "2026-10-15",
+      "status": "completed",
+      "phases": {
+        "pre": {
+          "label": "Pre-Acara (Penyusunan Modul & Logistik)",
+          "start": "2026-09-25",
+          "end": "2026-10-09"
+        },
+        "dday": {
+          "label": "Hari-H (Daurah 2 Hari)",
+          "date": "2026-10-10",
+          "duration": 2
+        },
+        "post": {
+          "label": "Pasca-Acara (Follow-up & Rencana Aksi)",
+          "start": "2026-10-12",
+          "end": "2026-10-15"
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t_01",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "bph",
+      "memberId": "m_2024_38_3238",
+      "title": "Konsolidasi Master Plan & SK Panitia",
+      "phase": "pre",
+      "startDate": "2026-10-18",
+      "duration": 4,
+      "progress": 100,
+      "color": "#C59B27",
+      "status": "completed"
+    },
+    {
+      "id": "t_02",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "bph",
+      "memberId": "m_2024_38_3393",
+      "title": "Penerbitan Surat Izin Tempat & Kerjasama Takmir",
+      "phase": "pre",
+      "startDate": "2026-10-21",
+      "duration": 6,
+      "progress": 80,
+      "color": "#C59B27",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_03",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "bph",
+      "memberId": "m_2024_38_3072",
+      "title": "Penyusunan & Pencairan RAB Termin 1",
+      "phase": "pre",
+      "startDate": "2026-10-23",
+      "duration": 5,
+      "progress": 90,
+      "color": "#C59B27",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_04",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "acara",
+      "memberId": "m_2025_03_4247",
+      "title": "Penyusunan Rundown Detil Menit-ke-Menit",
+      "phase": "pre",
+      "startDate": "2026-10-25",
+      "duration": 7,
+      "progress": 70,
+      "color": "#F59E0B",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_05",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "acara",
+      "memberId": "m_2024_03_3123",
+      "title": "Konfirmasi & Briefing Pemateri Nasional",
+      "phase": "pre",
+      "startDate": "2026-10-28",
+      "duration": 8,
+      "progress": 60,
+      "color": "#F59E0B",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_06",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "acara",
+      "memberId": "m_2025_33_3902",
+      "title": "Gladi Bersih MC & Qari Pembukaan",
+      "phase": "pre",
+      "startDate": "2026-11-12",
+      "duration": 3,
+      "progress": 20,
+      "color": "#F59E0B",
+      "status": "todo"
+    },
+    {
+      "id": "t_07",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "acara",
+      "memberId": "m_2025_03_4247",
+      "title": "Eksekusi Rundown & Timekeeping Hari-H",
+      "phase": "dday",
+      "startDate": "2026-11-15",
+      "duration": 1,
+      "progress": 0,
+      "color": "#E11D48",
+      "status": "todo"
+    },
+    {
+      "id": "t_08",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "acara",
+      "memberId": "m_2024_03_3604",
+      "title": "Rapat Pleno Evaluasi Kinerja Acara & LPJ",
+      "phase": "post",
+      "startDate": "2026-11-16",
+      "duration": 5,
+      "progress": 0,
+      "color": "#F59E0B",
+      "status": "todo"
+    },
+    {
+      "id": "t_09",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "media",
+      "memberId": "m_2024_03_3585",
+      "title": "Brand Guidelines & Key Visual Kajian Akbar",
+      "phase": "pre",
+      "startDate": "2026-10-20",
+      "duration": 5,
+      "progress": 100,
+      "color": "#EC4899",
+      "status": "completed"
+    },
+    {
+      "id": "t_10",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "media",
+      "memberId": "m_2024_03_3218",
+      "title": "Desain Poster Utama & Feed Instagram Seri 1-3",
+      "phase": "pre",
+      "startDate": "2026-10-25",
+      "duration": 6,
+      "progress": 85,
+      "color": "#EC4899",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_11",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "media",
+      "memberId": "m_2026_38_4863",
+      "title": "Produksi Video Teaser Reels / TikTok (30 Detik)",
+      "phase": "pre",
+      "startDate": "2026-10-30",
+      "duration": 8,
+      "progress": 50,
+      "color": "#EC4899",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_12",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "media",
+      "memberId": "m_2024_03_3585",
+      "title": "Live Streaming Setup & Multi-Cam Directing",
+      "phase": "dday",
+      "startDate": "2026-11-15",
+      "duration": 1,
+      "progress": 0,
+      "color": "#E11D48",
+      "status": "todo"
+    },
+    {
+      "id": "t_13",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "media",
+      "memberId": "m_2026_38_4863",
+      "title": "Editing & Rilis Aftermovie Dokumentasi Resmi",
+      "phase": "post",
+      "startDate": "2026-11-16",
+      "duration": 6,
+      "progress": 0,
+      "color": "#EC4899",
+      "status": "todo"
+    },
+    {
+      "id": "t_14",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "humas",
+      "memberId": "m_2025_03_4107",
+      "title": "Penyebaran Undangan Tokoh Ormawa & Kampus",
+      "phase": "pre",
+      "startDate": "2026-11-01",
+      "duration": 7,
+      "progress": 40,
+      "color": "#06B6D4",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_15",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "humas",
+      "memberId": "m_2024_38_3124",
+      "title": "Broadcast Syiar Komunitas & Grup Dakwah Jember",
+      "phase": "pre",
+      "startDate": "2026-11-05",
+      "duration": 8,
+      "progress": 30,
+      "color": "#06B6D4",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_16",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "sarpras",
+      "memberId": "m_2024_03_3339",
+      "title": "Sewa Sound System & Genset 10.000 Watt",
+      "phase": "pre",
+      "startDate": "2026-11-02",
+      "duration": 6,
+      "progress": 50,
+      "color": "#8B5CF6",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_17",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "sarpras",
+      "memberId": "m_2025_33_4316",
+      "title": "Layout Panggung, Karpet, & Barikade Jamaah",
+      "phase": "pre",
+      "startDate": "2026-11-13",
+      "duration": 2,
+      "progress": 0,
+      "color": "#8B5CF6",
+      "status": "todo"
+    },
+    {
+      "id": "t_18",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "sarpras",
+      "memberId": "m_2024_03_3339",
+      "title": "Bongkar Muat & Retur Aset Logistik Sarpras",
+      "phase": "post",
+      "startDate": "2026-11-16",
+      "duration": 3,
+      "progress": 0,
+      "color": "#8B5CF6",
+      "status": "todo"
+    },
+    {
+      "id": "t_19",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "digital",
+      "memberId": "m_2025_03_3874",
+      "title": "Halaman Registrasi Online & E-Ticket QR Code",
+      "phase": "pre",
+      "startDate": "2026-10-22",
+      "duration": 7,
+      "progress": 95,
+      "color": "#3B82F6",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_20",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "digital",
+      "memberId": "m_2024_03_3613",
+      "title": "Sistem Scanner Presensi Jamaah di Pintu Masuk",
+      "phase": "pre",
+      "startDate": "2026-11-04",
+      "duration": 7,
+      "progress": 60,
+      "color": "#3B82F6",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_21",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "keilmuan",
+      "memberId": "m_2025_MB_4390",
+      "title": "Penyusunan Risalah Ringkasan Materi & Faedah",
+      "phase": "pre",
+      "startDate": "2026-11-01",
+      "duration": 10,
+      "progress": 40,
+      "color": "#6366F1",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_22",
+      "projectId": "proker-kajian-akbar-2026",
+      "divisionId": "danus",
+      "memberId": "m_2024_38_3121",
+      "title": "Pengadaan Merchandise Dakwah & Stand Bazar",
+      "phase": "pre",
+      "startDate": "2026-10-26",
+      "duration": 12,
+      "progress": 55,
+      "color": "#14B8A6",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_rihlah_01",
+      "projectId": "proker-rihlah-makrab-3hari-2026",
+      "divisionId": "sarpras",
+      "memberId": "m_2024_03_3339",
+      "title": "Booking Lahan Camping & Tenda Dome",
+      "phase": "pre",
+      "startDate": "2026-12-01",
+      "duration": 6,
+      "progress": 80,
+      "color": "#8B5CF6",
+      "status": "in_progress"
+    },
+    {
+      "id": "t_rihlah_02",
+      "projectId": "proker-rihlah-makrab-3hari-2026",
+      "divisionId": "media",
+      "memberId": "m_2026_38_4863",
+      "title": "D1 Hari-H: Dokumentasi Video Utama & Interview Santri",
+      "phase": "dday",
+      "startDate": "2026-12-18",
+      "duration": 1,
+      "progress": 0,
+      "color": "#EC4899",
+      "status": "todo"
+    },
+    {
+      "id": "t_rihlah_03",
+      "projectId": "proker-rihlah-makrab-3hari-2026",
+      "divisionId": "media",
+      "memberId": "m_2024_03_3218",
+      "title": "D1 Hari-H: Operator Slide Materi & Audio PA Tenda Utama",
+      "phase": "dday",
+      "startDate": "2026-12-18",
+      "duration": 1,
+      "progress": 0,
+      "color": "#EC4899",
+      "status": "todo"
+    },
+    {
+      "id": "t_rihlah_04",
+      "projectId": "proker-rihlah-makrab-3hari-2026",
+      "divisionId": "media",
+      "memberId": "m_2026_38_4863",
+      "title": "D2 Hari-H: Switch Role -> Operator Slide & Sound Outbound",
+      "phase": "dday",
+      "startDate": "2026-12-19",
+      "duration": 1,
+      "progress": 0,
+      "color": "#EC4899",
+      "status": "todo"
+    },
+    {
+      "id": "t_rihlah_05",
+      "projectId": "proker-rihlah-makrab-3hari-2026",
+      "divisionId": "media",
+      "memberId": "m_2024_03_3218",
+      "title": "D2 Hari-H: Switch Role -> Pilot Drone & Video Liputan Outbound",
+      "phase": "dday",
+      "startDate": "2026-12-19",
+      "duration": 1,
+      "progress": 0,
+      "color": "#EC4899",
+      "status": "todo"
+    },
+    {
+      "id": "t_rihlah_06",
+      "projectId": "proker-rihlah-makrab-3hari-2026",
+      "divisionId": "media",
+      "memberId": "m_2024_03_3585",
+      "title": "D3 Hari-H: Rapat Evaluasi & Foto Bersama 109 Pengurus",
+      "phase": "dday",
+      "startDate": "2026-12-20",
+      "duration": 1,
+      "progress": 0,
+      "color": "#EC4899",
+      "status": "todo"
+    }
+  ]
+}
