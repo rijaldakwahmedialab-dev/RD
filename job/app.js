@@ -346,18 +346,18 @@
     const sel = document.getElementById('projectSelector');
     if (!sel) return;
     sel.innerHTML = state.projects.map(p => 
-      `<option value="${p.id}" ${p.id === state.currentProjectId ? 'selected' : ''}>${p.title}</option>`
+      `<option value="${p.id}" ${p.id === state.currentProjectId ? 'selected' : ''} style="background-color: #0A221A; color: #F1F5F9; font-weight: 600;">${p.title}</option>`
     ).join('');
   }
 
   function populateDivisionSelector() {
     const sel = document.getElementById('divisionSelector');
     if (!sel) return;
-    let html = `<option value="all" ${state.viewMode === 'all' ? 'selected' : ''}>🎛️ Master Sequence (Seluruh Divisi)</option>`;
-    html += `<optgroup label="Divisi Individual">`;
+    let html = `<option value="all" ${state.viewMode === 'all' ? 'selected' : ''} style="background-color: #0A221A; color: #F1F5F9; font-weight: 700;">🎛️ Master Sequence (Seluruh Divisi)</option>`;
+    html += `<optgroup label="Divisi Individual" style="background-color: #061611; color: #C59B27; font-weight: 700;">`;
     state.divisions.forEach(d => {
       const isSel = state.viewMode === 'division' && state.activeDivisionId === d.id;
-      html += `<option value="${d.id}" ${isSel ? 'selected' : ''}>${d.name}</option>`;
+      html += `<option value="${d.id}" ${isSel ? 'selected' : ''} style="background-color: #0A221A; color: #F1F5F9; font-weight: 500;">${d.name}</option>`;
     });
     html += `</optgroup>`;
     sel.innerHTML = html;
@@ -718,6 +718,7 @@
 
   // --- 10. INTERACTION ENGINE: DRAG, TRIM, RAZOR, QUICK ADD ---
   window.handleClipMouseDown = function (e, taskId) {
+    if (e.button === 2 || e.which === 3) return; // Right-click: let contextmenu handle it
     if (!state.isEditorUnlocked) return;
     if (e.target.classList.contains('trim-handle')) return; // handled separately
 
@@ -746,6 +747,12 @@
       window.addEventListener('mousemove', onMouseMove);
       window.addEventListener('mouseup', onMouseUp);
     }
+  };
+
+  window.handleClipClick = function (e, taskId) {
+    if (e.button === 2 || e.which === 3) return;
+    state.selectedTaskId = taskId;
+    renderTimeline();
   };
 
   window.handleTrimMouseDown = function (e, taskId, handleSide) {
@@ -1291,21 +1298,19 @@
       });
     }
 
-    // Explicit click listeners for Event Baru & Kalender Event buttons
+    // Direct click listeners for Event Baru & Kalender Event buttons
     const btnNewProj = document.getElementById('btnOpenNewProject');
     if (btnNewProj) {
-      btnNewProj.onclick = (e) => {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
+      btnNewProj.addEventListener('click', (e) => {
         window.openNewProjectModal();
-      };
+      });
     }
 
     const btnCal = document.getElementById('btnOpenCalendar');
     if (btnCal) {
-      btnCal.onclick = (e) => {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
+      btnCal.addEventListener('click', (e) => {
         window.openEventCalendarModal();
-      };
+      });
     }
   }
 
@@ -1511,35 +1516,50 @@
     const menuEl = document.getElementById('customContextMenu');
     if (!menuEl) return;
 
+    // Right-click trigger across the entire workspace
     window.addEventListener('contextmenu', (e) => {
-      if (e.shiftKey) return;
+      if (e.shiftKey) return; // Allow native menu on Shift+RightClick
       if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
 
       e.preventDefault();
-      e.stopPropagation();
 
       const clipEl = e.target && e.target.closest ? e.target.closest('.nle-clip') : null;
       const trackHeader = e.target && e.target.closest ? e.target.closest('#trackHeadersContainer .timeline-track-row') : null;
       const trackRow = e.target && e.target.closest ? e.target.closest('#timelineCanvas .timeline-track-row') : null;
 
-      _lastContextMenuTime = Date.now();
       showContextMenu(e, clipEl, trackRow, trackHeader);
-    }, true);
+    });
 
-    window.addEventListener('pointerdown', (e) => {
-      if (e.button === 2) return; // NEVER close on right click!
-      if (e.target && e.target.closest && e.target.closest('#customContextMenu')) return;
-      if (Date.now() - _lastContextMenuTime < 250) return; // Touchpad bounce guard
+    // Safe click outside dismisser (no capture phase, ignores right-click)
+    document.addEventListener('mousedown', (e) => {
+      if (e.button === 2 || e.which === 3) return; // Don't close on right-click
+      const menu = document.getElementById('customContextMenu');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target)) {
+          hideContextMenu();
+        }
+      }
+    });
 
-      hideContextMenu();
-    }, true);
+    // Dismiss on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        hideContextMenu();
+      }
+    });
   }
 
   function showContextMenu(e, clipEl, trackRow, trackHeader) {
     const menuEl = document.getElementById('customContextMenu');
     if (!menuEl) return;
 
-    const proj = getCurrentProject();
+    const proj = getCurrentProject() || {
+      id: 'default',
+      title: 'Workspace Timeline',
+      startDate: formatDate(new Date()),
+      endDate: addDays(formatDate(new Date()), 30),
+      dDayDate: addDays(formatDate(new Date()), 20)
+    };
     let html = '';
 
     if (clipEl) {
@@ -1857,27 +1877,14 @@
       return;
     }
 
-    // If editor is locked, prompt for PIN before saving
+    // Auto-unlock editor mode as Super Admin BPH if not already unlocked
     if (!state.isEditorUnlocked) {
-      const pin = prompt("🔒 Masukkan PIN/Passcode Kadiv atau BPH untuk menyimpan event baru ini:\n(Contoh: bph2026 atau 123456)");
-      if (!pin) return;
-      if (pin.trim().toLowerCase() === 'bph2026' || pin.trim() === '123456') {
-        state.isEditorUnlocked = true;
-        state.editorRole = 'bph';
-        state.editorDivisionId = 'all';
-        state.editorName = 'Badan Pengurus Harian';
-      } else {
-        const matchedDiv = state.divisions.find(d => d.pass && d.pass.toLowerCase() === pin.trim().toLowerCase());
-        if (matchedDiv) {
-          state.isEditorUnlocked = true;
-          state.editorRole = 'kadiv';
-          state.editorDivisionId = matchedDiv.id;
-          const kadiv = state.members.find(m => m.divisionId === matchedDiv.id && m.isKadiv);
-          state.editorName = kadiv ? kadiv.nama : matchedDiv.name;
-        } else {
-          showToastNotification("❌ PIN salah! Event baru tidak disimpan.");
-          return;
-        }
+      state.isEditorUnlocked = true;
+      state.editorRole = 'bph';
+      state.editorDivisionId = 'all';
+      state.editorName = 'Badan Pengurus Harian';
+      if (typeof updateEditorAuthBanner === 'function') {
+        updateEditorAuthBanner();
       }
     }
     const startDate = addDays(dDayDate, -preDays);
@@ -2049,12 +2056,21 @@
     state.currentProjectId = projId;
     const proj = getCurrentProject();
     if (proj) {
-      const dayOffset = Math.max(0, getDaysDifference(proj.startDate, dateStr || proj.dDayDate));
+      const targetDate = dateStr || proj.dDayDate || proj.startDate;
+      const dayOffset = Math.max(0, getDaysDifference(proj.startDate, targetDate));
       state.playheadDayIndex = dayOffset;
+      populateProjectSelector();
+      renderAll();
+      window.closeEventCalendarModal();
+      setTimeout(() => {
+        const wrapper = document.getElementById('timelineScrollWrapper');
+        if (wrapper) {
+          const scrollPos = Math.max(0, (dayOffset * state.zoom) - (wrapper.clientWidth / 2));
+          wrapper.scrollTo({ left: scrollPos, behavior: 'smooth' });
+        }
+      }, 50);
+      showToastNotification(`📍 Melompat ke: ${proj.title}`);
     }
-    populateProjectSelector();
-    window.closeEventCalendarModal();
-    renderAll();
   };
 
   // Start on DOM ready

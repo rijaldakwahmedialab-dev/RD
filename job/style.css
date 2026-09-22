@@ -8,6 +8,14 @@
   display: none !important;
 }
 
+/* Safe Modals Display: Ensure opened modals always display flex with high z-index */
+.fixed.inset-0:not(.hidden) {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 99999 !important;
+}
+
 :root {
   --bg-main: #061611;
   --bg-panel: #0A221A;

@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Custom NLE Styling -->
-  <link rel="stylesheet" href="style.css?v=2.5" />
+  <link rel="stylesheet" href="style.css?v=2.6" />
 
   <!-- Tailwind Configuration -->
   <script>
@@ -79,12 +79,13 @@
       <!-- Proker Selector Dropdown -->
       <!-- Proker Selector Dropdown & New Event Button -->
       <div class="flex items-center gap-1.5 flex-shrink-0">
-        <div class="flex items-center gap-1.5 bg-[#061611] px-2.5 py-1.5 rounded-lg border border-[#C59B27]/30 shadow-inner">
-          <i class="fa-solid fa-folder-tree text-xs text-amber-400"></i>
+        <label for="projectSelector" class="flex items-center gap-1.5 bg-[#061611] px-2.5 py-1.5 rounded-lg border border-[#C59B27]/30 shadow-inner cursor-pointer hover:border-[#C59B27]/70 transition" title="Pilih Event / Proker Rijal Dakwah">
+          <i class="fa-solid fa-folder-tree text-xs text-amber-400 pointer-events-none"></i>
           <select id="projectSelector" class="bg-transparent text-xs font-bold text-slate-200 focus:outline-none cursor-pointer max-w-[140px] sm:max-w-[200px] truncate">
             <!-- Populated by app.js -->
           </select>
-        </div>
+          <i class="fa-solid fa-chevron-down text-[9px] text-amber-400/80 pointer-events-none ml-0.5"></i>
+        </label>
         <button id="btnOpenNewProject" onclick="window.openNewProjectModal()" class="px-3 py-1.5 bg-amber-500/25 hover:bg-amber-500/40 text-amber-300 border border-amber-500/50 rounded-lg text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow cursor-pointer" title="Tambah Event / Proker Baru">
           <i class="fa-solid fa-plus text-xs text-amber-400"></i>
           <span class="font-bold whitespace-nowrap">Event Baru</span>
@@ -93,12 +94,13 @@
 
       <!-- Division View Scope Switcher & Calendar Button -->
       <div class="flex items-center gap-1.5 flex-shrink-0">
-        <div class="flex items-center gap-1.5 bg-[#061611] px-2.5 py-1.5 rounded-lg border border-[#C59B27]/30 shadow-inner">
-          <i class="fa-solid fa-layer-group text-xs text-emerald-400"></i>
+        <label for="divisionSelector" class="flex items-center gap-1.5 bg-[#061611] px-2.5 py-1.5 rounded-lg border border-[#C59B27]/30 shadow-inner cursor-pointer hover:border-[#C59B27]/70 transition" title="Filter Cakupan Divisi / Master View">
+          <i class="fa-solid fa-layer-group text-xs text-emerald-400 pointer-events-none"></i>
           <select id="divisionSelector" class="bg-transparent text-xs font-bold text-slate-200 focus:outline-none cursor-pointer max-w-[130px] sm:max-w-[180px] truncate">
             <!-- Populated by app.js -->
           </select>
-        </div>
+          <i class="fa-solid fa-chevron-down text-[9px] text-emerald-400/80 pointer-events-none ml-0.5"></i>
+        </label>
         <button id="btnOpenCalendar" onclick="window.openEventCalendarModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-[#0F2F24] hover:bg-[#1B4D3E] text-amber-300 border border-[#C59B27]/40 rounded-lg text-xs font-bold transition shadow active:scale-95 cursor-pointer" title="Buka Kalender Event & Milestone Hari-H">
           <i class="fa-solid fa-calendar-days text-xs text-amber-400"></i>
           <span class="font-bold whitespace-nowrap">Kalender Event</span>
@@ -257,7 +259,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: KADIV / BPH EDITOR PASSCODE GATE                                   -->
   <!-- ========================================================================= -->
-  <div id="passcodeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
+  <div id="passcodeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="window.closeEditorPasscodeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -306,7 +308,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: CLIP INSPECTOR / EDIT TASK DRAWER                                  -->
   <!-- ========================================================================= -->
-  <div id="inspectorModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
+  <div id="inspectorModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
       <button onclick="window.closeInspectorModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -391,7 +393,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: D-DAY TRANSITION RUNWAY CHECKLIST                                  -->
   <!-- ========================================================================= -->
-  <div id="dDayChecklistModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
+  <div id="dDayChecklistModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-[#0A221A] rounded-2xl border border-rose-500/40 max-w-lg w-full p-6 shadow-2xl relative">
       <button onclick="window.closeDDayModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -459,14 +461,14 @@
 
   <!-- CUSTOM CONTEXT MENU (WINDOWS 11 / NLE STYLE)                             -->
   <!-- ========================================================================= -->
-  <div id="customContextMenu" class="hidden fixed win11-menu p-1.5 z-[999999] min-w-[220px] select-none text-xs" style="display: none;">
+  <div id="customContextMenu" class="hidden fixed win11-menu p-1.5 z-[999999] min-w-[220px] select-none text-xs">
     <!-- Populated dynamically by app.js -->
   </div>
 
   <!-- ========================================================================= -->
   <!-- MODAL: TAMBAH EVENT / PROKER BARU                                         -->
   <!-- ========================================================================= -->
-  <div id="newProjectModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
+  <div id="newProjectModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="window.closeNewProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -560,7 +562,7 @@
   <!-- ========================================================================= -->
   <!-- MODAL: KALENDER EVENT & MILESTONE HARI-H                                  -->
   <!-- ========================================================================= -->
-  <div id="eventCalendarModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
+  <div id="eventCalendarModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-[#0A221A] rounded-2xl border border-[#C59B27]/40 max-w-3xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
       <button onclick="window.closeEventCalendarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -618,6 +620,6 @@
   </div>
 
   <!-- Core App Logic -->
-  <script src="app.js?v=2.5"></script>
+  <script src="app.js?v=2.6"></script>
 </body>
 </html>
