@@ -1,0 +1,1489 @@
+{
+  "totalAnggota": 148,
+  "totalPengurusDiAnggota": 74,
+  "totalRelawan": 74,
+  "updatedAt": "2026-09-29",
+  "source": "Daftar Nama Anggota Baru Rijal Dakwah 2026-2027 Yang Diterima.pdf",
+  "members": [
+    {
+      "no": 1,
+      "nama": "Abdillah Hammam Muhammad Hawari",
+      "nim": "2025.03.3756",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 2,
+      "nama": "Abdul Aziz Mujahid",
+      "nim": "2025.38.4082",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 3,
+      "nama": "Abdul Ghofur",
+      "nim": "2026.03.5100",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 4,
+      "nama": "Abdul Rosyad Fahrudin",
+      "nim": "2026.33.4573",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 5,
+      "nama": "Abdullah",
+      "nim": "2026.38.5192",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 6,
+      "nama": "Abdullah Al Fawwaz",
+      "nim": "2026.33.4972",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 7,
+      "nama": "Abdullah Hanafi",
+      "nim": "2026.03.4970",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 8,
+      "nama": "Abdurahman Al Bana",
+      "nim": "2026.38.4823",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 9,
+      "nama": "Abdurrahman Albassam",
+      "nim": "2026.33.5139",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 10,
+      "nama": "Achmad Fahrezy",
+      "nim": "2025.38.4423",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 11,
+      "nama": "Adis Vedry Rakha Maulana",
+      "nim": "2026.33.4796",
+      "isPengurus": true,
+      "divisionId": "humas",
+      "divisionName": "Divisi Humas",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 12,
+      "nama": "Adit Saputra",
+      "nim": "2025.03.3747",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 13,
+      "nama": "Affan Sholih Addaffa",
+      "nim": "2025.38.3686",
+      "isPengurus": true,
+      "divisionId": "humas",
+      "divisionName": "Divisi Humas",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 14,
+      "nama": "Afnan Azis Setiawan",
+      "nim": "2025.03.3961",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 15,
+      "nama": "Agung Putra Wijaya",
+      "nim": "2025.03.4258",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 16,
+      "nama": "Agung Satria Kurniawan",
+      "nim": "2025.03.4229",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 17,
+      "nama": "Ahmad",
+      "nim": "2025.03.3714",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 18,
+      "nama": "Ahmad Farohat Al Murshofi",
+      "nim": "2024.03.3500",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 19,
+      "nama": "Ahmad Haidar Amanullah",
+      "nim": "2025.03.3824",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 20,
+      "nama": "Ahmad Rizal Izzi",
+      "nim": "2025.03.4478",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 21,
+      "nama": "Ahmad Syauki Al Ghifari",
+      "nim": "2026.MB.4621",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 22,
+      "nama": "Ahmad Zaky Krisnamurti",
+      "nim": "2024.03.3218",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 23,
+      "nama": "Ahmad Zikri Khotibul Umam",
+      "nim": "2024.03.3232",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 24,
+      "nama": "Ahmad Zuhhad Muwahhid",
+      "nim": "2026.38.5099",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 25,
+      "nama": "Akbar Noorfaiz",
+      "nim": "2025.03.4325",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 26,
+      "nama": "Alam Ramadhan",
+      "nim": "2025.03.3668",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 27,
+      "nama": "Alvin Saiful Jihad",
+      "nim": "2026.38.4683",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 28,
+      "nama": "Ammar",
+      "nim": "2026.33.4965",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 29,
+      "nama": "Anggi Sibgotalloh Mujaddid",
+      "nim": "2024.38.3172",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 30,
+      "nama": "Aqib Wasiul Ilmi",
+      "nim": "2024.03.3516",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 31,
+      "nama": "Arga Luthfi Abdan Syakuro",
+      "nim": "2026.38.5074",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 32,
+      "nama": "Azhar Wahyu Robihansyah",
+      "nim": "2025.03.4078",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 33,
+      "nama": "Azzaam Hanif Ikhtiar Rizki",
+      "nim": "2026.33.5026",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 34,
+      "nama": "Azzan Ghozi Misfir",
+      "nim": "2025.03.3780",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 35,
+      "nama": "Bijak Abadi",
+      "nim": "2025.03.4068",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 36,
+      "nama": "Bima Bijak Putra Pratama",
+      "nim": "2026.38.5122",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 37,
+      "nama": "Davit Putra",
+      "nim": "2026.MB.4623",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 38,
+      "nama": "Deriko Maulana Steven",
+      "nim": "2025.38.4291",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 39,
+      "nama": "Diaz",
+      "nim": "2026.33.4743",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 40,
+      "nama": "Diguna Nata Anggara",
+      "nim": "2026.MB.4687",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 41,
+      "nama": "Excell Rizqullah Nasir Harahap",
+      "nim": "2026.03.5258",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 42,
+      "nama": "Fadil Mohammad Jae",
+      "nim": "2024.38.3623",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 43,
+      "nama": "Fahmi Irkhamna",
+      "nim": "2024.03.3397",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 44,
+      "nama": "Farand Ihsan Nabeel",
+      "nim": "2026.33.4711",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 45,
+      "nama": "Farid Febrian",
+      "nim": "2025.03.4371",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 46,
+      "nama": "Fathir Shihab",
+      "nim": "2025.03.4383",
+      "isPengurus": true,
+      "divisionId": "danus",
+      "divisionName": "Divisi Dana Usaha",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 47,
+      "nama": "Fatih Rabbani",
+      "nim": "2025.03.4370",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 48,
+      "nama": "Grara Isa Muhammad",
+      "nim": "2026.38.4863",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 49,
+      "nama": "Habib Arrasyid",
+      "nim": "2024.03.3269",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 50,
+      "nama": "Habib Huwaidi Salam",
+      "nim": "2026.38.5440",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 51,
+      "nama": "Haekal Lutfi",
+      "nim": "2025.03.3781",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 52,
+      "nama": "Haikal Baihakki",
+      "nim": "2025.03.4195",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 53,
+      "nama": "Hanif",
+      "nim": "2026.MB.4792",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 54,
+      "nama": "Hanif Farisan",
+      "nim": "2026.03.4646",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 55,
+      "nama": "Hikam A’thoillah Al Hakim",
+      "nim": "2025.38.4038",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 56,
+      "nama": "Ibnurasyd Fardi",
+      "nim": "2026.03.4865",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 57,
+      "nama": "Ibrahimovic Prasetyo",
+      "nim": "2026.MB.4542",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 58,
+      "nama": "Ikhsan Rahman Al Kahfi",
+      "nim": "2026.MB.4742",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 59,
+      "nama": "Ilzamy Nardo",
+      "nim": "2026.38.5177",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 60,
+      "nama": "Irbadh Muhammad Yusuf",
+      "nim": "2024.03.3457",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 61,
+      "nama": "Irfan Rosyadi Anfasa",
+      "nim": "2026.03.4793",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 62,
+      "nama": "Jihadul Akhbar",
+      "nim": "2026.03.5165",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 63,
+      "nama": "Juhdan Benzema Alrabbani Iswandi",
+      "nim": "2025.03.4333",
+      "isPengurus": true,
+      "divisionId": "humas",
+      "divisionName": "Divisi Humas",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 64,
+      "nama": "Khaerul Mizan",
+      "nim": "2025.03.4098",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 65,
+      "nama": "L Ahmad Arwadi",
+      "nim": "2025.03.4465",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 66,
+      "nama": "Lukman",
+      "nim": "2025.03.3821",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 67,
+      "nama": "M. Abdur Rohman",
+      "nim": "2024.03.3543",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 68,
+      "nama": "M. Fadhil Sa'd",
+      "nim": "2025.MB.4324",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 69,
+      "nama": "M. Fadil Ibnu Singgih",
+      "nim": "2026.03.4797",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 70,
+      "nama": "M. Rasyah Rafif",
+      "nim": "2026.MB.4726",
+      "isPengurus": true,
+      "divisionId": "humas",
+      "divisionName": "Divisi Humas",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 71,
+      "nama": "Maslamah",
+      "nim": "2026.03.5410",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 72,
+      "nama": "Marwaan Aflah",
+      "nim": "2026.03.5230",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 73,
+      "nama": "Maulana Ardi Rifa’i",
+      "nim": "2025.33.4361",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 74,
+      "nama": "Meko Alyoga",
+      "nim": "2024.03.3453",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 75,
+      "nama": "Mikechal Satria Pratama",
+      "nim": "2026.13.5125",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 76,
+      "nama": "Miqdad Muttaqien",
+      "nim": "2025.03.4003",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 77,
+      "nama": "Mohammad Talent Gendicha Wagih Rusyidi",
+      "nim": "2025.03.3695",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 78,
+      "nama": "Muawwidz Rofiq",
+      "nim": "2026.03.5277",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 79,
+      "nama": "Muh Fasha Aprian",
+      "nim": "2026.38.5025",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 80,
+      "nama": "Muh Jihadul Akhbar",
+      "nim": "2026.03.5165",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 81,
+      "nama": "Muh Zhafran S Hi Noor",
+      "nim": "2024.03.3400",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 82,
+      "nama": "Muh. Diaz Fatin",
+      "nim": "2025.38.3671",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 83,
+      "nama": "Muh. Hafizal Al Zul Qafar",
+      "nim": "2026.38.4668",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 84,
+      "nama": "Muhamad Puang Respati",
+      "nim": "2026.13.5000",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 85,
+      "nama": "Muhamad Salwan Haekal Nizami",
+      "nim": "2025.38.4175",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 86,
+      "nama": "Muhammad Abdul Khaliq",
+      "nim": "2026.38.5383",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 87,
+      "nama": "Muhammad Abdullah Rizqy Faza",
+      "nim": "2026.03.4639",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 88,
+      "nama": "Muhammad Adhi Nasrullah",
+      "nim": "2025.38.3860",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 89,
+      "nama": "Muhammad Aldran Adiwangsa Yayin",
+      "nim": "2025.03.3932",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 90,
+      "nama": "Muhammad Arif Wakiilaa",
+      "nim": "2023.38.2747",
+      "isPengurus": true,
+      "divisionId": "danus",
+      "divisionName": "Divisi Dana Usaha",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 92,
+      "nama": "Muhammad Daffa Ramadhan",
+      "nim": "2025.38.4010",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 93,
+      "nama": "Muhammad Dzaki Ali Syifaa",
+      "nim": "2024.03.3139",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 94,
+      "nama": "Muhammad Fakhri Alwi",
+      "nim": "2026.03.5045",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 95,
+      "nama": "Muhammad Falah Wibowo",
+      "nim": "2026.03.4995",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 96,
+      "nama": "Muhammad Falih Asyabib",
+      "nim": "2024.03.3336",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 97,
+      "nama": "Muhammad Faris Zuhair",
+      "nim": "2024.03.3433",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 98,
+      "nama": "Muhammad Fauzan Ihza Santosa",
+      "nim": "2024.03.3301",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 99,
+      "nama": "Muhammad Haikal",
+      "nim": "2025.03.4337",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 100,
+      "nama": "Muhammad Ibrahim",
+      "nim": "2024.03.3605",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 101,
+      "nama": "Muhammad Iqbal Zulfahmi",
+      "nim": "2026.33.5071",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 102,
+      "nama": "Muhammad Jundi Fakhrudin Ismail",
+      "nim": "2024.03.3613",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 103,
+      "nama": "Muhammad Kinza Nawfal Altamis",
+      "nim": "2026.MB.4814",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 104,
+      "nama": "Muhammad Putra Ramadhan",
+      "nim": "2026.03.4840",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 105,
+      "nama": "Muhammad Rafi Aulia",
+      "nim": "2025.13.4387",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 106,
+      "nama": "Muhammad Ramdani",
+      "nim": "2026.13.5272",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 107,
+      "nama": "Muhammad Razan Daniswara",
+      "nim": "2026.MB.4671",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 108,
+      "nama": "Muhammad Ridho",
+      "nim": "2026.03.5217",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 109,
+      "nama": "Muhammad Rifa' Nur Azmi",
+      "nim": "2025.03.4146",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 110,
+      "nama": "Muhammad Tsaqif Ashadiar",
+      "nim": "2026.03.4588",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 111,
+      "nama": "Muhammad Zahreno Fajrul Falah",
+      "nim": "2024.38.3246",
+      "isPengurus": true,
+      "divisionId": "danus",
+      "divisionName": "Divisi Dana Usaha",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 112,
+      "nama": "Mush'ab Al Bara",
+      "nim": "2026.38.5399",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 113,
+      "nama": "Naufal Nadhif Assami",
+      "nim": "2026.03.5043",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 114,
+      "nama": "Pandu Gea Wardika",
+      "nim": "2025.03.3794",
+      "isPengurus": true,
+      "divisionId": "danus",
+      "divisionName": "Divisi Dana Usaha",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 115,
+      "nama": "Putra Bintang Fadhilah",
+      "nim": "2026.38.4564",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 116,
+      "nama": "Rafi Dzafran Saputra",
+      "nim": "2025.03.3911",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 117,
+      "nama": "Rafly Muhammad Padilah",
+      "nim": "2025.38.3659",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 118,
+      "nama": "Rahmat Hidayat",
+      "nim": "2026.03.4776",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 119,
+      "nama": "Ramanda Zikri",
+      "nim": "2026.MB.4771",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 120,
+      "nama": "Ramzy Syamlan",
+      "nim": "2024.03.3204",
+      "isPengurus": true,
+      "divisionId": "humas",
+      "divisionName": "Divisi Humas",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 121,
+      "nama": "Riski Ananda",
+      "nim": "2025.MB.3248",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 122,
+      "nama": "Rizqi Alfaza",
+      "nim": "2025.03.3669",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 123,
+      "nama": "Rosyid Nashrulloh Ar Rofif",
+      "nim": "2024.03.3251",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 124,
+      "nama": "Ryan Ferdiyana Muhammad",
+      "nim": "2026.MB.4751",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 125,
+      "nama": "Sajid Fathan Yudistira",
+      "nim": "2026.MB.4888",
+      "isPengurus": true,
+      "divisionId": "media",
+      "divisionName": "Divisi Media",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 126,
+      "nama": "Sanja Kuswari",
+      "nim": "2026.03.5087",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 127,
+      "nama": "Satya Wira Dharma Samudra",
+      "nim": "2026.MB.4594",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 128,
+      "nama": "Savero Rami",
+      "nim": "2026.38.4611",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 129,
+      "nama": "Sayyid Fadhil Al Fajr",
+      "nim": "2026.03.4814",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 130,
+      "nama": "Senandung Mubarok",
+      "nim": "2026.03.5178",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 131,
+      "nama": "Sulthan Bahabazy",
+      "nim": "2026.38.4803",
+      "isPengurus": true,
+      "divisionId": "keilmuan",
+      "divisionName": "Divisi Keilmuan",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 132,
+      "nama": "Syaiful Mustaqim",
+      "nim": "2026.MB.4732",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 133,
+      "nama": "Thaariq Dzaki Razaan",
+      "nim": "2026.38.4541",
+      "isPengurus": true,
+      "divisionId": "humas",
+      "divisionName": "Divisi Humas",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 134,
+      "nama": "Tsaqif Althaf Rayyan",
+      "nim": "2026.03.4834",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 135,
+      "nama": "Tsaqif Ibrahimovic",
+      "nim": "2024.38.3577",
+      "isPengurus": true,
+      "divisionId": "digital",
+      "divisionName": "Divisi Dakwah Digital",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 136,
+      "nama": "Ukkasyah",
+      "nim": "2024.03.3530",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 137,
+      "nama": "Umair",
+      "nim": "2023.03.2782",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 138,
+      "nama": "Umar Anwar Martak",
+      "nim": "2026.38.5136",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 140,
+      "nama": "Usamah",
+      "nim": "2025.38.3846",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 141,
+      "nama": "Wafy Abdurrahman Azzahid",
+      "nim": "2026.03.5208",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 142,
+      "nama": "Wahid Rafiqi Ramadhan",
+      "nim": "2025.03.3799",
+      "isPengurus": true,
+      "divisionId": "sarpras",
+      "divisionName": "Divisi Sarpras & Inventaris",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 143,
+      "nama": "Wildan Abdillah Bashirrafi",
+      "nim": "2026.38.4895",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 144,
+      "nama": "Yahya Abdullah",
+      "nim": "2025.03.3769",
+      "isPengurus": true,
+      "divisionId": "tpq",
+      "divisionName": "Divisi TPQ",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 145,
+      "nama": "Yazid Hamidi",
+      "nim": "2026.03.5168",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 146,
+      "nama": "Yusuf",
+      "nim": "2024.03.3370",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 147,
+      "nama": "Yusuf Abdilah",
+      "nim": "2025.03.4109",
+      "isPengurus": true,
+      "divisionId": "acara",
+      "divisionName": "Divisi Acara",
+      "skRole": "Anggota Divisi",
+      "status": "Pengurus Aktif"
+    },
+    {
+      "no": 148,
+      "nama": "Yusuf Bahtiar",
+      "nim": "2026.MB.4545",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 149,
+      "nama": "Zalva Naufal Aghri",
+      "nim": "2026.13.4830",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    },
+    {
+      "no": 150,
+      "nama": "Zayyin 'Athaya Ahmada",
+      "nim": "2025.03.4162",
+      "isPengurus": false,
+      "divisionId": "relawan",
+      "divisionName": "Relawan / Anggota Biasa",
+      "skRole": "Relawan",
+      "status": "Anggota (Relawan)"
+    }
+  ]
+}

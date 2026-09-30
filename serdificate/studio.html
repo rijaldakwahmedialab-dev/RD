@@ -1,0 +1,2827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RD-CERT • Portal Sertifikat Resmi UKM Rijal Dakwah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #064E3B;
+      --primary-light: #047857;
+      --emerald-glow: #10B981;
+      --gold: #D97706;
+      --gold-light: #F59E0B;
+      --bg-dark: #070B14;
+      --panel-dark: #0E1626;
+      --card-dark: #141F36;
+      --card-inner: #0A101D;
+      --border-dark: #1E293B;
+      --border-focus: #334155;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Bar Header */
+    header {
+      background: var(--panel-dark);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 100;
+    }
+    .brand-wrap { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary) 0%, #022C22 100%);
+      border: 1.5px solid var(--emerald-glow); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 14px;
+      color: #FFF; box-shadow: 0 0 15px rgba(16,185,129,0.3);
+    }
+    .brand-title { font-size: 14px; font-weight: 800; letter-spacing: 0.4px; display: flex; align-items: center; gap: 8px; }
+    .badge-official {
+      background: rgba(16, 185, 129, 0.15); color: #34D399;
+      font-size: 9.5px; font-weight: 700; padding: 2px 7px;
+      border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .brand-sub { font-size: 10.5px; color: var(--text-muted); }
+
+    /* Role Nav Tabs */
+    .role-tabs {
+      display: flex; gap: 4px; background: var(--card-inner);
+      padding: 4px; border-radius: 9px; border: 1px solid var(--border-dark);
+    }
+    .role-tab-btn {
+      padding: 6px 14px; font-size: 11.5px; font-weight: 700;
+      border-radius: 6px; cursor: pointer; border: none; background: transparent;
+      color: var(--text-muted); transition: all 0.2s ease;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .role-tab-btn:hover { color: #FFF; }
+    .role-tab-btn.active {
+      background: var(--card-dark); color: #FFF;
+      border: 1px solid var(--border-focus);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .role-tab-btn.active.sekretaris { color: #F59E0B; border-color: rgba(245,158,11,0.4); }
+    .role-tab-btn.active.kadiv { color: #38BDF8; border-color: rgba(56,189,248,0.4); }
+    .role-tab-btn.active.media { color: #34D399; border-color: rgba(52,211,153,0.4); }
+
+    /* Header Actions */
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .header-icon-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 8px;
+      background: #0A0F1D; border: 1px solid #334155;
+      color: #94A3B8; text-decoration: none; cursor: pointer;
+      transition: all 0.15s ease; flex-shrink: 0;
+    }
+    .header-icon-btn:hover {
+      border-color: #38BDF8; color: #FFF; background: #131F37;
+      transform: translateY(-1px);
+    }
+    .header-lock-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 1px solid rgba(245,158,11,0.3); background: rgba(245,158,11,0.12);
+      color: #FBBF24; cursor: pointer; font-size: 14px;
+      transition: all 0.15s ease; flex-shrink: 0;
+    }
+    .header-lock-btn:hover {
+      transform: translateY(-1px); filter: brightness(1.2);
+    }
+    .header-lock-btn.locked {
+      background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: #34D399;
+    }
+    .btn-export-main {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+      border: 1px solid var(--emerald-glow); color: #FFF; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(4, 120, 87, 0.4); transition: 0.15s; flex-shrink: 0;
+    }
+    .btn-export-main:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(16,185,129,0.6); }
+    /* Layout Workspace */
+    main {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      flex: 1;
+      height: calc(100vh - 58px);
+      overflow: hidden;
+    }
+
+    /* Left Sidebar */
+    aside {
+      background: var(--panel-dark);
+      border-right: 1px solid var(--border-dark);
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .card-box {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.6px; color: #38BDF8;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-title.gold { color: #F59E0B; }
+    .card-title.emerald { color: #34D399; }
+
+    label { display: block; font-size: 10.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 3px; }
+    input[type="text"], input[type="number"], select, textarea {
+      width: 100%; background: var(--card-inner); border: 1px solid #334155;
+      color: var(--text-main); font-family: inherit; font-size: 11px;
+      padding: 6px 9px; border-radius: 6px; outline: none; transition: 0.15s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--emerald-glow); box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    /* Roster Grid Redesign */
+    .roster-grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 7px;
+      max-height: 205px;
+      overflow-y: auto;
+      background: var(--card-inner);
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #1E293B;
+      scrollbar-width: thin;
+      scrollbar-color: #334155 #0B1222;
+    }
+    .roster-grid-container::-webkit-scrollbar { width: 5px; }
+    .roster-grid-container::-webkit-scrollbar-track { background: #0B1222; border-radius: 4px; }
+    .roster-grid-container::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .roster-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 9px;
+      background: #0B1222;
+      border: 1px solid #1E293B;
+      border-radius: 7px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .roster-card:hover {
+      border-color: #38BDF8;
+      background: #111D35;
+      transform: translateY(-1px);
+    }
+    .roster-card.selected {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    .roster-avatar {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: #141F36; color: #38BDF8; font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .roster-card.selected .roster-avatar {
+      background: rgba(16, 185, 129, 0.25); color: #34D399;
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .roster-info {
+      flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;
+    }
+    .roster-name {
+      font-size: 10.5px; font-weight: 700; color: #F1F5F9;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .roster-nim {
+      font-size: 9px; color: #64748B; font-family: monospace;
+    }
+    .roster-card.selected .roster-nim {
+      color: #34D399;
+    }
+    .roster-action-badge {
+      width: 18px; height: 18px; border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; flex-shrink: 0;
+      background: #141F36; color: #64748B;
+      transition: all 0.15s ease;
+    }
+    .roster-card:hover .roster-action-badge {
+      background: #1E293B; color: #38BDF8;
+    }
+    .roster-card.selected .roster-action-badge {
+      background: #059669; color: #FFF;
+    }
+    /* Table of Added Recipients */
+    .table-container {
+      max-height: 220px; overflow-y: auto; background: var(--card-inner);
+      border: 1px solid #1E293B; border-radius: 6px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+    th {
+      background: #0D1524; color: var(--text-dim); text-align: left;
+      padding: 6px 8px; font-weight: 700; border-bottom: 1px solid #1E293B;
+      position: sticky; top: 0; z-index: 2;
+    }
+    td {
+      padding: 6px 8px; border-bottom: 1px solid #162032; color: #CBD5E1; vertical-align: middle;
+    }
+    tr.active-row td { background: rgba(16, 185, 129, 0.1); color: #FFF; font-weight: 600; }
+    .badge-sk {
+      font-size: 9px; padding: 1px 4px; border-radius: 3px; font-weight: 700;
+      background: rgba(16,185,129,0.2); color: #34D399; border: 1px solid rgba(16,185,129,0.4);
+    }
+    .badge-ext {
+      font-size: 9px; padding: 1px 4px; border-radius: 3px; font-weight: 700;
+      background: rgba(245,158,11,0.2); color: #FBBF24; border: 1px solid rgba(245,158,11,0.4);
+    }
+
+    /* Right Canvas Area */
+    .canvas-area {
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    .meta-bar {
+      background: #090F1C;
+      border-bottom: 1px solid var(--border-dark);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+    .canvas-wrapper {
+      flex: 1;
+      padding: 24px;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #10192C 0%, #060A14 100%);
+    }
+    #svgContainer {
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255,255,255,0.08);
+      border-radius: 8px;
+      line-height: 0;
+      max-width: 95%;
+      max-height: 90%;
+      transition: transform 0.2s ease;
+    }
+    #svgContainer svg {
+      width: 100%;
+      height: auto;
+      max-height: calc(100vh - 160px);
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* Slider / Nav Controls */
+    .nav-slider {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; background: #0A111F; border: 1px solid #1E293B;
+      border-radius: 8px;
+    }
+
+    /* Slide-Over Export Drawer */
+    .drawer-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px); z-index: 250;
+      display: none; opacity: 0; transition: opacity 0.25s ease;
+    }
+    .drawer-backdrop.open { display: block; opacity: 1; }
+    
+    .export-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 440px; max-width: 90vw; background: #0F172A;
+      border-left: 1px solid #334155; z-index: 260;
+      box-shadow: -15px 0 40px rgba(0,0,0,0.7);
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    .export-drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      padding: 16px 20px; border-bottom: 1px solid #1E293B;
+      display: flex; align-items: center; justify-content: space-between;
+      background: #141E33; position: sticky; top: 0; z-index: 10;
+    }
+    .drawer-title { font-size: 15px; font-weight: 700; color: #F8FAFC; display: flex; align-items: center; gap: 8px; }
+    .drawer-close { background: transparent; border: none; color: #94A3B8; font-size: 20px; cursor: pointer; padding: 4px 8px; border-radius: 6px; line-height: 1; }
+    .drawer-close:hover { background: #334155; color: #FFF; }
+
+    .drawer-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+    .drawer-card {
+      background: #141E33; border: 1px solid #1E293B; border-radius: 10px;
+      padding: 14px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .drawer-card-title {
+      font-size: 11.5px; font-weight: 700; color: #38BDF8; text-transform: uppercase;
+      letter-spacing: 0.5px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .pill-selector {
+      display: flex; gap: 6px; background: #0A0F1D; padding: 4px; border-radius: 8px; border: 1px solid #334155;
+    }
+    .pill-btn {
+      flex: 1; padding: 7px 8px; font-size: 10.5px; font-weight: 600; text-align: center;
+      border-radius: 6px; cursor: pointer; border: none; background: transparent; color: #94A3B8;
+      transition: all 0.2s ease;
+    }
+    .pill-btn.active { background: #047857; color: #FFFFFF; box-shadow: 0 2px 6px rgba(4,120,87,0.4); }
+    
+    .progress-bar-wrap {
+      width: 100%; height: 8px; background: #0A0F1D; border-radius: 4px;
+      overflow: hidden; border: 1px solid #334155; margin-top: 6px;
+    }
+    .progress-bar-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, #10B981, #3B82F6);
+      transition: width 0.15s ease;
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px); z-index: 200;
+      display: none; align-items: center; justify-content: center;
+    }
+    .modal-box {
+      background: #141E33; border: 1px solid #334155;
+      border-radius: 12px; padding: 18px; width: 90%; max-width: 400px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+    /* Print Styles */
+    @media print {
+      @page { size: A4 landscape; margin: 0; }
+      body { background: #FFF !important; color: #000 !important; }
+      header, aside, .meta-bar, .modal-backdrop, .canvas-area, main, .export-drawer { display: none !important; }
+      #printContainer { display: block !important; width: 100% !important; }
+      .print-sheet { width: 297mm; height: 210mm; page-break-after: always; break-after: page; margin: 0; padding: 0; overflow: hidden; }
+      .print-sheet svg { width: 100%; height: 100%; display: block; }
+    }
+    
+    /* Security Gatekeeper Overlay */
+    #authGuardOverlay {
+      position: fixed; inset: 0; background: #070B14;
+      z-index: 99999; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .gate-card {
+      background: #0F172A; border: 1.5px solid #334155;
+      border-radius: 18px; padding: 32px 28px; width: 100%; max-width: 460px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9); text-align: center;
+      animation: gateFadeIn 0.3s ease;
+    }
+    @keyframes gateFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .quick-gate-btn {
+      width: 100%; background: #141F36; border: 1px solid #334155;
+      color: #CBD5E1; padding: 7px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.15s ease;
+    }
+    .quick-gate-btn:hover {
+      border-color: #38BDF8; color: #FFF; background: #1E2D4A;
+    }
+
+    #printContainer { display: none; }
+  </style>
+  <!-- SheetJS for Excel Upload & Parse (.xlsx, .xls, .csv) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <!-- Security Gatekeeper Overlay (Blocks unauthenticated visitors) -->
+  <div id="authGuardOverlay" style="display:none;">
+    <div class="gate-card">
+      <div style="width:58px; height:58px; border-radius:14px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#F87171; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 16px auto;">
+        🛡️
+      </div>
+      <div style="font-size:10px; font-weight:800; color:#F87171; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">
+        SECURITY GATE • PORTAL INTERNAL RIJAL DAKWAH
+      </div>
+      <h2 style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:8px; font-family:'Plus Jakarta Sans', sans-serif;">
+        Akses Terbatas: Khusus BPH &amp; Kadiv
+      </h2>
+      <p style="font-size:12px; color:#94A3B8; line-height:1.55; margin-bottom:18px;">
+        Halaman ini memuat master SK 109 Pengurus resmi, tanda tangan digital, dan generator penomoran surat internal. Pengunjung biasa dilarang mengakses demi mencegah pemalsuan sertifikat.
+      </p>
+      <!-- Passcode Login Form on Gate (Matching Gantt Studio & SeRDificate Gate) -->
+      <form id="formGateLogin" style="text-align:left;">
+        <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:10px;">
+          <label style="font-size:11px; font-weight:700; color:#CBD5E1;">Peran Akses</label>
+          <select id="gateRole" style="background:#0A0F1D; border:1px solid #334155; border-radius:6px; padding:8px 10px; color:#FFF; font-size:12px; width:100%; box-sizing:border-box;">
+            <option value="bph">👑 BPH / Sekretaris (Akses Penuh)</option>
+            <option value="media">🎨 Divisi Media (Desain &amp; Ekspor)</option>
+            <option value="acara">📋 Divisi Acara</option>
+            <option value="tpq">📖 Divisi TPQ</option>
+            <option value="keilmuan">🎓 Divisi Keilmuan</option>
+            <option value="humas">📢 Divisi Humas</option>
+            <option value="sarpras">📦 Divisi Sarpras</option>
+            <option value="digital">💻 Divisi Digital &amp; IT</option>
+            <option value="danus">💰 Divisi Danus</option>
+          </select>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:12px;">
+          <label style="font-size:11px; font-weight:700; color:#CBD5E1;">Passcode Divisi (Sinkron Gantt)</label>
+          <input type="password" id="gatePassword" placeholder="Contoh: bph2026 atau media2026" required style="background:#0A0F1D; border:1px solid #334155; border-radius:6px; padding:8px 10px; color:#FFF; font-size:12px; width:100%; box-sizing:border-box; font-family:monospace;">
+        </div>
+        <div id="gateErrorMsg" style="display:none; color:#F87171; font-size:11px; margin-bottom:10px; text-align:center;">Passcode tidak valid. Gunakan passcode resmi Gantt Studio.</div>
+        <button type="submit" style="width:100%; padding:10px; background:linear-gradient(135deg, #059669 0%, #047857 100%); border:1px solid #10B981; border-radius:8px; color:#FFF; font-weight:700; font-size:12px; cursor:pointer;">
+          Buka Akses Pengurus
+        </button>
+      </form>
+      <a href="dashboard.html" style="display:inline-block; margin-top:16px; font-size:11.5px; color:#64748B; text-decoration:none;">
+        ← Kembali ke Dashboard Agenda Kegiatan (dashboard.html)
+      </a>
+    </div>
+  </div>
+
+
+  <!-- Top Bar -->
+  <header>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a id="btnHeaderBack" href="dashboard.html" class="header-icon-btn" title="Kembali ke Dashboard Agenda Kegiatan">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </a>
+      <div class="brand-wrap">
+        <div class="brand-logo" title="UKM Rijal Dakwah">RD</div>
+        <div>
+          <div class="brand-title">
+            <span>RD-CERT</span>
+            <span class="badge-official">SK 2026/2027</span>
+          </div>
+          <div class="brand-sub">Portal Sertifikat Pengurus</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Role Switcher (WITH TEXT AS REQUESTED) -->
+    <div class="role-tabs">
+      <button id="tabBtnSekretaris" class="role-tab-btn sekretaris active">👑 Sekretaris</button>
+      <button id="tabBtnKadiv" class="role-tab-btn kadiv">📋 Pengajuan Kadiv</button>
+      <button id="tabBtnMedia" class="role-tab-btn media">🎨 Media Studio</button>
+    </div>
+
+    <!-- Actions (ICON-BASED) -->
+    <div class="header-actions">
+      <div id="rdUserSessionWrap" style="display:flex; align-items:center; gap:6px;"></div>
+      
+      <button id="btnHeaderLockToggle" class="header-lock-btn" title="Status Pengajuan: Buka (Klik untuk Kunci/Buka)">
+        <span id="lockIcon">🔓</span>
+        <span id="lockText" style="display:none;">Pengajuan Buka</span>
+      </button>
+
+      <button id="btnOpenExportDrawer" class="btn-export-main" title="Buka Menu Export &amp; Unduh (PDF / ZIP / Google Drive)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <main>
+    <!-- Left Sidebar Dynamic View -->
+    <aside>
+      
+      <!-- VIEW 1: SEKRETARIS -->
+      <div id="viewSekretaris" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="card-box">
+          <div class="card-title gold">
+            <span>1. Manajemen Agenda &amp; Nomor Surat</span>
+            <span style="font-size:9px; color:#FBBF24;">Hak Akses Sekretaris</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div>
+              <label>Nama Agenda / Kegiatan Resmi</label>
+              <input type="text" id="secEventName" value="Muktamar Anggota VI UKM Rijal Dakwah">
+            </div>
+            <div class="grid-2">
+              <div>
+                <label>Kode Surat Resmi</label>
+                <input type="text" id="secEventCode" value="RD-MA/X/2026">
+              </div>
+              <div>
+                <label>Tanggal Pelaksanaan</label>
+                <input type="text" id="secEventDate" value="28 September 2026">
+              </div>
+            </div>
+            <div class="grid-2">
+              <div>
+                <label>Nomor Urut Awal</label>
+                <input type="number" id="secStartNumber" value="1" min="1" max="999">
+              </div>
+              <div>
+                <label>Format Pratinjau Nomor</label>
+                <input type="text" id="secNumberPreview" value="001/RD-MA/X/2026" readonly style="background:#050912; color:#38BDF8;">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:4px; padding-top:10px; border-top:1px solid #1E293B; display:flex; flex-direction:column; gap:8px;">
+            <button id="btnToggleLock" style="padding:8px 12px; border-radius:6px; font-weight:700; font-size:11px; cursor:pointer; background:#D97706; border:1px solid #F59E0B; color:#FFF; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <span>🔒 Kunci &amp; Terbitkan Nomor Resmi</span>
+            </button>
+            <div style="font-size:10px; color:#94A3B8; line-height:1.4;">
+              💡 <em>Kunci Pengajuan</em> memastikan nomor urut surat mengikat secara permanen pada daftar nama yang diajukan dan mencegah penomoran bergeser saat diekspor.
+            </div>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <div class="card-title">
+            <span>2. Statistik Pengajuan Antar-Divisi</span>
+            <span id="secTotalRecipients" style="color:#34D399; font-weight:700;">0 Orang</span>
+          </div>
+          <div id="divisionStatsList" style="display:flex; flex-direction:column; gap:6px; font-size:11px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: KADIV SUBMISSION -->
+      <div id="viewKadiv" style="display:none; flex-direction:column; gap:14px;">
+        <div class="card-box">
+          <div class="card-title">
+            <span>1. Pilih Divisi Anda</span>
+            <span style="font-size:9px; color:#94A3B8;">Rujukan SK 2026/2027</span>
+          </div>
+          <div>
+            <select id="kadivSelectDivision">
+              <!-- Rendered by JS from MASTER_SK.divisions -->
+            </select>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <div class="card-title">
+            <span>2. Tambah Panitia / Penerima</span>
+            <div style="display:flex; gap:4px;">
+              <button id="modeBtnBulkNim" class="pill-btn active" style="padding:2px 8px; font-size:10px;">Paste NIM</button>
+              <button id="modeBtnRoster" class="pill-btn" style="padding:2px 8px; font-size:10px;">Roster Divisi</button>
+              <button id="modeBtnExt" class="pill-btn" style="padding:2px 8px; font-size:10px;">Eksternal</button>
+            </div>
+          </div>
+
+          <!-- Mode A: Bulk NIM Paste -->
+          <div id="boxBulkNim" style="display:flex; flex-direction:column; gap:6px;">
+            <div style="font-size:10px; color:#94A3B8;">
+              Salin &amp; tempel daftar NIM panitia divisi Anda (1 baris 1 NIM). Sistem otomatis menarik nama lengkap resmi dari database SK:
+            </div>
+            <textarea id="inputBulkNim" rows="5" placeholder="2024.38.3238&#10;2025.03.3777&#10;2024.03.3385" style="font-family:monospace;"></textarea>
+            <div class="grid-2">
+              <div>
+                <label>Peran Baku Kegiatan</label>
+                <select id="selectDefaultRole">
+                  <option value="Anggota Sie">Anggota Sie</option>
+                  <option value="Relawan Panitia">Relawan Panitia</option>
+                  <option value="Relawan Lapangan">Relawan Lapangan</option>
+                  <option value="Koordinator Sie">Koordinator Sie</option>
+                  <option value="Ketua Pelaksana">Ketua Pelaksana</option>
+                  <option value="Sekretaris Panitia">Sekretaris Panitia</option>
+                  <option value="Bendahara Panitia">Bendahara Panitia</option>
+                  <option value="Master of Ceremony">Master of Ceremony</option>
+                  <option value="Narasumber / Pemateri">Narasumber / Pemateri</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:flex-end;">
+                <button id="btnProcessBulkNim" style="width:100%; padding:7px; background:#047857; border:1px solid #10B981; border-radius:6px; color:#FFF; font-weight:700; font-size:11px; cursor:pointer;">
+                  ⚡ Cocokkan SK
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode B: Quick Roster Picker (or Excel Uploader in Umum) -->
+          <div id="boxRosterPicker" style="display:none; flex-direction:column; gap:8px;">
+            <!-- Dedicated Excel Upload Section for Mode Umum -->
+            <div id="boxExcelUploadWrap" style="display:none; flex-direction:column; gap:8px; background:#0A0F1D; padding:12px; border-radius:8px; border:1px dashed #38BDF8;">
+              <div style="font-size:11px; font-weight:700; color:#38BDF8; display:flex; align-items:center; gap:6px;">
+                <span>📊</span><span>Unggah Berkas Spreadsheet (.xlsx, .xls, .csv)</span>
+              </div>
+              <p style="font-size:10px; color:#94A3B8; line-height:1.4;">
+                Unggah file Excel daftar peserta. Sistem otomatis mendeteksi kolom: <strong>Nama</strong>, <strong>Peran/Jabatan</strong>, dan <strong>Instansi</strong>.
+              </p>
+              <input type="file" id="inputExcelFile" accept=".xlsx, .xls, .csv" style="font-size:11px; color:#FFF; background:#0B132B; padding:8px; border-radius:6px; border:1px solid #1E293B; cursor:pointer;">
+              <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; color:#64748B;">
+                <span>Mendukung Excel 2007+ (.xlsx), .xls &amp; CSV</span>
+                <a href="javascript:void(0)" id="btnDlExcelTemplate" style="color:#38BDF8; text-decoration:none; font-weight:600;">📥 Unduh Template (.csv)</a>
+              </div>
+            </div>
+
+            <!-- Standard Roster Control Bar for Internal -->
+            <div id="boxRosterInternalWrap" style="display:flex; flex-direction:column; gap:8px;">
+            <!-- Roster Control Bar -->
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+              <div style="position:relative; flex:1;">
+                <input type="text" id="searchRosterMember" placeholder="Cari nama atau NIM..." style="width:100%; padding:6px 8px 6px 26px; font-size:10.5px; border-radius:6px; background:#0B1222; border:1px solid #1E293B; color:#F1F5F9;">
+                <span style="position:absolute; left:8px; top:6px; font-size:11px; color:#64748B; pointer-events:none;">🔍</span>
+              </div>
+              <div style="display:flex; gap:4px; flex-shrink:0;">
+                <button id="btnRosterSelectAll" type="button" style="background:#064E3B; border:1px solid #059669; color:#34D399; font-size:10px; font-weight:700; padding:6px 9px; border-radius:6px; cursor:pointer;" title="Tambahkan semua anggota divisi ini ke daftar">
+                  + Semua
+                </button>
+                <button id="btnRosterClearAll" type="button" style="background:#141F36; border:1px solid #334155; color:#F87171; font-size:10px; font-weight:700; padding:6px 9px; border-radius:6px; cursor:pointer;" title="Hapus anggota divisi ini dari daftar">
+                  ✕ Reset
+                </button>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; color:#94A3B8; padding:0 2px;">
+              <span id="rosterCountStatus">Memuat anggota divisi...</span>
+              <span style="font-size:9.5px; color:#64748B;">Klik kartu untuk pilih / hapus</span>
+            </div>
+
+            <div id="divisionChipsContainer" class="roster-grid-container">
+              <!-- Rendered by JS as responsive member cards -->
+            </div>
+            </div> <!-- end boxRosterInternalWrap -->
+          </div>
+
+          <!-- Mode C: External Participant -->
+          <div id="boxExternal" style="display:none; flex-direction:column; gap:6px;">
+            <div>
+              <label>Nama Lengkap &amp; Gelar Resmi</label>
+              <input type="text" id="inputExtName" placeholder="Dr. Muhammad Fulan, M.Ag.">
+            </div>
+            <div class="grid-2">
+              <div>
+                <label>Instansi / Asal Ormawa</label>
+                <input type="text" id="inputExtInstansi" placeholder="STDI Imam Syafi'i Jember">
+              </div>
+              <div>
+                <label>Peran di Acara</label>
+                <input type="text" id="inputExtRole" value="Narasumber Tamu">
+              </div>
+            </div>
+            <button id="btnAddExternal" style="padding:6px; background:#D97706; border:1px solid #F59E0B; border-radius:6px; color:#FFF; font-weight:700; font-size:11px; cursor:pointer; margin-top:4px;">
+              ➕ Tambah Peserta Umum
+            </button>
+          </div>
+        </div>
+
+        <!-- Recipients Table -->
+        <div class="card-box" style="flex:1;">
+          <div class="card-title">
+            <span>3. Roster Panitia Terverifikasi</span>
+            <span id="recipientCountBadge" style="color:#38BDF8; font-weight:700;">0 Orang</span>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:28px;">No</th>
+                  <th>Nama Lengkap</th>
+                  <th>NIM</th>
+                  <th>Peran di Acara</th>
+                  <th style="width:30px; text-align:center;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="recipientsTableBody">
+                <!-- Rows rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: MEDIA & LIVE STUDIO -->
+      <div id="viewMedia" style="display:none; flex-direction:column; gap:14px;">
+        <div class="card-box">
+          <div class="card-title emerald">
+            <span>1. Template Master Inkscape</span>
+            <span id="mediaTplBadge" style="font-size:9px; color:#34D399; font-weight:700;">RESMI RD</span>
+          </div>
+          <div style="font-size:10.5px; color:#94A3B8;">Menggunakan desain vektor resmi Rijal Dakwah (`template-sertifikat-master.svg`).</div>
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <label style="flex:1; text-align:center; padding:6px; background:#0A0F1D; border:1px solid #334155; border-radius:6px; cursor:pointer; font-size:10.5px; color:#CBD5E1; margin-bottom:0;">
+              📁 Ganti SVG Kustom
+              <input type="file" id="mediaInputCustomSvg" accept=".svg" style="display:none;">
+            </label>
+            <button id="mediaBtnResetSvg" style="background:#0A0F1D; border:1px solid #334155; color:#94A3B8; padding:0 10px; border-radius:6px; cursor:pointer;" title="Reset ke Master SVG">↺</button>
+          </div>
+          <button id="btnDownloadMasterSvg" style="margin-top:6px; padding:6px; background:transparent; border:1px dashed #334155; border-radius:6px; color:#94A3B8; font-size:10.5px; cursor:pointer; width:100%;">
+            📥 Unduh Template SVG Master
+          </button>
+        </div>
+
+        <div class="card-box">
+          <div class="card-title">
+            <span>2. Navigasi Lembar Aktif</span>
+            <span id="navCounter" style="font-size:11px; color:#38BDF8; font-weight:700;">0 / 0</span>
+          </div>
+          <div class="nav-slider">
+            <button id="btnNavPrev" style="background:#141F36; border:1px solid #334155; color:#FFF; padding:4px 10px; border-radius:4px; cursor:pointer;">◀ Sebelumnya</button>
+            <button id="btnEmergencyFix" style="background:transparent; border:none; color:#FBBF24; font-size:11px; text-decoration:underline; cursor:pointer;">✏️ Edit Cepat</button>
+            <button id="btnNavNext" style="background:#141F36; border:1px solid #334155; color:#FFF; padding:4px 10px; border-radius:4px; cursor:pointer;">Berikutnya ▶</button>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <div class="card-title gold">3. Kustomisasi Bingkai &amp; Tanda Tangan</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div>
+              <label>Visual Flex (Aksen Warna Bingkai)</label>
+              <select id="mediaSelectVariant">
+                <option value="#064E3B">Emerald (Panitia Acara)</option>
+                <option value="#D97706">Gold (BPH / Pengurus Harian)</option>
+                <option value="#2563EB">Sapphire (Pemateri / Narasumber)</option>
+                <option value="#7C3AED">Amethyst (Tamu Undangan)</option>
+              </select>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:4px;">
+              <label style="margin-bottom:0;">Dynamic E-Signature (Simulasi TTD)</label>
+              <input type="checkbox" id="mediaToggleESign" style="width:auto; cursor:pointer;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Right Live Canvas Area -->
+    <section class="canvas-area">
+      <div class="meta-bar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:10px; text-transform:uppercase; font-weight:800; color:#64748B;">Target Berkas:</span>
+          <span id="canvasNamingTarget" style="font-family:monospace; background:#0F172A; border:1px solid #1E293B; padding:2px 8px; border-radius:4px; color:#38BDF8; font-size:11px;">output.pdf</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span id="canvasEventBadge" style="color:#F59E0B; font-weight:600;">Muktamar Anggota VI</span>
+          <span style="color:#64748B;">A4 Landscape (3508 x 2480 px, 300 DPI)</span>
+        </div>
+      </div>
+
+      <div class="canvas-wrapper">
+        <div id="svgContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Slide-Over Export Drawer (440px) -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <div id="exportDrawer" class="export-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <span>⚡ Pusat Ekspor &amp; Cloud Sync</span>
+      </div>
+      <button id="btnCloseDrawer" class="drawer-close" title="Tutup Panel">&times;</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Status Strip -->
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1; background:#0A0F1D; border:1px solid #1E293B; border-radius:6px; padding:6px; text-align:center;">
+          <div style="font-size:9px; color:#64748B; text-transform:uppercase;">Total Sertifikat</div>
+          <div id="drawerTotalCount" style="font-size:14px; font-weight:700; color:#38BDF8;">0 Lembar</div>
+        </div>
+        <div style="flex:1; background:#0A0F1D; border:1px solid #1E293B; border-radius:6px; padding:6px; text-align:center;">
+          <div style="font-size:9px; color:#64748B; text-transform:uppercase;">Lembar Aktif</div>
+          <div id="drawerActiveIndex" style="font-size:14px; font-weight:700; color:#34D399;">Ke-0</div>
+        </div>
+        <div style="flex:1; background:#0A0F1D; border:1px solid #1E293B; border-radius:6px; padding:6px; text-align:center;">
+          <div style="font-size:9px; color:#64748B; text-transform:uppercase;">Standar Mutu</div>
+          <div style="font-size:14px; font-weight:700; color:#FBBF24;">A4 300 DPI</div>
+        </div>
+      </div>
+
+      <!-- Card 1: Single Download -->
+      <div class="drawer-card">
+        <div class="drawer-card-title">
+          <span>1. Unduh Lembar Ini (Single)</span>
+          <span style="font-size:9px; color:#94A3B8; font-weight:500;">Pratinjau Sekarang</span>
+        </div>
+        <div class="pill-selector">
+          <button id="optSingleSvg" class="pill-btn">Vektor (.SVG)</button>
+          <button id="optSinglePng" class="pill-btn">Gambar HD (.PNG)</button>
+          <button id="optSinglePdf" class="pill-btn active">Dokumen (.PDF)</button>
+        </div>
+        <div style="font-size:10px; color:#64748B; background:#0A0F1D; padding:6px 8px; border-radius:6px; border:1px solid #1E293B;">
+          Target: <code id="drawerSingleFileName" style="color:#E2E8F0; word-break:break-all;">output.pdf</code>
+        </div>
+        <button id="btnDownloadSingle" style="padding:8px 12px; background:#047857; border:1px solid #10B981; border-radius:6px; color:#FFF; font-weight:700; font-size:11px; cursor:pointer;">
+          📥 Unduh Lembar Aktif
+        </button>
+      </div>
+
+      <!-- Card 2: Batch ZIP -->
+      <div class="drawer-card">
+        <div class="drawer-card-title">
+          <span>2. Paket Massal (.ZIP)</span>
+          <span style="font-size:9px; color:#34D399; font-weight:600;">100% Offline</span>
+        </div>
+        <div class="pill-selector" style="flex-wrap:wrap;">
+          <button id="optZipSvg" class="pill-btn">Hanya SVG</button>
+          <button id="optZipPng" class="pill-btn">Hanya PNG</button>
+          <button id="optZipPdf" class="pill-btn active">Hanya PDF</button>
+          <button id="optZipAll" class="pill-btn">Semua (Komplit)</button>
+        </div>
+
+        <div id="zipProgressSection" style="display:none; background:#0A0F1D; padding:10px; border-radius:8px; border:1px solid #334155;">
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:#CBD5E1; font-weight:600;">
+            <span id="zipProgressStatus">Merender PDF ke kanvas...</span>
+            <span id="zipProgressPercent">0%</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div id="zipProgressBarFill" class="progress-bar-fill"></div>
+          </div>
+        </div>
+
+        <button id="btnDownloadBatchZip" style="padding:9px 12px; background:#4F46E5; border:1px solid #6366F1; border-radius:6px; color:#FFF; font-weight:700; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <span>📦 Kemas &amp; Unduh ZIP</span>
+        </button>
+      </div>
+
+      <!-- Card 3: Multi-Page Print -->
+      <div class="drawer-card">
+        <div class="drawer-card-title">
+          <span>3. Percetakan Kampus (PDF)</span>
+          <span style="font-size:9px; color:#C084FC; font-weight:600;">Multi-Page</span>
+        </div>
+        <div style="font-size:10px; color:#94A3B8; background:#0A0F1D; padding:8px; border-radius:6px; border:1px solid #1E293B; line-height:1.4;">
+          💡 Gabung ratusan sertifikat ke dalam 1 file PDF gabungan untuk percetakan kampus menggunakan dialog cetak browser.
+        </div>
+        <button id="btnPrintMultiPage" style="padding:8px 12px; background:#7C3AED; border:1px solid #8B5CF6; border-radius:6px; color:#FFF; font-weight:700; font-size:11px; cursor:pointer;">
+          🖨️ Buka Jendela Cetak Multi-Lembar
+        </button>
+      </div>
+
+      <!-- Card 4: Google Drive Upload -->
+      <div class="drawer-card" id="drawerCardGdrive">
+        <div class="drawer-card-title">
+          <span>4. Upload ke Google Drive RD</span>
+          <span style="font-size:9px; color:#10B981; font-weight:700; background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px; border:1px solid rgba(16,185,129,0.3);">⚡ Cloud Aktif</span>
+        </div>
+
+        <!-- Agenda Folder Correspondence Indicator -->
+        <div id="gdriveEventTargetLabel" style="font-size:10px; color:#38BDF8; background:#0B132B; padding:5px 8px; border-radius:4px; border:1px solid #1E293B; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <span>📁</span><span id="gdriveEventNameDisplay">Target Agenda: Muktamar Anggota VI</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:6px; background:#0A0F1D; padding:8px; border-radius:6px; border:1px solid #1E293B; font-size:10px;">
+          <div>
+            <label style="font-size:9.5px; color:#94A3B8; margin-bottom:2px; display:flex; justify-content:space-between;">
+              <span>Target Google Drive Folder ID:</span>
+              <a href="#" id="linkLearnGdrive" style="color:#38BDF8; text-decoration:none;" onclick="alert('Buka folder di drive.google.com, salin kode unik di ujung URL bar (contoh: 1A2b3C4d5E...).\n\nPanduan lengkap tersimpan di file: PANDUAN_SETUP_GOOGLE_DRIVE_API.md'); return false;">Bantuan ID?</a>
+            </label>
+            <input type="text" id="inputGdriveFolderId" value="1rSwN4pD_50ccpr2AFnQ0U-n2XARoJCFB" placeholder="1rSwN4pD_50ccpr2AFnQ0U-n2XARoJCFB" style="font-family:monospace; font-size:10px; padding:4px 8px;">
+          </div>
+          <div>
+            <label style="font-size:9.5px; color:#94A3B8; margin-bottom:2px;">API Bridge Endpoint:</label>
+            <input type="text" id="inputGdriveEndpoint" value="https://script.google.com/macros/s/AKfycbytQmhQceAXJu3jbli3h2yOm8kKPtAC6QCTgWSlaToPJRqN4Y7BrciqyMVacC3WyIl4/exec" placeholder="https://script.google.com/macros/s/.../exec" style="font-family:monospace; font-size:9px; padding:4px 8px;">
+          </div>
+        </div>
+
+        <!-- Replace / Overwrite Option (Anti Data Ganda) -->
+        <div style="display:flex; align-items:flex-start; gap:8px; background:#0B132B; padding:6px 8px; border-radius:6px; border:1px solid #1E293B;">
+          <input type="checkbox" id="checkGdriveReplace" checked style="accent-color:#0284C7; width:14px; height:14px; margin-top:2px; cursor:pointer;">
+          <label for="checkGdriveReplace" style="font-size:9.5px; color:#E2E8F0; cursor:pointer; user-select:none; line-height:1.35;">
+            <strong style="color:#38BDF8;">⚡ Replace / Timpa File Lama</strong> (Anti data ganda — jika file PDF dengan nama yang sama sudah ada di folder Drive, file lama otomatis ditimpa dengan versi terbaru).
+          </label>
+        </div>
+
+        <!-- Dual-Stage Pipeline Progress Container -->
+        <div id="gdriveProgressWrap" style="display:none; background:#0A0F1D; padding:10px 12px; border-radius:8px; border:1px solid #334155; flex-direction:column; gap:9px;">
+          
+          <!-- Tahap 1: Render Engine (Hijau) -->
+          <div id="gdriveRenderPhaseWrap" style="display:flex; flex-direction:column; gap:3px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:700;">
+              <span id="gdriveRenderLabel" style="color:#34D399; display:flex; align-items:center; gap:5px;">
+                <span>🟢</span><span>Tahap 1/2: Render PDF Lokal (RAM)</span>
+              </span>
+              <span id="gdriveRenderPercent" style="color:#34D399; font-family:monospace;">0%</span>
+            </div>
+            <div class="progress-bar-wrap" style="height:5px; background:rgba(16,185,129,0.15);">
+              <div id="gdriveRenderBarFill" class="progress-bar-fill" style="width:0%; background:linear-gradient(90deg, #059669, #10B981, #34D399);"></div>
+            </div>
+            <div id="gdriveRenderSubText" style="font-size:9px; color:#94A3B8;">Menyiapkan kanvas render...</div>
+          </div>
+
+          <!-- Tahap 2: Cloud Upload Engine (Ungu Multi-Worker) -->
+          <div id="gdriveUploadPhaseWrap" style="display:flex; flex-direction:column; gap:3px; opacity:0.4; transition:opacity 0.3s ease;">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:700;">
+              <span id="gdriveUploadLabel" style="color:#C084FC; display:flex; align-items:center; gap:5px;">
+                <span>🟣</span><span>Tahap 2/2: Upload GDrive (Multi-Worker 4x Paralel)</span>
+              </span>
+              <span id="gdriveUploadPercent" style="color:#C084FC; font-family:monospace;">0%</span>
+            </div>
+            <div class="progress-bar-wrap" style="height:5px; background:rgba(168,85,247,0.15);">
+              <div id="gdriveUploadBarFill" class="progress-bar-fill" style="width:0%; background:linear-gradient(90deg, #7C3AED, #A855F7, #C084FC);"></div>
+            </div>
+            <div id="gdriveUploadSubText" style="font-size:9px; color:#94A3B8;">Menunggu tahap render selesai...</div>
+          </div>
+
+        </div>
+
+        <!-- Result Link Container (Dynamic Success or Dirty Warning) -->
+        <div id="gdriveResultBox" style="display:none; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:8px 10px; border-radius:6px; font-size:10.5px; color:#34D399; transition:all 0.3s ease;">
+          <div id="gdriveResultTitle" style="font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+            <span>✓</span><span>Upload ke GDrive Berhasil!</span>
+          </div>
+          <div style="font-size:10px; color:#CBD5E1; margin-bottom:6px; line-height:1.4;" id="gdriveResultDetail">18 berkas PDF berhasil diupload ke Google Drive.</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap;">
+            <a id="btnOpenGdriveLink" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; background:#047857; color:#FFF; border-radius:4px; text-decoration:none; font-size:10px; font-weight:700;">
+              <span>📂 Buka Folder di Google Drive</span>
+            </a>
+            <button id="btnForceUploadAll" type="button" style="display:none; background:transparent; border:none; color:#94A3B8; text-decoration:underline; font-size:9.5px; cursor:pointer;">
+              Upload Ulang Semua (Paksa)
+            </button>
+          </div>
+        </div>
+
+        <button id="btnCloudSyncDrive" style="padding:9px 12px; background:#0284C7; border:1px solid #38BDF8; border-radius:6px; color:#FFF; font-weight:700; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <span>☁️ Upload ke GDrive</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency Fix Modal -->
+  <div id="modalEmergency" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size:13px; font-weight:800; margin-bottom:4px; color:#FFF;">✏️ Emergency Fix-on-the-Fly</h3>
+      <p style="font-size:10.5px; color:#94A3B8; margin-bottom:12px;">Revisi ejaan nama atau gelar mendadak untuk lembar aktif saat ini.</p>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div><label>NIM / Instansi</label><input type="text" id="editNim"></div>
+        <div><label>Nama Lengkap</label><input type="text" id="editNama"></div>
+        <div><label>Jabatan</label><input type="text" id="editJabatan"></div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:14px; flex-wrap:wrap;">
+        <button id="btnCancelEdit" type="button" style="background:#0A0F1D; color:#94A3B8; border:1px solid #334155; padding:6px 12px; border-radius:6px; font-size:11px; cursor:pointer;">Batal</button>
+        <button id="btnSaveEdit" type="button" style="background:#047857; color:#FFF; border:1px solid #10B981; padding:6px 14px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;">Terapkan Saja</button>
+        <button id="btnSaveAndUploadSingle" type="button" style="background:#7C3AED; color:#FFF; border:1px solid #A855F7; padding:6px 14px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px;">
+          <span>🚀</span><span>Terapkan &amp; Upload GDrive (1 Lembar)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print Container & Canvas for Render -->
+  <div id="printContainer"></div>
+  <canvas id="exportCanvas" style="display:none;"></canvas>
+
+  <script>
+    // Master Ground Truth Dataset
+    
+    // Default Fallback SHA-256 Hashes for Division Passcodes (Zero plain-text, same as Gantt Studio)
+    const DEFAULT_AUTH_HASHES = {
+      bph: "4248e33b5e4b935c3918f98dca94f6287ac309202549e06e778833a1ef2fcd81",      // bph2026
+      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",  // 123456
+      tpq: "4ab3a838a92031b15087cc12ec592e233603927b36d9dabb90439f35cebef0a9",      // tpq2026
+      keilmuan: "c9cfa7fc006ca27d75efb67f1396a5bc837073b624f114624b455b8ef109ff6b", // ilmu2026
+      acara: "5427b3e200787e2f5f14e64906f36307374bf94a9a08e1694f4c3a7fc62e3d36",    // acara2026
+      humas: "75628b0dd64ff3aa06085a5369bb9c1f6a15db3bce36c7da493081e2858bca79",    // humas2026
+      sarpras: "cfaebfeff27b6863d03ca4cbdfbb9cf8f547c47d7c67425e4c6c06a44f80c619",  // sarpras2026
+      digital: "3499256e077c5ba70312678129ff203cba5c04b4c732c527013ad2f913d80092",  // digital2026
+      media: "ae11158a1766a5faad9dc6158d6fb2478d15582f3479bc1fc9b646c2bc4a54c3",    // media2026
+      danus: "254e2f89d0f3c5bdf182103fb6ab8cae37c35848bb220199182a3928174780cf"     // danus2026
+    };
+
+    // SHA-256 Helper (Web Crypto)
+    async function calcSha256(str) {
+      const buf = new TextEncoder().encode(str);
+      const hash = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const SESSION_KEY = 'rd_cert_user_session_v1';
+    let currentAuthUser = null;
+
+    function getSessionUser() {
+      try {
+        const stored = localStorage.getItem(SESSION_KEY);
+        if (stored) return JSON.parse(stored);
+      } catch (e) {}
+      return null;
+    }
+
+    function saveSessionUser(user) {
+      currentAuthUser = user;
+      if (user) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      } else {
+        localStorage.removeItem(SESSION_KEY);
+      }
+    }
+
+    function logoutRd() {
+      saveSessionUser(null);
+      sessionStorage.removeItem('serdificate_auth_role');
+      sessionStorage.removeItem('serdificate_is_master');
+      sessionStorage.removeItem('serdificate_auth_token');
+      alert('Sesi telah diakhiri. Mengembalikan ke portal SeRDificate...');
+      window.location.href = 'dashboard.html';
+    }
+    window.logoutRd = logoutRd;
+
+    function checkAuthGuard() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isModeUmum = urlParams.get('mode') === 'umum';
+      const serdRole = sessionStorage.getItem('serdificate_auth_role');
+      const isMaster = sessionStorage.getItem('serdificate_is_master') === 'true';
+
+      const overlay = document.getElementById('authGuardOverlay');
+      const header = document.querySelector('header');
+      const main = document.querySelector('main');
+      const badgeWrap = document.getElementById('rdUserSessionWrap');
+
+      // MODE UMUM: Bebas Akses (0 Passcode)
+      if (isModeUmum) {
+        window._isModeUmum = true;
+        if (overlay) overlay.style.display = 'none';
+        if (header) header.style.display = 'flex';
+        if (main) main.style.display = 'flex';
+
+        const btnBack = document.getElementById('btnHeaderBack');
+        if (btnBack) {
+          btnBack.href = 'index.html';
+          btnBack.title = 'Kembali ke Pilihan Jalur SeRDificate';
+        }
+        if (badgeWrap) {
+          badgeWrap.innerHTML = `
+            <div style="display:flex; align-items:center; gap:6px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.4); height:34px; padding:0 12px; border-radius:8px; font-size:11px;" title="Mode Sertifikat Umum & Kajian Eksternal">
+              <span style="color:#38BDF8;">🌐</span>
+              <strong style="color:#FFF;">Jalur Umum</strong>
+              <a href="index.html" style="color:#94A3B8; text-decoration:none; margin-left:4px; font-size:10px;" title="Ganti Jalur">← Kembali</a>
+            </div>
+          `;
+        }
+
+        // HIDE GOOGLE DRIVE SECTION IN DRAWER & EMERGENCY MODAL FOR SECURITY
+        const gdriveDrawer = document.getElementById('drawerCardGdrive');
+        if (gdriveDrawer) gdriveDrawer.style.display = 'none';
+
+        const emergGdriveBtn = document.getElementById('btnEmergApplyAndUpload');
+        if (emergGdriveBtn) emergGdriveBtn.style.display = 'none';
+
+        // ADAPT TAB 2 TO EXCEL MODE
+        const tabKad = document.getElementById('tabBtnKadiv');
+        if (tabKad) tabKad.innerHTML = '<span>📊</span><span>Input Data (Excel / Paste)</span>';
+
+        const modeBtnBulk = document.getElementById('modeBtnBulkNim');
+        if (modeBtnBulk) modeBtnBulk.textContent = '📑 Paste Excel / Teks';
+
+        const modeBtnRoster = document.getElementById('modeBtnRoster');
+        if (modeBtnRoster) modeBtnRoster.textContent = '📊 Upload File Excel';
+
+        const modeBtnExt = document.getElementById('modeBtnExt');
+        if (modeBtnExt) modeBtnExt.textContent = '✏️ Input Satuan';
+
+        const excelUploadWrap = document.getElementById('boxExcelUploadWrap');
+        if (excelUploadWrap) excelUploadWrap.style.display = 'flex';
+
+        const rosterInternalWrap = document.getElementById('boxRosterInternalWrap');
+        if (rosterInternalWrap) rosterInternalWrap.style.display = 'none';
+
+        // Sembunyikan dropdown divisi organisasi di mode umum
+        const divSelectorCard = document.getElementById('kadivSelectDivision')?.closest('.card-box');
+        if (divSelectorCard) divSelectorCard.style.display = 'none';
+
+        // Update placeholder & desc di boxBulkNim
+        const inpBulk = document.getElementById('inputBulkNim');
+        if (inpBulk) {
+          inpBulk.placeholder = "Ahmad Fauzi\tPeserta Terbaik\tSTDIIS\nMuhammad Ridwan\tNarasumber\tUniversitas Jember\nFathur Rahman\tPeserta Kajian\tUmum";
+          const bulkDesc = document.querySelector('#boxBulkNim div');
+          if (bulkDesc) {
+            bulkDesc.textContent = 'Tempel data yang disalin dari Excel/Spreadsheet (Kolom 1: Nama, Kolom 2: Jabatan, Kolom 3: Instansi) atau 1 baris 1 nama:';
+          }
+        }
+
+        // Sesuaikan nama kegiatan umum jika masih default
+        const secBadge = document.getElementById('canvasEventBadge');
+        if (secBadge && (!eventData.name || eventData.name.includes("Rijal Dakwah"))) {
+          eventData.name = "Kajian Ilmiah Terbuka 2026";
+          secBadge.textContent = eventData.name;
+          const secInp = document.getElementById('secEventName');
+          if (secInp) secInp.value = eventData.name;
+        }
+        return true;
+      }
+
+      // MODE INTERNAL: Cek Sesi dari SeRDificate Gate atau Session Lokal
+      if (serdRole) {
+        currentAuthUser = {
+          role: (serdRole === 'bph' || isMaster) ? 'bph' : 'kadiv',
+          name: isMaster ? 'Master BPH' : serdRole.toUpperCase(),
+          title: isMaster ? 'Pimpinan BPH' : `Kadiv ${serdRole}`
+        };
+        saveSessionUser(currentAuthUser);
+      } else {
+        currentAuthUser = getSessionUser();
+      }
+
+      if (!currentAuthUser || (currentAuthUser.role !== 'bph' && currentAuthUser.role !== 'kadiv')) {
+        if (overlay) overlay.style.display = 'flex';
+        if (header) header.style.display = 'none';
+        if (main) main.style.display = 'none';
+        return false;
+      }
+
+      // ACCESS GRANTED
+      if (overlay) overlay.style.display = 'none';
+      if (header) header.style.display = 'flex';
+      if (main) main.style.display = 'flex';
+
+      // Update User Badge in Header
+      if (badgeWrap) {
+        const isBph = currentAuthUser.role === 'bph';
+        const roleLabel = isBph ? '👑 BPH' : '📋 Kadiv';
+        const borderColor = isBph ? 'rgba(245,158,11,0.4)' : 'rgba(56,189,248,0.4)';
+        const bgColor = isBph ? 'rgba(245,158,11,0.08)' : 'rgba(56,189,248,0.08)';
+        badgeWrap.innerHTML = `
+          <div style="display:flex; align-items:center; gap:5px; background:${bgColor}; border:1px solid ${borderColor}; height:34px; padding:0 9px; border-radius:8px; font-size:11px;" title="${currentAuthUser.name} (${currentAuthUser.title || ''})">
+            <span>${roleLabel}</span>
+            <strong style="color:#FFF;">${currentAuthUser.name.split(' ')[0]}</strong>
+            <button onclick="logoutRd()" style="background:transparent; border:none; color:#94A3B8; cursor:pointer; font-size:11px; margin-left:3px; display:flex; align-items:center; justify-content:center;" title="Keluar / Logout">✕</button>
+          </div>
+        `;
+      }
+
+      // Role Nuance: If Kadiv, default to Kadiv tab and lock secretary lock button
+      if (currentAuthUser.role === 'kadiv') {
+        const tabKad = document.getElementById('tabBtnKadiv');
+        if (tabKad) tabKad.click();
+        const btnLock = document.getElementById('btnToggleLock');
+        if (btnLock) {
+          btnLock.disabled = true;
+          btnLock.title = "Hanya Sekretaris/BPH yang berwenang mengunci nomor surat resmi.";
+          btnLock.style.opacity = "0.45";
+          btnLock.style.cursor = "not-allowed";
+        }
+        const hdrLock = document.getElementById('btnHeaderLockToggle');
+        if (hdrLock) {
+          hdrLock.disabled = true;
+          hdrLock.title = "Hanya Sekretaris/BPH yang berwenang mengunci nomor surat resmi.";
+          hdrLock.style.opacity = "0.45";
+          hdrLock.style.cursor = "not-allowed";
+        }
+      }
+
+      return true;
+    }
+    function initSecurityGate() {
+      const formGate = document.getElementById('formGateLogin');
+      if (formGate) {
+        formGate.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const role = document.getElementById('gateRole').value;
+          const p = document.getElementById('gatePassword').value.trim();
+          const errEl = document.getElementById('gateErrorMsg');
+
+          const enteredHash = await calcSha256(p);
+          const isMaster = enteredHash === DEFAULT_AUTH_HASHES.bph || enteredHash === DEFAULT_AUTH_HASHES.bph_alt;
+          const isRoleValid = enteredHash === DEFAULT_AUTH_HASHES[role];
+
+          if (isMaster || isRoleValid) {
+            const authUser = {
+              username: role,
+              name: isMaster ? 'Master BPH' : `Kadiv ${role.toUpperCase()}`,
+              role: (role === 'bph' || isMaster) ? 'bph' : 'kadiv',
+              title: isMaster ? 'Pimpinan BPH' : `Divisi ${role.toUpperCase()}`
+            };
+            saveSessionUser(authUser);
+            errEl.style.display = 'none';
+            alert(`Akses Diterima! Selamat datang, ${authUser.name}.`);
+            if (checkAuthGuard()) {
+              init();
+            }
+          } else {
+            errEl.textContent = 'Passcode tidak valid. Gunakan passcode divisi resmi Gantt Studio.';
+            errEl.style.display = 'block';
+          }
+        });
+      }
+    }
+
+    const MASTER_SK = {"divisions": [{"id": "bph", "name": "Badan Pengurus Harian", "icon": "fa-crown", "color": "#C59B27"}, {"id": "tpq", "name": "Divisi TPQ", "icon": "fa-book-quran", "color": "#10B981"}, {"id": "keilmuan", "name": "Divisi Keilmuan", "icon": "fa-graduation-cap", "color": "#6366F1"}, {"id": "acara", "name": "Divisi Acara", "icon": "fa-calendar-check", "color": "#F59E0B"}, {"id": "humas", "name": "Divisi Humas", "icon": "fa-bullhorn", "color": "#06B6D4"}, {"id": "sarpras", "name": "Divisi Sarpras & Inventaris", "icon": "fa-boxes-stacked", "color": "#8B5CF6"}, {"id": "digital", "name": "Divisi Dakwah Digital", "icon": "fa-laptop-code", "color": "#3B82F6"}, {"id": "media", "name": "Divisi Media", "icon": "fa-camera-retro", "color": "#EC4899"}, {"id": "danus", "name": "Divisi Dana Usaha", "icon": "fa-sack-dollar", "color": "#14B8A6"}], "totalMembers": 109, "members": [{"id": "m_2024_03_3385", "nama": "Akhmad Dzaqi Mustofa", "nim": "2024.03.3385", "divisionId": "bph", "role": "Wakil 2", "isKadiv": true, "bphRole": "Wakil 2"}, {"id": "m_2024_38_3072", "nama": "Dzaki Rasendriya", "nim": "2024.38.3072", "divisionId": "bph", "role": "Bendahara", "isKadiv": true, "bphRole": "Bendahara"}, {"id": "m_2024_38_3238", "nama": "Fasya Ramadhan", "nim": "2024.38.3238", "divisionId": "bph", "role": "Ketua Umum", "isKadiv": true, "bphRole": "Ketua Umum"}, {"id": "m_2025_03_3777", "nama": "Fawwaz Azzaki", "nim": "2025.03.3777", "divisionId": "bph", "role": "Wakil 1", "isKadiv": true, "bphRole": "Wakil 1"}, {"id": "m_2024_38_3393", "nama": "Fazli Aljabbaar Fujiyono Putra", "nim": "2024.38.3393", "divisionId": "bph", "role": "Sekretaris", "isKadiv": true, "bphRole": "Sekretaris"}, {"id": "m_2024_38_3474", "nama": "Muhammad Alqindi", "nim": "2024.38.3474", "divisionId": "bph", "role": "Wakil 3", "isKadiv": true, "bphRole": "Wakil 3"}, {"id": "m_2025_03_4499", "nama": "Abdurrahman Azzaid", "nim": "2025.03.4499", "divisionId": "tpq", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2025_03_4325", "nama": "Akbar Noorfaiz", "nim": "2025.03.4325", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4683", "nama": "Alvin Saiful Jihad", "nim": "2026.38.4683", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4371", "nama": "Farid Febrian", "nim": "2025.03.4371", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3457", "nama": "Irbadh Muhammad Yusuf", "nim": "2024.03.3457", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4210", "nama": "M. Khikam Muzadi", "nim": "2025.03.4210", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_4175", "nama": "Muhamad Salwan Haekal Nizami", "nim": "2025.38.4175", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_03_4639", "nama": "Muhammad Abdullah Rizqy Faza", "nim": "2026.03.4639", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4249", "nama": "Nailul Athar Asyaukani", "nim": "2025.03.4249", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3911", "nama": "Rafi Dzafran Saputra", "nim": "2025.03.3911", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3854", "nama": "Rakha Riskillah", "nim": "2025.03.3854", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_3957", "nama": "Roshan Kalevi", "nim": "2025.38.3957", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3251", "nama": "Rosyid Nashrulloh Ar Rofif", "nim": "2024.03.3251", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4611", "nama": "Savero Rami", "nim": "2026.38.4611", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_03_4814", "nama": "Sayyid Fadhil Al Fajr", "nim": "2026.03.4814", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3910", "nama": "Ubaidillah", "nim": "2025.03.3910", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2023_03_2782", "nama": "Umair", "nim": "2023.03.2782", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3769", "nama": "Yahya Abdullah", "nim": "2025.03.3769", "divisionId": "tpq", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_MB_4390", "nama": "Muhammad Rafi Syahid Putra", "nim": "2025.MB.4390", "divisionId": "keilmuan", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2026_03_4970", "nama": "Abdullah Hanafi", "nim": "2026.03.4970", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4823", "nama": "Abdurahman Al Bana", "nim": "2026.38.4823", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3824", "nama": "Ahmad Haidar Amanullah", "nim": "2025.03.3824", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_38_3172", "nama": "Anggi Sibgotalloh Mujaddid", "nim": "2024.38.3172", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_MB_4687", "nama": "Diguna Nata Anggara", "nim": "2026.MB.4687", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_03_5165", "nama": "Jihadul Akhbar", "nim": "2026.03.5165", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_13_5000", "nama": "Muhamad Puang Respati", "nim": "2026.13.5000", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_5383", "nama": "Muhammad Abdul Khaliq", "nim": "2026.38.5383", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3543", "nama": "Muhammad Abdurrohman", "nim": "2024.03.3543", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_5025", "nama": "Muhammad Fasha Aprian", "nim": "2026.38.5025", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4250", "nama": "Muhammad Firdaus", "nim": "2025.03.4250", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_33_5071", "nama": "Muhammad Iqbal Zulfahmi", "nim": "2026.33.5071", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_03_5217", "nama": "Muhammad Ridho", "nim": "2026.03.5217", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_3770", "nama": "Rifki Kamaludin", "nim": "2025.38.3770", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4803", "nama": "Sulthan Bahabazy", "nim": "2026.38.4803", "divisionId": "keilmuan", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4247", "nama": "Pigo Sulaiman", "nim": "2025.03.4247", "divisionId": "acara", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2025_03_4258", "nama": "Agung Putra Wijaya", "nim": "2025.03.4258", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3714", "nama": "Ahmad", "nim": "2025.03.3714", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4478", "nama": "Ahmad Rizal Izzi", "nim": "2025.03.4478", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3604", "nama": "Alwan Habib", "nim": "2024.03.3604", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_5074", "nama": "Arga Luthfi Abdan Syakuro", "nim": "2026.38.5074", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_5440", "nama": "Habib Huwaidi Salam", "nim": "2026.38.5440", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3781", "nama": "Haekal Lutfi", "nim": "2025.03.3781", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3123", "nama": "Ismail H. Laniang", "nim": "2024.03.3123", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_33_3902", "nama": "Muhammad Alifya", "nim": "2025.33.3902", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_3659", "nama": "Rafly Muhammad Padilah", "nim": "2025.38.3659", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_03_5178", "nama": "Senandung Mubarok", "nim": "2026.03.5178", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3370", "nama": "Yusuf", "nim": "2024.03.3370", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4109", "nama": "Yusuf Abdilah", "nim": "2025.03.4109", "divisionId": "acara", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4107", "nama": "Abdul Hakim", "nim": "2025.03.4107", "divisionId": "humas", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2024_03_3328", "nama": "Abdul Malik Ramadhan", "nim": "2024.03.3328", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_33_4796", "nama": "Adis Vedry Rakha Maulana", "nim": "2026.33.4796", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_3686", "nama": "Affan Sholih Addaffa", "nim": "2025.38.3686", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_33_3963", "nama": "Aiman Wahidin Basyarahil", "nim": "2025.33.3963", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4333", "nama": "Juhdan Benzema Alrabbani Iswandi", "nim": "2025.03.4333", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_38_3124", "nama": "Mohamad Axel Wicaksono", "nim": "2024.38.3124", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_33_4645", "nama": "Muhammad Bintang Kautsar", "nim": "2026.33.4645", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3080", "nama": "Muhammad Maqdum Nafi\u2019", "nim": "2024.03.3080", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_MB_4726", "nama": "Muhammad Rasyah Rafif", "nim": "2026.MB.4726", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3204", "nama": "Ramzy Syamlan", "nim": "2024.03.3204", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4198", "nama": "Rofi Suarmadani", "nim": "2025.03.4198", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4541", "nama": "Thaariq Dzaki Razaan", "nim": "2026.38.4541", "divisionId": "humas", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3339", "nama": "Muhammad Mu'adz Harits", "nim": "2024.03.3339", "divisionId": "sarpras", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2026_03_5100", "nama": "Abdul Ghofur", "nim": "2026.03.5100", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_33_4573", "nama": "Abdul Rosyad Fahrudin", "nim": "2026.33.4573", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3297", "nama": "Ananda Azka Arsyad", "nim": "2024.03.3297", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3397", "nama": "Fahmi Irkhamna", "nim": "2024.03.3397", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3453", "nama": "Meko Alyoga", "nim": "2024.03.3453", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3336", "nama": "Muhammad Falih Asyabib", "nim": "2024.03.3336", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3301", "nama": "Muhammad Fauzan Ihza Santosa", "nim": "2024.03.3301", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3605", "nama": "Muhammad Ibrahim", "nim": "2024.03.3605", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3530", "nama": "Ukkasyah", "nim": "2024.03.3530", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3799", "nama": "Wahid Rafiqi Ramadhan", "nim": "2025.03.3799", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_33_4316", "nama": "Wildan Hakim Alfin", "nim": "2025.33.4316", "divisionId": "sarpras", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3874", "nama": "Naufal Zahran Daffa", "nim": "2025.03.3874", "divisionId": "digital", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2025_03_4195", "nama": "Haikal Baihakki", "nim": "2025.03.4195", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_4038", "nama": "Hikam A\u2019thoillah Al Hakim", "nim": "2025.38.4038", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4553", "nama": "Khairul Fajri Ardani", "nim": "2026.38.4553", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_03_5410", "nama": "Maslamah", "nim": "2026.03.5410", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3932", "nama": "Muhammad Aldran Adiwangsa Yayin", "nim": "2025.03.3932", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3139", "nama": "Muhammad Dzaki Ali Syifaa", "nim": "2024.03.3139", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4337", "nama": "Muhammad Haikal", "nim": "2025.03.4337", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3613", "nama": "Muhammad Jundi Fakhrudin Ismail", "nim": "2024.03.3613", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_13_4387", "nama": "Muhammad Rafi Aulia", "nim": "2025.13.4387", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_38_3577", "nama": "Tsaqif ibrahimovic", "nim": "2024.38.3577", "divisionId": "digital", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3585", "nama": "Farid Abdillah Maulana", "nim": "2024.03.3585", "divisionId": "media", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2024_03_3500", "nama": "Ahmad Farohat Al Murshofi", "nim": "2024.03.3500", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3218", "nama": "Ahmad Zaky Krisnamurti", "nim": "2024.03.3218", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3232", "nama": "Ahmad Zikri Khotibul Umam", "nim": "2024.03.3232", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4863", "nama": "Grara Isa Muhammad", "nim": "2026.38.4863", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3269", "nama": "Habib Arrasyid", "nim": "2024.03.3269", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3695", "nama": "Mohammad Talent Gendicha Wagih Rusyidi", "nim": "2025.03.3695", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3973", "nama": "Muhammad Ali Saifuddin Izharul Haq Saphiro", "nim": "2025.03.3973", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_38_4010", "nama": "Muhammad Daffa Ramadhan", "nim": "2025.38.4010", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_3433", "nama": "Muhammad Faris Zuhair", "nim": "2024.03.3433", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_03_2740", "nama": "Muhammad Hikam Zainuri", "nim": "2024.03.2740", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_38_4564", "nama": "Putra Bintang Fadhilah", "nim": "2026.38.4564", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2026_MB_4888", "nama": "Sajid Fathan Yudistira", "nim": "2026.MB.4888", "divisionId": "media", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_38_3121", "nama": "Hafidz Rizki Indiarto", "nim": "2024.38.3121", "divisionId": "danus", "role": "Kepala Divisi", "isKadiv": true}, {"id": "m_2024_03_3235", "nama": "Abdul Aziz", "nim": "2024.03.3235", "divisionId": "danus", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_4383", "nama": "Fathir Shihab", "nim": "2025.03.4383", "divisionId": "danus", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2023_38_2747", "nama": "Muhammad Arif Wakiilaa", "nim": "2023.38.2747", "divisionId": "danus", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2024_38_3246", "nama": "Muhammad Zahreno Fajrul Falah", "nim": "2024.38.3246", "divisionId": "danus", "role": "Anggota Divisi", "isKadiv": false}, {"id": "m_2025_03_3794", "nama": "Pandu Gea Wardika", "nim": "2025.03.3794", "divisionId": "danus", "role": "Anggota Divisi", "isKadiv": false}]};
+        const MASTER_ANGGOTA = [{"no": 1, "nama": "Abdillah Hammam Muhammad Hawari", "nim": "2025.03.3756", "isPengurus": false, "divisionId": "relawan"}, {"no": 2, "nama": "Abdul Aziz Mujahid", "nim": "2025.38.4082", "isPengurus": false, "divisionId": "relawan"}, {"no": 3, "nama": "Abdul Ghofur", "nim": "2026.03.5100", "isPengurus": true, "divisionId": "sarpras"}, {"no": 4, "nama": "Abdul Rosyad Fahrudin", "nim": "2026.33.4573", "isPengurus": true, "divisionId": "sarpras"}, {"no": 5, "nama": "Abdullah", "nim": "2026.38.5192", "isPengurus": false, "divisionId": "relawan"}, {"no": 6, "nama": "Abdullah Al Fawwaz", "nim": "2026.33.4972", "isPengurus": false, "divisionId": "relawan"}, {"no": 7, "nama": "Abdullah Hanafi", "nim": "2026.03.4970", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 8, "nama": "Abdurahman Al Bana", "nim": "2026.38.4823", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 9, "nama": "Abdurrahman Albassam", "nim": "2026.33.5139", "isPengurus": false, "divisionId": "relawan"}, {"no": 10, "nama": "Achmad Fahrezy", "nim": "2025.38.4423", "isPengurus": false, "divisionId": "relawan"}, {"no": 11, "nama": "Adis Vedry Rakha Maulana", "nim": "2026.33.4796", "isPengurus": true, "divisionId": "humas"}, {"no": 12, "nama": "Adit Saputra", "nim": "2025.03.3747", "isPengurus": false, "divisionId": "relawan"}, {"no": 13, "nama": "Affan Sholih Addaffa", "nim": "2025.38.3686", "isPengurus": true, "divisionId": "humas"}, {"no": 14, "nama": "Afnan Azis Setiawan", "nim": "2025.03.3961", "isPengurus": false, "divisionId": "relawan"}, {"no": 15, "nama": "Agung Putra Wijaya", "nim": "2025.03.4258", "isPengurus": true, "divisionId": "acara"}, {"no": 16, "nama": "Agung Satria Kurniawan", "nim": "2025.03.4229", "isPengurus": false, "divisionId": "relawan"}, {"no": 17, "nama": "Ahmad", "nim": "2025.03.3714", "isPengurus": true, "divisionId": "acara"}, {"no": 18, "nama": "Ahmad Farohat Al Murshofi", "nim": "2024.03.3500", "isPengurus": true, "divisionId": "media"}, {"no": 19, "nama": "Ahmad Haidar Amanullah", "nim": "2025.03.3824", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 20, "nama": "Ahmad Rizal Izzi", "nim": "2025.03.4478", "isPengurus": true, "divisionId": "acara"}, {"no": 21, "nama": "Ahmad Syauki Al Ghifari", "nim": "2026.MB.4621", "isPengurus": false, "divisionId": "relawan"}, {"no": 22, "nama": "Ahmad Zaky Krisnamurti", "nim": "2024.03.3218", "isPengurus": true, "divisionId": "media"}, {"no": 23, "nama": "Ahmad Zikri Khotibul Umam", "nim": "2024.03.3232", "isPengurus": true, "divisionId": "media"}, {"no": 24, "nama": "Ahmad Zuhhad Muwahhid", "nim": "2026.38.5099", "isPengurus": false, "divisionId": "relawan"}, {"no": 25, "nama": "Akbar Noorfaiz", "nim": "2025.03.4325", "isPengurus": true, "divisionId": "tpq"}, {"no": 26, "nama": "Alam Ramadhan", "nim": "2025.03.3668", "isPengurus": false, "divisionId": "relawan"}, {"no": 27, "nama": "Alvin Saiful Jihad", "nim": "2026.38.4683", "isPengurus": true, "divisionId": "tpq"}, {"no": 28, "nama": "Ammar", "nim": "2026.33.4965", "isPengurus": false, "divisionId": "relawan"}, {"no": 29, "nama": "Anggi Sibgotalloh Mujaddid", "nim": "2024.38.3172", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 30, "nama": "Aqib Wasiul Ilmi", "nim": "2024.03.3516", "isPengurus": false, "divisionId": "relawan"}, {"no": 31, "nama": "Arga Luthfi Abdan Syakuro", "nim": "2026.38.5074", "isPengurus": true, "divisionId": "acara"}, {"no": 32, "nama": "Azhar Wahyu Robihansyah", "nim": "2025.03.4078", "isPengurus": false, "divisionId": "relawan"}, {"no": 33, "nama": "Azzaam Hanif Ikhtiar Rizki", "nim": "2026.33.5026", "isPengurus": false, "divisionId": "relawan"}, {"no": 34, "nama": "Azzan Ghozi Misfir", "nim": "2025.03.3780", "isPengurus": false, "divisionId": "relawan"}, {"no": 35, "nama": "Bijak Abadi", "nim": "2025.03.4068", "isPengurus": false, "divisionId": "relawan"}, {"no": 36, "nama": "Bima Bijak Putra Pratama", "nim": "2026.38.5122", "isPengurus": false, "divisionId": "relawan"}, {"no": 37, "nama": "Davit Putra", "nim": "2026.MB.4623", "isPengurus": false, "divisionId": "relawan"}, {"no": 38, "nama": "Deriko Maulana Steven", "nim": "2025.38.4291", "isPengurus": false, "divisionId": "relawan"}, {"no": 39, "nama": "Diaz", "nim": "2026.33.4743", "isPengurus": false, "divisionId": "relawan"}, {"no": 40, "nama": "Diguna Nata Anggara", "nim": "2026.MB.4687", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 41, "nama": "Excell Rizqullah Nasir Harahap", "nim": "2026.03.5258", "isPengurus": false, "divisionId": "relawan"}, {"no": 42, "nama": "Fadil Mohammad Jae", "nim": "2024.38.3623", "isPengurus": false, "divisionId": "relawan"}, {"no": 43, "nama": "Fahmi Irkhamna", "nim": "2024.03.3397", "isPengurus": true, "divisionId": "sarpras"}, {"no": 44, "nama": "Farand Ihsan Nabeel", "nim": "2026.33.4711", "isPengurus": false, "divisionId": "relawan"}, {"no": 45, "nama": "Farid Febrian", "nim": "2025.03.4371", "isPengurus": true, "divisionId": "tpq"}, {"no": 46, "nama": "Fathir Shihab", "nim": "2025.03.4383", "isPengurus": true, "divisionId": "danus"}, {"no": 47, "nama": "Fatih Rabbani", "nim": "2025.03.4370", "isPengurus": false, "divisionId": "relawan"}, {"no": 48, "nama": "Grara Isa Muhammad", "nim": "2026.38.4863", "isPengurus": true, "divisionId": "media"}, {"no": 49, "nama": "Habib Arrasyid", "nim": "2024.03.3269", "isPengurus": true, "divisionId": "media"}, {"no": 50, "nama": "Habib Huwaidi Salam", "nim": "2026.38.5440", "isPengurus": true, "divisionId": "acara"}, {"no": 51, "nama": "Haekal Lutfi", "nim": "2025.03.3781", "isPengurus": true, "divisionId": "acara"}, {"no": 52, "nama": "Haikal Baihakki", "nim": "2025.03.4195", "isPengurus": true, "divisionId": "digital"}, {"no": 53, "nama": "Hanif", "nim": "2026.MB.4792", "isPengurus": false, "divisionId": "relawan"}, {"no": 54, "nama": "Hanif Farisan", "nim": "2026.03.4646", "isPengurus": false, "divisionId": "relawan"}, {"no": 55, "nama": "Hikam A’thoillah Al Hakim", "nim": "2025.38.4038", "isPengurus": true, "divisionId": "digital"}, {"no": 56, "nama": "Ibnurasyd Fardi", "nim": "2026.03.4865", "isPengurus": false, "divisionId": "relawan"}, {"no": 57, "nama": "Ibrahimovic Prasetyo", "nim": "2026.MB.4542", "isPengurus": false, "divisionId": "relawan"}, {"no": 58, "nama": "Ikhsan Rahman Al Kahfi", "nim": "2026.MB.4742", "isPengurus": false, "divisionId": "relawan"}, {"no": 59, "nama": "Ilzamy Nardo", "nim": "2026.38.5177", "isPengurus": false, "divisionId": "relawan"}, {"no": 60, "nama": "Irbadh Muhammad Yusuf", "nim": "2024.03.3457", "isPengurus": true, "divisionId": "tpq"}, {"no": 61, "nama": "Irfan Rosyadi Anfasa", "nim": "2026.03.4793", "isPengurus": false, "divisionId": "relawan"}, {"no": 62, "nama": "Jihadul Akhbar", "nim": "2026.03.5165", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 63, "nama": "Juhdan Benzema Alrabbani Iswandi", "nim": "2025.03.4333", "isPengurus": true, "divisionId": "humas"}, {"no": 64, "nama": "Khaerul Mizan", "nim": "2025.03.4098", "isPengurus": false, "divisionId": "relawan"}, {"no": 65, "nama": "L Ahmad Arwadi", "nim": "2025.03.4465", "isPengurus": false, "divisionId": "relawan"}, {"no": 66, "nama": "Lukman", "nim": "2025.03.3821", "isPengurus": false, "divisionId": "relawan"}, {"no": 67, "nama": "M. Abdur Rohman", "nim": "2024.03.3543", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 68, "nama": "M. Fadhil Sa'd", "nim": "2025.MB.4324", "isPengurus": false, "divisionId": "relawan"}, {"no": 69, "nama": "M. Fadil Ibnu Singgih", "nim": "2026.03.4797", "isPengurus": false, "divisionId": "relawan"}, {"no": 70, "nama": "M. Rasyah Rafif", "nim": "2026.MB.4726", "isPengurus": true, "divisionId": "humas"}, {"no": 71, "nama": "Maslamah", "nim": "2026.03.5410", "isPengurus": true, "divisionId": "digital"}, {"no": 72, "nama": "Marwaan Aflah", "nim": "2026.03.5230", "isPengurus": false, "divisionId": "relawan"}, {"no": 73, "nama": "Maulana Ardi Rifa’i", "nim": "2025.33.4361", "isPengurus": false, "divisionId": "relawan"}, {"no": 74, "nama": "Meko Alyoga", "nim": "2024.03.3453", "isPengurus": true, "divisionId": "sarpras"}, {"no": 75, "nama": "Mikechal Satria Pratama", "nim": "2026.13.5125", "isPengurus": false, "divisionId": "relawan"}, {"no": 76, "nama": "Miqdad Muttaqien", "nim": "2025.03.4003", "isPengurus": false, "divisionId": "relawan"}, {"no": 77, "nama": "Mohammad Talent Gendicha Wagih Rusyidi", "nim": "2025.03.3695", "isPengurus": true, "divisionId": "media"}, {"no": 78, "nama": "Muawwidz Rofiq", "nim": "2026.03.5277", "isPengurus": false, "divisionId": "relawan"}, {"no": 79, "nama": "Muh Fasha Aprian", "nim": "2026.38.5025", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 80, "nama": "Muh Jihadul Akhbar", "nim": "2026.03.5165", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 81, "nama": "Muh Zhafran S Hi Noor", "nim": "2024.03.3400", "isPengurus": false, "divisionId": "relawan"}, {"no": 82, "nama": "Muh. Diaz Fatin", "nim": "2025.38.3671", "isPengurus": false, "divisionId": "relawan"}, {"no": 83, "nama": "Muh. Hafizal Al Zul Qafar", "nim": "2026.38.4668", "isPengurus": false, "divisionId": "relawan"}, {"no": 84, "nama": "Muhamad Puang Respati", "nim": "2026.13.5000", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 85, "nama": "Muhamad Salwan Haekal Nizami", "nim": "2025.38.4175", "isPengurus": true, "divisionId": "tpq"}, {"no": 86, "nama": "Muhammad Abdul Khaliq", "nim": "2026.38.5383", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 87, "nama": "Muhammad Abdullah Rizqy Faza", "nim": "2026.03.4639", "isPengurus": true, "divisionId": "tpq"}, {"no": 88, "nama": "Muhammad Adhi Nasrullah", "nim": "2025.38.3860", "isPengurus": false, "divisionId": "relawan"}, {"no": 89, "nama": "Muhammad Aldran Adiwangsa Yayin", "nim": "2025.03.3932", "isPengurus": true, "divisionId": "digital"}, {"no": 90, "nama": "Muhammad Arif Wakiilaa", "nim": "2023.38.2747", "isPengurus": true, "divisionId": "danus"}, {"no": 92, "nama": "Muhammad Daffa Ramadhan", "nim": "2025.38.4010", "isPengurus": true, "divisionId": "media"}, {"no": 93, "nama": "Muhammad Dzaki Ali Syifaa", "nim": "2024.03.3139", "isPengurus": true, "divisionId": "digital"}, {"no": 94, "nama": "Muhammad Fakhri Alwi", "nim": "2026.03.5045", "isPengurus": false, "divisionId": "relawan"}, {"no": 95, "nama": "Muhammad Falah Wibowo", "nim": "2026.03.4995", "isPengurus": false, "divisionId": "relawan"}, {"no": 96, "nama": "Muhammad Falih Asyabib", "nim": "2024.03.3336", "isPengurus": true, "divisionId": "sarpras"}, {"no": 97, "nama": "Muhammad Faris Zuhair", "nim": "2024.03.3433", "isPengurus": true, "divisionId": "media"}, {"no": 98, "nama": "Muhammad Fauzan Ihza Santosa", "nim": "2024.03.3301", "isPengurus": true, "divisionId": "sarpras"}, {"no": 99, "nama": "Muhammad Haikal", "nim": "2025.03.4337", "isPengurus": true, "divisionId": "digital"}, {"no": 100, "nama": "Muhammad Ibrahim", "nim": "2024.03.3605", "isPengurus": true, "divisionId": "sarpras"}, {"no": 101, "nama": "Muhammad Iqbal Zulfahmi", "nim": "2026.33.5071", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 102, "nama": "Muhammad Jundi Fakhrudin Ismail", "nim": "2024.03.3613", "isPengurus": true, "divisionId": "digital"}, {"no": 103, "nama": "Muhammad Kinza Nawfal Altamis", "nim": "2026.MB.4814", "isPengurus": false, "divisionId": "relawan"}, {"no": 104, "nama": "Muhammad Putra Ramadhan", "nim": "2026.03.4840", "isPengurus": false, "divisionId": "relawan"}, {"no": 105, "nama": "Muhammad Rafi Aulia", "nim": "2025.13.4387", "isPengurus": true, "divisionId": "digital"}, {"no": 106, "nama": "Muhammad Ramdani", "nim": "2026.13.5272", "isPengurus": false, "divisionId": "relawan"}, {"no": 107, "nama": "Muhammad Razan Daniswara", "nim": "2026.MB.4671", "isPengurus": false, "divisionId": "relawan"}, {"no": 108, "nama": "Muhammad Ridho", "nim": "2026.03.5217", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 109, "nama": "Muhammad Rifa' Nur Azmi", "nim": "2025.03.4146", "isPengurus": false, "divisionId": "relawan"}, {"no": 110, "nama": "Muhammad Tsaqif Ashadiar", "nim": "2026.03.4588", "isPengurus": false, "divisionId": "relawan"}, {"no": 111, "nama": "Muhammad Zahreno Fajrul Falah", "nim": "2024.38.3246", "isPengurus": true, "divisionId": "danus"}, {"no": 112, "nama": "Mush'ab Al Bara", "nim": "2026.38.5399", "isPengurus": false, "divisionId": "relawan"}, {"no": 113, "nama": "Naufal Nadhif Assami", "nim": "2026.03.5043", "isPengurus": false, "divisionId": "relawan"}, {"no": 114, "nama": "Pandu Gea Wardika", "nim": "2025.03.3794", "isPengurus": true, "divisionId": "danus"}, {"no": 115, "nama": "Putra Bintang Fadhilah", "nim": "2026.38.4564", "isPengurus": true, "divisionId": "media"}, {"no": 116, "nama": "Rafi Dzafran Saputra", "nim": "2025.03.3911", "isPengurus": true, "divisionId": "tpq"}, {"no": 117, "nama": "Rafly Muhammad Padilah", "nim": "2025.38.3659", "isPengurus": true, "divisionId": "acara"}, {"no": 118, "nama": "Rahmat Hidayat", "nim": "2026.03.4776", "isPengurus": false, "divisionId": "relawan"}, {"no": 119, "nama": "Ramanda Zikri", "nim": "2026.MB.4771", "isPengurus": false, "divisionId": "relawan"}, {"no": 120, "nama": "Ramzy Syamlan", "nim": "2024.03.3204", "isPengurus": true, "divisionId": "humas"}, {"no": 121, "nama": "Riski Ananda", "nim": "2025.MB.3248", "isPengurus": false, "divisionId": "relawan"}, {"no": 122, "nama": "Rizqi Alfaza", "nim": "2025.03.3669", "isPengurus": false, "divisionId": "relawan"}, {"no": 123, "nama": "Rosyid Nashrulloh Ar Rofif", "nim": "2024.03.3251", "isPengurus": true, "divisionId": "tpq"}, {"no": 124, "nama": "Ryan Ferdiyana Muhammad", "nim": "2026.MB.4751", "isPengurus": false, "divisionId": "relawan"}, {"no": 125, "nama": "Sajid Fathan Yudistira", "nim": "2026.MB.4888", "isPengurus": true, "divisionId": "media"}, {"no": 126, "nama": "Sanja Kuswari", "nim": "2026.03.5087", "isPengurus": false, "divisionId": "relawan"}, {"no": 127, "nama": "Satya Wira Dharma Samudra", "nim": "2026.MB.4594", "isPengurus": false, "divisionId": "relawan"}, {"no": 128, "nama": "Savero Rami", "nim": "2026.38.4611", "isPengurus": true, "divisionId": "tpq"}, {"no": 129, "nama": "Sayyid Fadhil Al Fajr", "nim": "2026.03.4814", "isPengurus": true, "divisionId": "tpq"}, {"no": 130, "nama": "Senandung Mubarok", "nim": "2026.03.5178", "isPengurus": true, "divisionId": "acara"}, {"no": 131, "nama": "Sulthan Bahabazy", "nim": "2026.38.4803", "isPengurus": true, "divisionId": "keilmuan"}, {"no": 132, "nama": "Syaiful Mustaqim", "nim": "2026.MB.4732", "isPengurus": false, "divisionId": "relawan"}, {"no": 133, "nama": "Thaariq Dzaki Razaan", "nim": "2026.38.4541", "isPengurus": true, "divisionId": "humas"}, {"no": 134, "nama": "Tsaqif Althaf Rayyan", "nim": "2026.03.4834", "isPengurus": false, "divisionId": "relawan"}, {"no": 135, "nama": "Tsaqif Ibrahimovic", "nim": "2024.38.3577", "isPengurus": true, "divisionId": "digital"}, {"no": 136, "nama": "Ukkasyah", "nim": "2024.03.3530", "isPengurus": true, "divisionId": "sarpras"}, {"no": 137, "nama": "Umair", "nim": "2023.03.2782", "isPengurus": true, "divisionId": "tpq"}, {"no": 138, "nama": "Umar Anwar Martak", "nim": "2026.38.5136", "isPengurus": false, "divisionId": "relawan"}, {"no": 140, "nama": "Usamah", "nim": "2025.38.3846", "isPengurus": false, "divisionId": "relawan"}, {"no": 141, "nama": "Wafy Abdurrahman Azzahid", "nim": "2026.03.5208", "isPengurus": false, "divisionId": "relawan"}, {"no": 142, "nama": "Wahid Rafiqi Ramadhan", "nim": "2025.03.3799", "isPengurus": true, "divisionId": "sarpras"}, {"no": 143, "nama": "Wildan Abdillah Bashirrafi", "nim": "2026.38.4895", "isPengurus": false, "divisionId": "relawan"}, {"no": 144, "nama": "Yahya Abdullah", "nim": "2025.03.3769", "isPengurus": true, "divisionId": "tpq"}, {"no": 145, "nama": "Yazid Hamidi", "nim": "2026.03.5168", "isPengurus": false, "divisionId": "relawan"}, {"no": 146, "nama": "Yusuf", "nim": "2024.03.3370", "isPengurus": true, "divisionId": "acara"}, {"no": 147, "nama": "Yusuf Abdilah", "nim": "2025.03.4109", "isPengurus": true, "divisionId": "acara"}, {"no": 148, "nama": "Yusuf Bahtiar", "nim": "2026.MB.4545", "isPengurus": false, "divisionId": "relawan"}, {"no": 149, "nama": "Zalva Naufal Aghri", "nim": "2026.13.4830", "isPengurus": false, "divisionId": "relawan"}, {"no": 150, "nama": "Zayyin 'Athaya Ahmada", "nim": "2025.03.4162", "isPengurus": false, "divisionId": "relawan"}];
+let masterSvgTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 3508 2480\" width=\"3508\" height=\"2480\">\n  <defs>\n    <style>\n      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Cinzel:wght@600;700;800&amp;display=swap');\n      .title-font { font-family: 'Cinzel', 'Plus Jakarta Sans', serif; }\n      .sans-font { font-family: 'Plus Jakarta Sans', sans-serif; }\n    </style>\n    <linearGradient id=\"goldGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#D97706\" />\n      <stop offset=\"50%\" stop-color=\"#F59E0B\" />\n      <stop offset=\"100%\" stop-color=\"#B45309\" />\n    </linearGradient>\n    <linearGradient id=\"emeraldGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#064E3B\" />\n      <stop offset=\"100%\" stop-color=\"#047857\" />\n    </linearGradient>\n  </defs>\n\n  <!-- Background Canvas -->\n  <rect width=\"3508\" height=\"2480\" fill=\"#FFFFFF\" />\n  \n  <!-- Subtle Inner Border -->\n  <rect x=\"80\" y=\"80\" width=\"3348\" height=\"2320\" fill=\"none\" stroke=\"#E2E8F0\" stroke-width=\"4\" rx=\"16\" />\n  \n  <!-- Outer Decorative Border (Target id for Visual Flex Feature) -->\n  <rect id=\"ACCENT_BORDER\" x=\"120\" y=\"120\" width=\"3268\" height=\"2240\" fill=\"none\" stroke=\"#064E3B\" stroke-width=\"12\" rx=\"12\" />\n  \n  <!-- Golden Thin Accent Border -->\n  <rect x=\"148\" y=\"148\" width=\"3212\" height=\"2184\" fill=\"none\" stroke=\"url(#goldGrad)\" stroke-width=\"4\" rx=\"8\" />\n\n  <!-- Corner Geometric Ornaments -->\n  <!-- Top-Left -->\n  <path d=\"M 120 280 L 280 120 M 120 220 L 220 120 M 120 160 L 160 120\" stroke=\"url(#goldGrad)\" stroke-width=\"3\" />\n  <!-- Top-Right -->\n  <path d=\"M 3388 280 L 3228 120 M 3388 220 L 3288 120 M 3388 160 L 3348 120\" stroke=\"url(#goldGrad)\" stroke-width=\"3\" />\n  <!-- Bottom-Left -->\n  <path d=\"M 120 2200 L 280 2360 M 120 2260 L 220 2360 M 120 2320 L 160 2360\" stroke=\"url(#goldGrad)\" stroke-width=\"3\" />\n  <!-- Bottom-Right -->\n  <path d=\"M 3388 2200 L 3228 2360 M 3388 2260 L 3288 2360 M 3388 2320 L 3348 2360\" stroke=\"url(#goldGrad)\" stroke-width=\"3\" />\n\n  <!-- Header: Organization -->\n  <text class=\"sans-font\" x=\"1754\" y=\"320\" text-anchor=\"middle\" font-size=\"34\" font-weight=\"700\" fill=\"#047857\" letter-spacing=\"8\">\n    UKM RIJAL DAKWAH \u2022 LEMBAGA DAKWAH KAMPUS\n  </text>\n  <text class=\"sans-font\" x=\"1754\" y=\"370\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"500\" fill=\"#64748B\" letter-spacing=\"4\">\n    KAMPUS PERJUANGAN DAKWAH &amp; PENGEMBANGAN DIRI\n  </text>\n\n  <!-- Divider Line -->\n  <line x1=\"1404\" y1=\"415\" x2=\"2104\" y2=\"415\" stroke=\"url(#goldGrad)\" stroke-width=\"3\" />\n\n  <!-- Certificate Main Title -->\n  <text class=\"title-font\" x=\"1754\" y=\"550\" text-anchor=\"middle\" font-size=\"92\" font-weight=\"800\" fill=\"#064E3B\" letter-spacing=\"6\">\n    PIAGAM PENGHARGAAN\n  </text>\n  \n  <!-- Certificate Number -->\n  <text class=\"sans-font\" x=\"1754\" y=\"630\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"600\" fill=\"#475569\" letter-spacing=\"2\">\n    Nomor: {{VAR_NOMOR}}\n  </text>\n\n  <!-- Pre-Name Salutation -->\n  <text class=\"sans-font\" x=\"1754\" y=\"770\" text-anchor=\"middle\" font-size=\"36\" font-weight=\"400\" fill=\"#334155\">\n    Diberikan dengan penuh hormat dan apresiasi setinggi-tingginya kepada:\n  </text>\n\n  <!-- Recipient Name (Hero Element) -->\n  <text class=\"sans-font\" x=\"1754\" y=\"960\" text-anchor=\"middle\" font-size=\"86\" font-weight=\"800\" fill=\"#064E3B\" letter-spacing=\"1\">\n    {{VAR_NAMA}}\n  </text>\n  \n  <!-- Name Underline Accent -->\n  <line x1=\"854\" y1=\"1020\" x2=\"2654\" y2=\"1020\" stroke=\"url(#goldGrad)\" stroke-width=\"4\" stroke-linecap=\"round\" />\n\n  <!-- Appreciation Statement -->\n  <text class=\"sans-font\" x=\"1754\" y=\"1130\" text-anchor=\"middle\" font-size=\"36\" font-weight=\"400\" fill=\"#334155\">\n    Atas dedikasi, integritas, dan kontribusi terbaik yang telah dicurahkan sebagai:\n  </text>\n\n  <!-- Role / Position Badge -->\n  <text class=\"sans-font\" x=\"1754\" y=\"1280\" text-anchor=\"middle\" font-size=\"64\" font-weight=\"700\" fill=\"#B45309\" letter-spacing=\"2\">\n    {{VAR_JABATAN}}\n  </text>\n\n  <!-- Event Description -->\n  <text class=\"sans-font\" x=\"1754\" y=\"1410\" text-anchor=\"middle\" font-size=\"36\" font-weight=\"500\" fill=\"#1E293B\">\n    Dalam agenda kegiatan:\n  </text>\n  <text class=\"sans-font\" x=\"1754\" y=\"1480\" text-anchor=\"middle\" font-size=\"44\" font-weight=\"700\" fill=\"#064E3B\">\n    {{VAR_KEGIATAN}}\n  </text>\n  <text class=\"sans-font\" x=\"1754\" y=\"1560\" text-anchor=\"middle\" font-size=\"32\" font-weight=\"400\" fill=\"#64748B\">\n    Diselenggarakan oleh UKM Rijal Dakwah pada {{VAR_TANGGAL}}\n  </text>\n\n  <!-- Signature Section -->\n  <!-- Left: Ketua Umum -->\n  <g transform=\"translate(650, 1850)\">\n    <text class=\"sans-font\" x=\"250\" y=\"0\" text-anchor=\"middle\" font-size=\"28\" font-weight=\"500\" fill=\"#475569\">\n      Mengetahui,\n    </text>\n    <text class=\"sans-font\" x=\"250\" y=\"40\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"700\" fill=\"#0F172A\">\n      Ketua Umum Rijal Dakwah\n    </text>\n    \n    <!-- Dynamic E-Signature Zone -->\n    <g id=\"ZONE_TTD_KETUM\">\n      <line x1=\"50\" y1=\"210\" x2=\"450\" y2=\"210\" stroke=\"#94A3B8\" stroke-width=\"2\" />\n    </g>\n    \n    <text class=\"sans-font\" x=\"250\" y=\"250\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"700\" fill=\"#064E3B\">\n      Muhammad Ilham Pratama\n    </text>\n    <text class=\"sans-font\" x=\"250\" y=\"290\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"500\" fill=\"#64748B\">\n      NIM. 22051204001\n    </text>\n  </g>\n\n  <!-- Center: Stempel Resmi RD -->\n  <g transform=\"translate(1604, 1860)\">\n    <circle cx=\"150\" cy=\"120\" r=\"100\" fill=\"none\" stroke=\"#047857\" stroke-width=\"4\" stroke-dasharray=\"10, 6\" opacity=\"0.6\" />\n    <text class=\"sans-font\" x=\"150\" y=\"115\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\" fill=\"#047857\" opacity=\"0.7\" letter-spacing=\"2\">\n      STEMPEL RESMI\n    </text>\n    <text class=\"sans-font\" x=\"150\" y=\"145\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"600\" fill=\"#047857\" opacity=\"0.7\">\n      RIJAL DAKWAH\n    </text>\n  </g>\n\n  <!-- Right: Sekretaris Umum / Pelaksana -->\n  <g transform=\"translate(2350, 1850)\">\n    <text class=\"sans-font\" x=\"250\" y=\"0\" text-anchor=\"middle\" font-size=\"28\" font-weight=\"500\" fill=\"#475569\">\n      Tertanda,\n    </text>\n    <text class=\"sans-font\" x=\"250\" y=\"40\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"700\" fill=\"#0F172A\">\n      Sekretaris Umum\n    </text>\n    \n    <!-- Dynamic E-Signature Zone -->\n    <g id=\"ZONE_TTD_SEKUM\">\n      <line x1=\"50\" y1=\"210\" x2=\"450\" y2=\"210\" stroke=\"#94A3B8\" stroke-width=\"2\" />\n    </g>\n    \n    <text class=\"sans-font\" x=\"250\" y=\"250\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"700\" fill=\"#064E3B\">\n      Fathur Rahman Al-Fatih\n    </text>\n    <text class=\"sans-font\" x=\"250\" y=\"290\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"500\" fill=\"#64748B\">\n      NIM. 22051204018\n    </text>\n  </g>\n\n  <!-- Footer Verification Badge -->\n  <text class=\"sans-font\" x=\"1754\" y=\"2310\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"500\" fill=\"#94A3B8\">\n    Dokumen ini sah dan diterbitkan secara resmi melalui Portal Sertifikat Digital UKM Rijal Dakwah (RD-CERT)\n  </text>\n</svg>\n";
+    const defaultEmbeddedSvg = masterSvgTemplate;
+
+    // State
+    let eventData = {
+      name: "Muktamar Anggota VI UKM Rijal Dakwah",
+      code: "RD-MA/X/2026",
+      date: "28 September 2026",
+      startNum: 1,
+      isLocked: false
+    };
+
+    // Initial Sample Recipients populated from BPH & Panitia Muktamar
+    let recipients = [
+      { nim: "2024.38.3238", nama: "Fasya Ramadhan", jabatan: "Ketua Umum", divisionId: "bph", isExternal: false },
+      { nim: "2025.03.3777", nama: "Fawwaz Azzaki", jabatan: "Ketua Pelaksana", divisionId: "bph", isExternal: false },
+      { nim: "2024.03.3385", nama: "Akhmad Dzaqi Mustofa", jabatan: "Koordinator Sie Acara", divisionId: "bph", isExternal: false },
+      { nim: "2024.38.3072", nama: "Dzaki Rasendriya", jabatan: "Bendahara Pelaksana", divisionId: "bph", isExternal: false },
+      { nim: "2024.03.3500", nama: "Ahmad Farohat Al Murshofi", jabatan: "Koordinator Sie Media", divisionId: "media", isExternal: false }
+    ];
+
+    window.MASTER_SK = MASTER_SK;
+    window.recipients = recipients;
+    window.eventData = eventData;
+    let currentIndex = 0;
+    let singleExportFormat = 'pdf'; // 'svg' | 'png' | 'pdf'
+    let zipExportFormat = 'pdf';    // 'svg' | 'png' | 'pdf' | 'all'
+
+    // Zero-Dependency Pure JS ZIP Generator (RFC 1950)
+    function crc32(bytes) {
+      let table = new Uint32Array(256);
+      for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let k = 0; k < 8; k++) c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+        table[i] = c;
+      }
+      let crc = 0 ^ (-1);
+      for (let i = 0; i < bytes.length; i++) {
+        crc = (crc >>> 8) ^ table[(crc ^ bytes[i]) & 0xFF];
+      }
+      return (crc ^ (-1)) >>> 0;
+    }
+
+    function createZip(files) {
+      const enc = new TextEncoder();
+      const fileRecords = [];
+      let centralDirSize = 0;
+      let offset = 0;
+
+      files.forEach(f => {
+        const nameBytes = enc.encode(f.name);
+        const contentBytes = (f.content instanceof Uint8Array) ? f.content : enc.encode(f.content);
+        const crc = crc32(contentBytes);
+        
+        const localHeader = new Uint8Array(30 + nameBytes.length + contentBytes.length);
+        const dv = new DataView(localHeader.buffer);
+        dv.setUint32(0, 0x04034b50, true);
+        dv.setUint16(4, 20, true);
+        dv.setUint16(6, 0, true);
+        dv.setUint16(8, 0, true);
+        dv.setUint16(10, 0, true);
+        dv.setUint16(12, 0, true);
+        dv.setUint32(14, crc, true);
+        dv.setUint32(18, contentBytes.length, true);
+        dv.setUint32(22, contentBytes.length, true);
+        dv.setUint16(26, nameBytes.length, true);
+        dv.setUint16(28, 0, true);
+        localHeader.set(nameBytes, 30);
+        localHeader.set(contentBytes, 30 + nameBytes.length);
+
+        fileRecords.push({ localHeader, nameBytes, contentBytes, crc, offset });
+        offset += localHeader.length;
+      });
+
+      const centralRecords = [];
+      fileRecords.forEach(f => {
+        const cd = new Uint8Array(46 + f.nameBytes.length);
+        const dv = new DataView(cd.buffer);
+        dv.setUint32(0, 0x02014b50, true);
+        dv.setUint16(4, 20, true);
+        dv.setUint16(6, 20, true);
+        dv.setUint16(8, 0, true);
+        dv.setUint16(10, 0, true);
+        dv.setUint16(12, 0, true);
+        dv.setUint32(16, f.crc, true);
+        dv.setUint32(20, f.contentBytes.length, true);
+        dv.setUint32(24, f.contentBytes.length, true);
+        dv.setUint16(28, f.nameBytes.length, true);
+        dv.setUint16(30, 0, true);
+        dv.setUint16(32, 0, true);
+        dv.setUint16(34, 0, true);
+        dv.setUint16(36, 0, true);
+        dv.setUint32(38, 0, true);
+        dv.setUint32(42, f.offset, true);
+        cd.set(f.nameBytes, 46);
+        centralRecords.push(cd);
+        centralDirSize += cd.length;
+      });
+
+      const eocd = new Uint8Array(22);
+      const dvEocd = new DataView(eocd.buffer);
+      dvEocd.setUint32(0, 0x06054b50, true);
+      dvEocd.setUint16(4, 0, true);
+      dvEocd.setUint16(6, 0, true);
+      dvEocd.setUint16(8, files.length, true);
+      dvEocd.setUint16(10, files.length, true);
+      dvEocd.setUint32(12, centralDirSize, true);
+      dvEocd.setUint32(16, offset, true);
+      dvEocd.setUint16(20, 0, true);
+
+      const parts = [];
+      fileRecords.forEach(f => parts.push(f.localHeader));
+      centralRecords.forEach(cd => parts.push(cd));
+      parts.push(eocd);
+      return new Blob(parts, { type: 'application/zip' });
+    }
+
+    // Pure JS Single-Page PDF Generator (RFC/ISO 32000-1 DCTDecode)
+    function createPdfFromJpeg(jpegBytes, widthPx, heightPx) {
+      const pdfWidth = 841.89; // A4 Landscape pt (297mm)
+      const pdfHeight = 595.28; // A4 Landscape pt (210mm)
+      const enc = new TextEncoder();
+
+      const contentStreamText = `q\n${pdfWidth.toFixed(2)} 0 0 ${pdfHeight.toFixed(2)} 0 0 cm\n/Im1 Do\nQ\n`;
+      const contentStreamBytes = enc.encode(contentStreamText);
+
+      const obj1 = `1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n`;
+      const obj2 = `2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n`;
+      const obj3 = `3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pdfWidth.toFixed(2)} ${pdfHeight.toFixed(2)}] /Resources << /XObject << /Im1 4 0 R >> >> /Contents 5 0 R >>\nendobj\n`;
+      const obj4Header = `4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${widthPx} /Height ${heightPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`;
+      const obj4Footer = `\nendstream\nendobj\n`;
+      const obj5 = `5 0 obj\n<< /Length ${contentStreamBytes.length} >>\nstream\n${contentStreamText}endstream\nendobj\n`;
+
+      const header = `%PDF-1.4\n%\xFF\xFF\xFF\xFF\n`;
+
+      const offsets = [];
+      let currentOffset = enc.encode(header).length;
+
+      offsets.push(currentOffset);
+      const obj1Bytes = enc.encode(obj1);
+      currentOffset += obj1Bytes.length;
+
+      offsets.push(currentOffset);
+      const obj2Bytes = enc.encode(obj2);
+      currentOffset += obj2Bytes.length;
+
+      offsets.push(currentOffset);
+      const obj3Bytes = enc.encode(obj3);
+      currentOffset += obj3Bytes.length;
+
+      offsets.push(currentOffset);
+      const obj4HeaderBytes = enc.encode(obj4Header);
+      const obj4FooterBytes = enc.encode(obj4Footer);
+      const obj4TotalLength = obj4HeaderBytes.length + jpegBytes.length + obj4FooterBytes.length;
+      currentOffset += obj4TotalLength;
+
+      offsets.push(currentOffset);
+      const obj5Bytes = enc.encode(obj5);
+      currentOffset += obj5Bytes.length;
+
+      let xref = `xref\n0 6\n0000000000 65535 f \n`;
+      for (let i = 0; i < offsets.length; i++) {
+        xref += String(offsets[i]).padStart(10, '0') + ` 00000 n \n`;
+      }
+      const startXref = currentOffset;
+      const trailer = `trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${startXref}\n%%EOF\n`;
+      const xrefBytes = enc.encode(xref + trailer);
+
+      const totalLength = currentOffset + xrefBytes.length;
+      const pdfBytes = new Uint8Array(totalLength);
+      let pos = 0;
+
+      const headerBytes = enc.encode(header);
+      pdfBytes.set(headerBytes, pos); pos += headerBytes.length;
+      pdfBytes.set(obj1Bytes, pos); pos += obj1Bytes.length;
+      pdfBytes.set(obj2Bytes, pos); pos += obj2Bytes.length;
+      pdfBytes.set(obj3Bytes, pos); pos += obj3Bytes.length;
+
+      pdfBytes.set(obj4HeaderBytes, pos); pos += obj4HeaderBytes.length;
+      pdfBytes.set(jpegBytes, pos); pos += jpegBytes.length;
+      pdfBytes.set(obj4FooterBytes, pos); pos += obj4FooterBytes.length;
+
+      pdfBytes.set(obj5Bytes, pos); pos += obj5Bytes.length;
+      pdfBytes.set(xrefBytes, pos); pos += xrefBytes.length;
+
+      return pdfBytes;
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function renderSvgToPngBuffer(svgString) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        img.onload = () => {
+          const canvas = document.getElementById('exportCanvas');
+          canvas.width = 3508;
+          canvas.height = 2480;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillRect(0, 0, 3508, 2480);
+          ctx.drawImage(img, 0, 0, 3508, 2480);
+          URL.revokeObjectURL(url);
+          canvas.toBlob(pngBlob => {
+            if (!pngBlob) return reject(new Error("Canvas render failed"));
+            const reader = new FileReader();
+            reader.onload = () => {
+              resolve(new Uint8Array(reader.result));
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(pngBlob);
+          }, 'image/png');
+        };
+        img.onerror = (err) => {
+          URL.revokeObjectURL(url);
+          reject(err);
+        };
+        img.src = url;
+      });
+    }
+
+    function renderSvgToPdfBuffer(svgString) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        img.onload = () => {
+          const canvas = document.getElementById('exportCanvas');
+          canvas.width = 3508;
+          canvas.height = 2480;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillRect(0, 0, 3508, 2480);
+          ctx.drawImage(img, 0, 0, 3508, 2480);
+          URL.revokeObjectURL(url);
+          canvas.toBlob(jpegBlob => {
+            if (!jpegBlob) return reject(new Error("Canvas render failed"));
+            const reader = new FileReader();
+            reader.onload = () => {
+              const jpegBytes = new Uint8Array(reader.result);
+              const pdfBytes = createPdfFromJpeg(jpegBytes, 3508, 2480);
+              resolve(pdfBytes);
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(jpegBlob);
+          }, 'image/jpeg', 0.93);
+        };
+        img.onerror = (err) => {
+          URL.revokeObjectURL(url);
+          reject(err);
+        };
+        img.src = url;
+      });
+    }
+
+    // Title Case & Academic Title Normalizer
+    function toTitleCase(str) {
+      const titleMap = {
+        's.kom': 'S.Kom.', 's.kom.': 'S.Kom.',
+        's.pd': 'S.Pd.', 's.pd.': 'S.Pd.',
+        's.t': 'S.T.', 's.t.': 'S.T.',
+        's.h': 'S.H.', 's.h.': 'S.H.',
+        'm.pd': 'M.Pd.', 'm.pd.': 'M.Pd.',
+        'm.kom': 'M.Kom.', 'm.kom.': 'M.Kom.',
+        'dr': 'Dr.', 'dr.': 'Dr.',
+        'prof': 'Prof.', 'prof.': 'Prof.',
+        'k.h': 'K.H.', 'k.h.': 'K.H.',
+        'kh': 'K.H.', 'kh.': 'K.H.',
+        'lc': 'Lc.', 'lc.': 'Lc.'
+      };
+
+      let result = str.replace(/\b[a-zA-ZÀ-ÿ]+/g, txt => {
+        return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+      });
+
+      for (const [key, val] of Object.entries(titleMap)) {
+        const regex = new RegExp(`\\b${key.replace(/\./g, '\\.')}\\b`, 'gi');
+        result = result.replace(regex, val);
+      }
+
+      return result.trim();
+    }
+
+    // Compute Certificate Number for Index
+    function getCertNumber(index) {
+      const num = String(eventData.startNum + index).padStart(3, '0');
+      return `${num}/${eventData.code}`;
+    }
+
+    // Render SVG for Specific Recipient
+    function renderSvgFor(record, index) {
+      let svg = masterSvgTemplate;
+      const certNo = getCertNumber(index);
+
+      svg = svg.replace(/\{\{\s*VAR_NOMOR\s*\}\}|\{\s*VAR_NOMOR\s*\}/g, certNo);
+      svg = svg.replace(/\{\{\s*VAR_NAMA\s*\}\}|\{\s*VAR_NAMA\s*\}/g, record.nama);
+      svg = svg.replace(/\{\{\s*VAR_JABATAN\s*\}\}|\{\s*VAR_JABATAN\s*\}/g, record.jabatan);
+      svg = svg.replace(/\{\{\s*VAR_KEGIATAN\s*\}\}|\{\s*VAR_KEGIATAN\s*\}/g, eventData.name);
+      svg = svg.replace(/\{\{\s*VAR_TANGGAL\s*\}\}|\{\s*VAR_TANGGAL\s*\}/g, eventData.date);
+
+      // Color Variant
+      const variant = document.getElementById('mediaSelectVariant') ? document.getElementById('mediaSelectVariant').value : '#064E3B';
+      svg = svg.replace(/stroke="#064E3B"/g, `stroke="${variant}"`);
+
+      // Dynamic E-Signature
+      const isESign = document.getElementById('mediaToggleESign') && document.getElementById('mediaToggleESign').checked;
+      if (isESign) {
+        const signatureMock = `<path d="M 120 200 Q 180 140 220 210 T 320 180 T 400 210" fill="none" stroke="#047857" stroke-width="4" stroke-linecap="round" />`;
+        svg = svg.replace(/<g id="ZONE_TTD_KETUM">.*?<\/g>/s, `<g id="ZONE_TTD_KETUM">${signatureMock}<line x1="50" y1="210" x2="450" y2="210" stroke="#047857" stroke-width="2" /></g>`);
+      }
+
+      // Dynamic font scaling for long names
+      if (record.nama.length > 30) {
+        const scaleFactor = Math.max(0.65, 30 / record.nama.length);
+        const newSize = Math.round(86 * scaleFactor);
+        svg = svg.replace(/font-size="86"/g, `font-size="${newSize}"`);
+      }
+
+      return svg;
+    }
+    function uint8ToBase64(bytes) {
+      let binary = '';
+      const len = bytes.byteLength;
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
+    }
+
+    // Google Drive Synchronization State (Clean vs Dirty Tracking)
+    let uploadSyncState = {
+      isUploaded: false,
+      dirtyIndices: new Set(),
+      isGlobalDirty: false,
+      lastUploadCount: 0,
+      lastDuration: { render: 0, upload: 0 },
+      lastFolder: ''
+    };
+
+    function markGdriveDirty(info = {}) {
+      if (!uploadSyncState.isUploaded) return; // Belum pernah upload, tidak perlu status dirty
+
+      if (info.type === 'global') {
+        uploadSyncState.isGlobalDirty = true;
+      } else if (info.type === 'singular' && typeof info.index === 'number') {
+        uploadSyncState.dirtyIndices.add(info.index);
+      }
+
+      updateGdriveResultBoxState(info);
+    }
+    window.markGdriveDirty = markGdriveDirty;
+
+    function updateGdriveResultBoxState(lastInfo = {}) {
+      const box = document.getElementById('gdriveResultBox');
+      const title = document.getElementById('gdriveResultTitle');
+      const detail = document.getElementById('gdriveResultDetail');
+      const btnSync = document.getElementById('btnCloudSyncDrive');
+      const btnForce = document.getElementById('btnForceUploadAll');
+      if (!box || !title || !detail || !btnSync) return;
+
+      if (!uploadSyncState.isUploaded) {
+        box.style.display = 'none';
+        return;
+      }
+
+      const isDirty = uploadSyncState.isGlobalDirty || uploadSyncState.dirtyIndices.size > 0;
+
+      if (!isDirty) {
+        // STATE BERSIH (HIJAU EMERALD)
+        box.style.display = 'block';
+        box.style.background = 'rgba(16,185,129,0.1)';
+        box.style.borderColor = 'rgba(16,185,129,0.3)';
+        box.style.color = '#34D399';
+        title.innerHTML = '<span>✓</span><span>Upload ke GDrive Berhasil!</span>';
+        title.style.color = '#34D399';
+        const rTime = uploadSyncState.lastDuration.render || '0.2';
+        const uTime = uploadSyncState.lastDuration.upload || '2.5';
+        detail.textContent = `Seluruh ${uploadSyncState.lastUploadCount || recipients.length} berkas PDF telah mutakhir di Google Drive. Render: ${rTime}s | Upload: ${uTime}s.`;
+        btnSync.innerHTML = '<span>☁️ Upload ke GDrive</span>';
+        if (btnForce) btnForce.style.display = 'none';
+      } else {
+        // STATE DIRTY / ADA PEMBARUAN (AMBER WARNING)
+        box.style.display = 'block';
+        box.style.background = 'rgba(245,158,11,0.12)';
+        box.style.borderColor = 'rgba(245,158,11,0.35)';
+        box.style.color = '#FBBF24';
+        title.innerHTML = '<span>⚠️</span><span>Ada Pembaruan Belum Diunggah</span>';
+        title.style.color = '#FBBF24';
+
+        if (uploadSyncState.isGlobalDirty) {
+          detail.textContent = `Terdeteksi ${lastInfo.reason || 'perubahan template/agenda'}. Seluruh sertifikat perlu diupload ulang ke Google Drive.`;
+          btnSync.innerHTML = `<span>☁️ Upload Ulang Semua (${recipients.length} Lembar)</span>`;
+          if (btnForce) btnForce.style.display = 'none';
+        } else {
+          const count = uploadSyncState.dirtyIndices.size;
+          const dirtyNames = Array.from(uploadSyncState.dirtyIndices)
+            .filter(i => recipients[i])
+            .map(i => recipients[i].nama.split(' ')[0])
+            .slice(0, 2)
+            .join(', ');
+          const extra = count > 2 ? ` (+${count - 2} lainnya)` : '';
+          detail.textContent = `Terdeteksi perubahan data pada ${count} sertifikat (${dirtyNames}${extra}). Anda dapat mengupload pembaruannya saja (sangat cepat).`;
+          btnSync.innerHTML = `<span>⚡ Upload Pembaruan (${count} Lembar Saja)</span>`;
+          if (btnForce) btnForce.style.display = 'inline-block';
+        }
+      }
+    }
+
+    // Upload Singular (1 Lembar Saja untuk Edit Darurat)
+    async function uploadSingleCertificateToGdrive(index) {
+      if (index < 0 || index >= recipients.length) return;
+      const r = recipients[index];
+      const inputFolderId = document.getElementById('inputGdriveFolderId');
+      const inputEndpoint = document.getElementById('inputGdriveEndpoint');
+      const targetFolder = inputFolderId ? (inputFolderId.value.trim() || 'root') : 'root';
+      const defaultEp = 'https://script.google.com/macros/s/AKfycbytQmhQceAXJu3jbli3h2yOm8kKPtAC6QCTgWSlaToPJRqN4Y7BrciqyMVacC3WyIl4/exec';
+      const endpoint = inputEndpoint ? (inputEndpoint.value.trim() || defaultEp) : defaultEp;
+
+      const safeName = r.nama.replace(/[^a-zA-Z0-9]/g, '_');
+      const safeRole = r.jabatan.replace(/[^a-zA-Z0-9]/g, '_');
+      const cleanNim = r.nim.replace(/[^a-zA-Z0-9]/g, '_');
+      const fileName = `${cleanNim}_${safeName}_${safeRole}.pdf`;
+
+      // Floating Toast
+      const toast = document.createElement('div');
+      toast.style.cssText = 'position:fixed; bottom:20px; right:20px; z-index:99999; background:#0B132B; color:#38BDF8; padding:10px 16px; border-radius:8px; border:1px solid #0284C7; box-shadow:0 10px 25px rgba(0,0,0,0.5); font-size:11px; display:flex; align-items:center; gap:8px; font-weight:600; animation:fadeIn 0.3s ease;';
+      toast.innerHTML = `<span>⏳</span><span>Merender & Mengupload 1 lembar (${r.nama.split(' ')[0]})...</span>`;
+      document.body.appendChild(toast);
+
+      const t0 = Date.now();
+      try {
+        const svgContent = renderSvgFor(r, index);
+        const pdfBytes = await renderSvgToPdfBuffer(svgContent);
+        const b64 = uint8ToBase64(new Uint8Array(pdfBytes));
+
+        const isGoogleAppsScript = endpoint.includes('script.google.com');
+        const fetchOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            authKey: 'RD_CERT_2026_AMAN',
+            fileName,
+            mimeType: 'application/pdf',
+            folderId: targetFolder,
+            base64Data: b64,
+            replace: true
+          })
+        };
+
+        if (isGoogleAppsScript) {
+          fetchOptions.mode = 'no-cors';
+        } else {
+          fetchOptions.mode = 'cors';
+        }
+
+        await fetch(endpoint, fetchOptions);
+
+        const duration = ((Date.now() - t0) / 1000).toFixed(1);
+        toast.style.borderColor = '#10B981';
+        toast.style.color = '#34D399';
+        toast.innerHTML = `<span>✓</span><span>Selesai! Sertifikat ${r.nama} berhasil diupdate di GDrive (${duration}s).</span>`;
+        if (!uploadSyncState.isUploaded) {
+          uploadSyncState.isUploaded = true;
+          uploadSyncState.lastUploadCount = 1;
+          uploadSyncState.lastDuration = { render: '0.1', upload: duration };
+          uploadSyncState.lastFolder = targetFolder;
+        }
+        uploadSyncState.dirtyIndices.delete(index);
+        updateGdriveResultBoxState();
+
+        setTimeout(() => toast.remove(), 4000);
+      } catch (err) {
+        console.error('Gagal upload singular:', err);
+        toast.style.borderColor = '#EF4444';
+        toast.style.color = '#F87171';
+        toast.innerHTML = `<span>✕</span><span>Gagal upload ${r.nama}: ${err.message}</span>`;
+        setTimeout(() => toast.remove(), 5000);
+      }
+    }
+
+
+    // View Refresh
+    function updateView() {
+      if (recipients.length === 0) {
+        document.getElementById('svgContainer').innerHTML = '<div style="color:#94a3b8; text-align:center; padding:40px;">Belum ada penerima yang ditambahkan.</div>';
+        return;
+      }
+
+      if (currentIndex >= recipients.length) currentIndex = recipients.length - 1;
+      if (currentIndex < 0) currentIndex = 0;
+
+      const curr = recipients[currentIndex];
+      const svg = renderSvgFor(curr, currentIndex);
+      document.getElementById('svgContainer').innerHTML = svg;
+
+      // Smart Naming
+      const safeName = curr.nama.replace(/[^a-zA-Z0-9]/g, '_');
+      const safeRole = curr.jabatan.replace(/[^a-zA-Z0-9]/g, '_');
+      const cleanNim = curr.nim.replace(/[^a-zA-Z0-9]/g, '_');
+      const ext = singleExportFormat === 'svg' ? '.svg' : (singleExportFormat === 'png' ? '.png' : '.pdf');
+      const filename = `${cleanNim}_${safeName}_${safeRole}${ext}`;
+
+      document.getElementById('canvasNamingTarget').textContent = filename;
+      document.getElementById('navCounter').textContent = `${currentIndex + 1} / ${recipients.length}`;
+      document.getElementById('drawerTotalCount').textContent = `${recipients.length} Lembar`;
+      document.getElementById('drawerActiveIndex').textContent = `Ke-${currentIndex + 1}`;
+      document.getElementById('drawerSingleFileName').textContent = filename;
+      document.getElementById('secTotalRecipients').textContent = `${recipients.length} Orang`;
+      document.getElementById('recipientCountBadge').textContent = `${recipients.length} Orang`;
+
+      renderTable();
+      renderDivisionStats();
+    }
+
+    // Render Table in Kadiv View
+    function renderTable() {
+      const tbody = document.getElementById('recipientsTableBody');
+      tbody.innerHTML = '';
+
+      recipients.forEach((r, idx) => {
+        const tr = document.createElement('tr');
+        if (idx === currentIndex) tr.className = 'active-row';
+
+        const tag = r.isExternal ? '<span class="badge-ext">EKSTERNAL</span>' : '<span class="badge-sk">SK RD</span>';
+
+        tr.innerHTML = `
+          <td style="color:#64748b;">${idx + 1}</td>
+          <td>
+            <div style="font-weight:700;">${r.nama}</div>
+            <div style="font-size:9.5px; color:#64748b;">${tag} ${r.divisionId ? '• ' + r.divisionId.toUpperCase() : ''}</div>
+          </td>
+          <td style="font-family:monospace;">${r.nim}</td>
+          <td>
+            <select class="role-changer" data-idx="${idx}" style="padding:2px 4px; font-size:10px;">
+              <option value="${r.jabatan}">${r.jabatan} (Pilihan)</option>
+              <option value="Ketua Pelaksana">Ketua Pelaksana</option>
+              <option value="Koordinator Sie">Koordinator Sie</option>
+              <option value="Anggota Sie">Anggota Sie</option>
+              <option value="Sekretaris Panitia">Sekretaris Panitia</option>
+              <option value="Bendahara Panitia">Bendahara Panitia</option>
+              <option value="Master of Ceremony">Master of Ceremony</option>
+              <option value="Narasumber / Pemateri">Narasumber / Pemateri</option>
+            </select>
+          </td>
+          <td style="text-align:center;">
+            <button class="btn-del-row" data-idx="${idx}" style="background:transparent; border:none; color:#EF4444; font-size:13px; cursor:pointer;" title="Hapus">✕</button>
+          </td>
+        `;
+
+        tr.addEventListener('click', (e) => {
+          if (e.target.tagName !== 'SELECT' && e.target.tagName !== 'BUTTON') {
+            currentIndex = idx;
+            updateView();
+          }
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      // Bind dynamic row changes
+      document.querySelectorAll('.role-changer').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+          const idx = parseInt(e.target.dataset.idx);
+          recipients[idx].jabatan = e.target.value;
+          updateView();
+        });
+      });
+
+      document.querySelectorAll('.btn-del-row').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.idx);
+          recipients.splice(idx, 1);
+          if (currentIndex >= recipients.length) currentIndex = recipients.length - 1;
+          updateView();
+          markGdriveDirty({ type: 'global', reason: 'penghapusan penerima sertifikat' });
+        });
+      });
+    }
+
+    // Render Division Stats in Sekretaris View
+    function renderDivisionStats() {
+      const container = document.getElementById('divisionStatsList');
+      container.innerHTML = '';
+
+      MASTER_SK.divisions.forEach(div => {
+        const count = recipients.filter(r => r.divisionId === div.id).length;
+        const total = MASTER_SK.members.filter(m => m.divisionId === div.id).length;
+
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.justifyContent = 'space-between';
+        row.style.padding = '4px 6px';
+        row.style.background = '#0A101D';
+        row.style.borderRadius = '4px';
+
+        row.innerHTML = `
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:${div.color};"></span>
+            <span>${div.name}</span>
+          </div>
+          <div style="font-family:monospace; color:${count > 0 ? '#34D399' : '#64748B'};">
+            ${count} / ${total} Diajukan
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // Populate Division Dropdown and Chips in Kadiv View
+    // Populate Division Dropdown and Roster Grid in Kadiv View
+    function setupKadivControls() {
+      const selDiv = document.getElementById('kadivSelectDivision');
+      selDiv.innerHTML = '';
+
+      MASTER_SK.divisions.forEach(div => {
+        const count = MASTER_SK.members.filter(m => m.divisionId === div.id).length;
+        const opt = document.createElement('option');
+        opt.value = div.id;
+        opt.textContent = `${div.name} (${count} Anggota SK)`;
+        selDiv.appendChild(opt);
+      });
+
+      const searchInput = document.getElementById('searchRosterMember');
+      const countStatus = document.getElementById('rosterCountStatus');
+      const btnSelectAll = document.getElementById('btnRosterSelectAll');
+      const btnClearAll = document.getElementById('btnRosterClearAll');
+
+      function getInitials(name) {
+        if (!name) return 'RD';
+        const parts = name.trim().split(/\s+/).filter(Boolean);
+        if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+
+      function refreshChips() {
+        const curDivId = selDiv.value;
+        const container = document.getElementById('divisionChipsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const allDivMembers = MASTER_SK.members.filter(m => m.divisionId === curDivId);
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        const filtered = query
+          ? allDivMembers.filter(m => m.nama.toLowerCase().includes(query) || m.nim.toLowerCase().includes(query))
+          : allDivMembers;
+
+        const addedInDiv = allDivMembers.filter(m => recipients.some(r => r.nim === m.nim)).length;
+        if (countStatus) {
+          countStatus.innerHTML = `<strong style="color:#FFF;">${allDivMembers.length}</strong> Anggota SK • <span style="color:#34D399; font-weight:700;">${addedInDiv} Terpilih</span>`;
+        }
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:18px; color:#64748B; font-size:11px;">Tidak ada anggota yang cocok dengan "${query}".</div>`;
+          return;
+        }
+
+        filtered.forEach(m => {
+          const isAdded = recipients.some(r => r.nim === m.nim);
+          const card = document.createElement('div');
+          card.className = `roster-card ${isAdded ? 'selected' : ''}`;
+          card.title = `${m.nama} (${m.nim}) - Klik untuk ${isAdded ? 'hapus dari' : 'tambah ke'} daftar`;
+
+          const initials = getInitials(m.nama);
+
+          card.innerHTML = `
+            <div class="roster-avatar">${initials}</div>
+            <div class="roster-info">
+              <div class="roster-name">${m.nama}</div>
+              <div class="roster-nim">${m.nim}</div>
+            </div>
+            <div class="roster-action-badge">
+              ${isAdded ? '✓' : '+'}
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            const existingIdx = recipients.findIndex(r => r.nim === m.nim);
+            if (existingIdx >= 0) {
+              recipients.splice(existingIdx, 1);
+            } else {
+              recipients.push({
+                nim: m.nim,
+                nama: m.nama,
+                jabatan: m.role || "Anggota Sie",
+                divisionId: m.divisionId,
+                isExternal: false
+              });
+              currentIndex = recipients.length - 1;
+            }
+            refreshChips();
+            updateView();
+            markGdriveDirty({ type: 'global', reason: 'perubahan susunan anggota panitia' });
+          });
+
+          container.appendChild(card);
+        });
+      }
+
+      // Live Search Listener
+      searchInput?.addEventListener('input', refreshChips);
+
+      // Select All in Division
+      btnSelectAll?.addEventListener('click', () => {
+        const curDivId = selDiv.value;
+        const allDivMembers = MASTER_SK.members.filter(m => m.divisionId === curDivId);
+        allDivMembers.forEach(m => {
+          if (!recipients.some(r => r.nim === m.nim)) {
+            recipients.push({
+              nim: m.nim,
+              nama: m.nama,
+              jabatan: m.role || "Anggota Sie",
+              divisionId: m.divisionId,
+              isExternal: false
+            });
+          }
+        });
+        if (recipients.length > 0) currentIndex = recipients.length - 1;
+        refreshChips();
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'penambahan anggota divisi' });
+      });
+
+      // Clear All in Division
+      btnClearAll?.addEventListener('click', () => {
+        const curDivId = selDiv.value;
+        recipients = recipients.filter(r => r.divisionId !== curDivId);
+        window.recipients = recipients;
+        if (currentIndex >= recipients.length) currentIndex = Math.max(0, recipients.length - 1);
+        refreshChips();
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'pengurangan anggota divisi' });
+      });
+
+      selDiv.addEventListener('change', () => {
+        if (searchInput) searchInput.value = '';
+        refreshChips();
+      });
+
+      refreshChips();
+    }
+
+    // Initialize View Bindings
+    function init() {
+      if (!checkAuthGuard()) return;
+      // Parse URL parameters from dashboard
+      const urlParams = new URLSearchParams(window.location.search);
+      const idParam = urlParams.get('id');
+      const eventParam = urlParams.get('event') || urlParams.get('name');
+      const codeParam = urlParams.get('code');
+      const dateParam = urlParams.get('date');
+      const folderParam = urlParams.get('folder');
+
+      if (idParam) eventData.id = idParam;
+      if (folderParam) eventData.gdriveFolderId = decodeURIComponent(folderParam);
+      if (eventParam) {
+        eventData.name = decodeURIComponent(eventParam);
+        const nameEl = document.getElementById('secEventName');
+        if (nameEl) nameEl.value = eventData.name;
+        const badgeEl = document.getElementById('canvasEventBadge');
+        if (badgeEl) badgeEl.textContent = eventData.name;
+      }
+      if (codeParam) {
+        eventData.code = decodeURIComponent(codeParam);
+        const codeEl = document.getElementById('secEventCode');
+        if (codeEl) codeEl.value = eventData.code;
+        const prevEl = document.getElementById('secNumberPreview');
+        if (prevEl) prevEl.value = getCertNumber(0);
+      }
+      if (dateParam) {
+        eventData.date = decodeURIComponent(dateParam);
+        const dateEl = document.getElementById('secEventDate');
+        if (dateEl) dateEl.value = eventData.date;
+      }
+
+      setupKadivControls();
+      updateView();
+      bindEvents();
+    }
+
+    function bindEvents() {
+      // Tab Switching
+      const tabSec = document.getElementById('tabBtnSekretaris');
+      const tabKad = document.getElementById('tabBtnKadiv');
+      const tabMed = document.getElementById('tabBtnMedia');
+      const viewSec = document.getElementById('viewSekretaris');
+      const viewKad = document.getElementById('viewKadiv');
+      const viewMed = document.getElementById('viewMedia');
+
+      function switchTab(activeBtn, activeView) {
+        [tabSec, tabKad, tabMed].forEach(b => b.classList.remove('active'));
+        [viewSec, viewKad, viewMed].forEach(v => v.style.display = 'none');
+        activeBtn.classList.add('active');
+        activeView.style.display = 'flex';
+      }
+
+      tabSec.addEventListener('click', () => switchTab(tabSec, viewSec));
+      tabKad.addEventListener('click', () => switchTab(tabKad, viewKad));
+      tabMed.addEventListener('click', () => switchTab(tabMed, viewMed));
+
+      // Sekretaris Event Controls
+      document.getElementById('secEventName').addEventListener('input', (e) => {
+        eventData.name = e.target.value.trim() || "Kegiatan UKM Rijal Dakwah";
+        document.getElementById('canvasEventBadge').textContent = eventData.name;
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'perubahan nama agenda' });
+      });
+      document.getElementById('secEventCode').addEventListener('input', (e) => {
+        eventData.code = e.target.value.trim() || "RD/2026";
+        document.getElementById('secNumberPreview').value = getCertNumber(0);
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'perubahan kode surat agenda' });
+      });
+      document.getElementById('secEventDate').addEventListener('input', (e) => {
+        eventData.date = e.target.value.trim();
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'perubahan tanggal kegiatan' });
+      });
+      document.getElementById('secStartNumber').addEventListener('input', (e) => {
+        eventData.startNum = parseInt(e.target.value) || 1;
+        document.getElementById('secNumberPreview').value = getCertNumber(0);
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'perubahan nomor awal surat' });
+      });
+
+      // Lock Button & Header Lock Shortcut
+      function updateLockUi() {
+        const toggleBtn = document.getElementById('btnHeaderLockToggle');
+        const icon = document.getElementById('lockIcon');
+        const text = document.getElementById('lockText');
+        const btn = document.getElementById('btnToggleLock');
+
+        if (eventData.isLocked) {
+          if (toggleBtn) {
+            toggleBtn.className = 'header-lock-btn locked';
+            toggleBtn.title = 'Status Pengajuan: Nomor Terkunci Resmi (Klik untuk Buka Revisi)';
+          }
+          if (icon) icon.textContent = '🔒';
+          if (text) text.textContent = 'Nomor Terkunci Resmi';
+          if (btn) {
+            btn.innerHTML = '<span>🔓 Buka Kunci Pengajuan (Revisi)</span>';
+            btn.style.background = '#047857';
+            btn.style.borderColor = '#10B981';
+          }
+        } else {
+          if (toggleBtn) {
+            toggleBtn.className = 'header-lock-btn';
+            toggleBtn.title = 'Status Pengajuan: Buka (Nomor fleksibel. Klik untuk Kunci)';
+          }
+          if (icon) icon.textContent = '🔓';
+          if (text) text.textContent = 'Pengajuan Buka';
+          if (btn) {
+            btn.innerHTML = '<span>🔒 Kunci &amp; Terbitkan Nomor Resmi</span>';
+            btn.style.background = '#D97706';
+            btn.style.borderColor = '#F59E0B';
+          }
+        }
+      }
+
+      function handleLockToggle() {
+        if (currentAuthUser && currentAuthUser.role === 'kadiv') {
+          alert('Akses Terbatas: Hanya Sekretaris atau BPH yang berwenang mengubah status penguncian nomor surat resmi.');
+          return;
+        }
+        eventData.isLocked = !eventData.isLocked;
+        updateLockUi();
+      }
+
+      document.getElementById('btnToggleLock')?.addEventListener('click', handleLockToggle);
+      document.getElementById('btnHeaderLockToggle')?.addEventListener('click', handleLockToggle);
+
+      // Kadiv Sub-Mode Switching
+      const bBulk = document.getElementById('modeBtnBulkNim');
+      const bRoster = document.getElementById('modeBtnRoster');
+      const bExt = document.getElementById('modeBtnExt');
+      const boxBulk = document.getElementById('boxBulkNim');
+      const boxRoster = document.getElementById('boxRosterPicker');
+      const boxExt = document.getElementById('boxExternal');
+
+      function switchKadivMode(btn, box) {
+        [bBulk, bRoster, bExt].forEach(b => b.classList.remove('active'));
+        [boxBulk, boxRoster, boxExt].forEach(x => x.style.display = 'none');
+        btn.classList.add('active');
+        box.style.display = 'flex';
+      }
+
+      bBulk.addEventListener('click', () => switchKadivMode(bBulk, boxBulk));
+      bRoster.addEventListener('click', () => switchKadivMode(bRoster, boxRoster));
+      bExt.addEventListener('click', () => switchKadivMode(bExt, boxExt));
+
+      // Process Bulk NIM Paste
+      document.getElementById('btnProcessBulkNim').addEventListener('click', () => {
+        const raw = document.getElementById('inputBulkNim').value.trim();
+        if (!raw) return alert("Silakan paste deretan NIM panitia terlebih dahulu!");
+
+        const defaultRole = document.getElementById('selectDefaultRole').value;
+        const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+        let matched = 0;
+        let notFound = [];
+
+        lines.forEach(line => {
+          // JALUR UMUM ATAU INPUT BERUPA NAMA LANGSUNG (Bukan angka NIM)
+          if (window._isModeUmum || /[a-zA-Z]/.test(line)) {
+            const cleanName = toTitleCase(line);
+            if (!recipients.some(r => r.nama.toLowerCase() === cleanName.toLowerCase())) {
+              recipients.push({
+                nim: window._isModeUmum ? `UMUM-${String(recipients.length + 1).padStart(3, '0')}` : 'Tamu / Umum',
+                nama: cleanName,
+                jabatan: defaultRole === 'Anggota Sie' ? 'Peserta' : defaultRole,
+                divisionId: 'umum',
+                isExternal: true
+              });
+              matched++;
+            }
+            return;
+          }
+
+          // JALUR KHUSUS RD: Validasi NIM terhadap Master SK & Oprec
+          const cleanToken = line.replace(/[^0-9.]/g, '');
+          const pengurus = MASTER_SK.members.find(m => m.nim === cleanToken || m.nim.replace(/\./g, '') === cleanToken.replace(/\./g, ''));
+          const anggota = !pengurus && typeof MASTER_ANGGOTA !== 'undefined' ? MASTER_ANGGOTA.find(m => m.nim === cleanToken || m.nim.replace(/\./g, '') === cleanToken.replace(/\./g, '')) : null;
+
+          if (pengurus) {
+            if (!recipients.some(r => r.nim === pengurus.nim)) {
+              recipients.push({
+                nim: pengurus.nim,
+                nama: pengurus.nama,
+                jabatan: defaultRole,
+                divisionId: pengurus.divisionId,
+                isExternal: false
+              });
+              matched++;
+            }
+          } else if (anggota) {
+            if (!recipients.some(r => r.nim === anggota.nim)) {
+              recipients.push({
+                nim: anggota.nim,
+                nama: anggota.nama,
+                jabatan: (defaultRole === 'Anggota Sie') ? 'Relawan Panitia' : defaultRole,
+                divisionId: 'relawan',
+                isExternal: false
+              });
+              matched++;
+            }
+          } else {
+            notFound.push(line);
+          }
+        });
+
+        updateView();
+        document.getElementById('inputBulkNim').value = '';
+        if (matched > 0) {
+          markGdriveDirty({ type: 'global', reason: `penambahan ${matched} orang panitia baru` });
+        }
+
+        if (notFound.length > 0) {
+          alert(`Berhasil memasukkan ${matched} orang!\n\nPerhatian: ${notFound.length} baris tidak dapat diproses:\n${notFound.join(', ')}\n\nSilakan gunakan tab 'Eksternal' untuk input manual.`);
+        } else {
+          const modeMsg = window._isModeUmum ? 'peserta/narasumber umum' : 'Pengurus/Relawan Anggota RD';
+          alert(`Sukses! ${matched} orang (${modeMsg}) berhasil dimasukkan tanpa typo nama.`);
+        }
+      });
+
+      // Add External Participant
+      document.getElementById('btnAddExternal').addEventListener('click', () => {
+        const name = document.getElementById('inputExtName').value.trim();
+        const instansi = document.getElementById('inputExtInstansi').value.trim() || 'Tamu / Umum';
+        const role = document.getElementById('inputExtRole').value.trim() || 'Narasumber';
+
+        if (!name) return alert("Silakan isi nama lengkap & gelar peserta!");
+
+        recipients.push({
+          nim: instansi,
+          nama: toTitleCase(name),
+          jabatan: toTitleCase(role),
+          divisionId: 'eksternal',
+          isExternal: true
+        });
+
+        document.getElementById('inputExtName').value = '';
+        currentIndex = recipients.length - 1;
+        updateView();
+        markGdriveDirty({ type: 'singular', index: recipients.length - 1, name: toTitleCase(name) });
+      });
+      // Media Slider Nav
+      document.getElementById('btnNavPrev').addEventListener('click', () => {
+        if (currentIndex > 0) { currentIndex--; updateView(); }
+      });
+      document.getElementById('btnNavNext').addEventListener('click', () => {
+        if (currentIndex < recipients.length - 1) { currentIndex++; updateView(); }
+      });
+
+      document.getElementById('mediaSelectVariant').addEventListener('change', () => {
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'perubahan warna tema sertifikat' });
+      });
+      document.getElementById('mediaToggleESign').addEventListener('change', () => {
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'perubahan stempel/tanda tangan elektronik' });
+      });
+      // Custom SVG Upload
+      document.getElementById('mediaInputCustomSvg').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const content = evt.target.result;
+          if (content && content.includes('<svg')) {
+            masterSvgTemplate = content;
+            document.getElementById('mediaTplBadge').textContent = "SVG KUSTOM";
+            document.getElementById('mediaTplBadge').style.color = "#FBBF24";
+            updateView();
+            markGdriveDirty({ type: 'global', reason: 'unggah template SVG baru' });
+          } else {
+            alert("Berkas yang dipilih bukan berkas SVG yang valid!");
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      // Reset Template SVG
+      document.getElementById('mediaBtnResetSvg').addEventListener('click', () => {
+        masterSvgTemplate = defaultEmbeddedSvg;
+        document.getElementById('mediaTplBadge').textContent = "RESMI RD";
+        document.getElementById('mediaTplBadge').style.color = "#34D399";
+        document.getElementById('mediaInputCustomSvg').value = "";
+        updateView();
+        markGdriveDirty({ type: 'global', reason: 'reset ke template resmi RD' });
+      });
+
+      // Download Master SVG Template
+      const btnDlMaster = document.getElementById('btnDownloadMasterSvg');
+      if (btnDlMaster) {
+        btnDlMaster.addEventListener('click', () => {
+          const blob = new Blob([defaultEmbeddedSvg], { type: 'image/svg+xml;charset=utf-8' });
+          downloadBlob(blob, 'template-sertifikat-master-rd.svg');
+        });
+      }
+
+      // Emergency Fix-on-the-Fly Modal
+      const modalEmerg = document.getElementById('modalEmergency');
+      document.getElementById('btnEmergencyFix').addEventListener('click', () => {
+        if (recipients.length === 0) return alert("Daftar penerima masih kosong!");
+        const curr = recipients[currentIndex];
+        document.getElementById('editNim').value = curr.nim;
+        document.getElementById('editNama').value = curr.nama;
+        document.getElementById('editJabatan').value = curr.jabatan;
+        modalEmerg.style.display = 'flex';
+      });
+
+      document.getElementById('btnCancelEdit').addEventListener('click', () => {
+        modalEmerg.style.display = 'none';
+      });
+
+      document.getElementById('btnSaveEdit').addEventListener('click', () => {
+        const curr = recipients[currentIndex];
+        curr.nim = document.getElementById('editNim').value.trim();
+        curr.nama = document.getElementById('editNama').value.trim();
+        curr.jabatan = document.getElementById('editJabatan').value.trim();
+        modalEmerg.style.display = 'none';
+        updateView();
+        markGdriveDirty({ type: 'singular', index: currentIndex, name: curr.nama });
+      });
+
+      document.getElementById('btnSaveAndUploadSingle')?.addEventListener('click', async () => {
+        const curr = recipients[currentIndex];
+        curr.nim = document.getElementById('editNim').value.trim();
+        curr.nama = document.getElementById('editNama').value.trim();
+        curr.jabatan = document.getElementById('editJabatan').value.trim();
+        modalEmerg.style.display = 'none';
+        updateView();
+        await uploadSingleCertificateToGdrive(currentIndex);
+      });
+
+      // Drawer Controls
+      const drawer = document.getElementById('exportDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      document.getElementById('btnOpenExportDrawer').addEventListener('click', () => {
+        updateView();
+        backdrop.classList.add('open');
+        drawer.classList.add('open');
+      });
+      document.getElementById('btnCloseDrawer').addEventListener('click', () => {
+        backdrop.classList.remove('open');
+        drawer.classList.remove('open');
+      });
+      backdrop.addEventListener('click', () => {
+        backdrop.classList.remove('open');
+        drawer.classList.remove('open');
+      });
+
+      // Single Export Format Pills
+      document.getElementById('optSingleSvg').addEventListener('click', () => {
+        singleExportFormat = 'svg';
+        document.getElementById('optSingleSvg').classList.add('active');
+        document.getElementById('optSinglePng').classList.remove('active');
+        document.getElementById('optSinglePdf').classList.remove('active');
+        updateView();
+      });
+      document.getElementById('optSinglePng').addEventListener('click', () => {
+        singleExportFormat = 'png';
+        document.getElementById('optSinglePng').classList.add('active');
+        document.getElementById('optSingleSvg').classList.remove('active');
+        document.getElementById('optSinglePdf').classList.remove('active');
+        updateView();
+      });
+      document.getElementById('optSinglePdf').addEventListener('click', () => {
+        singleExportFormat = 'pdf';
+        document.getElementById('optSinglePdf').classList.add('active');
+        document.getElementById('optSingleSvg').classList.remove('active');
+        document.getElementById('optSinglePng').classList.remove('active');
+        updateView();
+      });
+
+      // Single Download
+      document.getElementById('btnDownloadSingle').addEventListener('click', async () => {
+        if (recipients.length === 0) return alert("Daftar penerima masih kosong!");
+        const curr = recipients[currentIndex];
+        const svgContent = renderSvgFor(curr, currentIndex);
+        const filename = document.getElementById('canvasNamingTarget').textContent;
+
+        if (singleExportFormat === 'svg') {
+          const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+          downloadBlob(blob, filename);
+        } else if (singleExportFormat === 'png') {
+          const pngBuf = await renderSvgToPngBuffer(svgContent);
+          const blob = new Blob([pngBuf], { type: 'image/png' });
+          downloadBlob(blob, filename);
+        } else if (singleExportFormat === 'pdf') {
+          const pdfBuf = await renderSvgToPdfBuffer(svgContent);
+          const blob = new Blob([pdfBuf], { type: 'application/pdf' });
+          downloadBlob(blob, filename);
+        }
+      });
+
+      // ZIP Pills
+      function setZipFormat(fmt) {
+        zipExportFormat = fmt;
+        document.getElementById('optZipSvg').classList.toggle('active', fmt === 'svg');
+        document.getElementById('optZipPng').classList.toggle('active', fmt === 'png');
+        document.getElementById('optZipPdf').classList.toggle('active', fmt === 'pdf');
+        document.getElementById('optZipAll').classList.toggle('active', fmt === 'all');
+      }
+
+      document.getElementById('optZipSvg').addEventListener('click', () => setZipFormat('svg'));
+      document.getElementById('optZipPng').addEventListener('click', () => setZipFormat('png'));
+      document.getElementById('optZipPdf').addEventListener('click', () => setZipFormat('pdf'));
+      document.getElementById('optZipAll').addEventListener('click', () => setZipFormat('all'));
+
+      // Batch ZIP Download with Real-Time Progress Bar
+      document.getElementById('btnDownloadBatchZip').addEventListener('click', async () => {
+        if (recipients.length === 0) return alert("Daftar nama masih kosong!");
+
+        const btn = document.getElementById('btnDownloadBatchZip');
+        const originalHtml = btn.innerHTML;
+        const progressSection = document.getElementById('zipProgressSection');
+        const progressStatus = document.getElementById('zipProgressStatus');
+        const progressPercent = document.getElementById('zipProgressPercent');
+        const progressBarFill = document.getElementById('zipProgressBarFill');
+
+        btn.disabled = true;
+        progressSection.style.display = 'block';
+
+        const files = [];
+        const total = recipients.length;
+
+        try {
+          for (let i = 0; i < total; i++) {
+            const r = recipients[i];
+            const svgContent = renderSvgFor(r, i);
+            const safeName = r.nama.replace(/[^a-zA-Z0-9]/g, '_');
+            const safeRole = r.jabatan.replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanNim = r.nim.replace(/[^a-zA-Z0-9]/g, '_');
+            const baseName = `${cleanNim}_${safeName}_${safeRole}`;
+
+            const percent = Math.round(((i + 1) / total) * 100);
+            progressPercent.textContent = `${percent}%`;
+            progressBarFill.style.width = `${percent}%`;
+
+            if (zipExportFormat === 'svg') {
+              progressStatus.textContent = `Mengemas SVG (${i + 1}/${total})...`;
+              files.push({ name: `${baseName}.svg`, content: svgContent });
+            } else if (zipExportFormat === 'png') {
+              progressStatus.textContent = `Merender PNG (${i + 1}/${total})...`;
+              const pngBuf = await renderSvgToPngBuffer(svgContent);
+              files.push({ name: `${baseName}.png`, content: pngBuf });
+            } else if (zipExportFormat === 'pdf') {
+              progressStatus.textContent = `Merender PDF (${i + 1}/${total})...`;
+              const pdfBuf = await renderSvgToPdfBuffer(svgContent);
+              files.push({ name: `${baseName}.pdf`, content: pdfBuf });
+            } else if (zipExportFormat === 'all') {
+              progressStatus.textContent = `Mengemas SVG, PNG & PDF (${i + 1}/${total})...`;
+              files.push({ name: `${baseName}.svg`, content: svgContent });
+              const pngBuf = await renderSvgToPngBuffer(svgContent);
+              files.push({ name: `${baseName}.png`, content: pngBuf });
+              const pdfBuf = await renderSvgToPdfBuffer(svgContent);
+              files.push({ name: `${baseName}.pdf`, content: pdfBuf });
+            }
+
+            await new Promise(res => setTimeout(res, 10));
+          }
+
+          progressStatus.textContent = `Mengompresi berkas ZIP...`;
+          const zipBlob = createZip(files);
+          const safeCode = eventData.code.replace(/[^a-zA-Z0-9]/g, '_');
+          const fmtTag = zipExportFormat.toUpperCase();
+          downloadBlob(zipBlob, `Sertifikat_RD_${safeCode}_${fmtTag}.zip`);
+
+        } catch (err) {
+          alert("Gagal membuat arsip: " + err.message);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
+          setTimeout(() => {
+            progressSection.style.display = 'none';
+            progressBarFill.style.width = '0%';
+          }, 800);
+        }
+      });
+
+      // Multi-Page Print
+      document.getElementById('btnPrintMultiPage').addEventListener('click', () => {
+        if (recipients.length === 0) return alert("Daftar nama masih kosong!");
+
+        const printContainer = document.getElementById('printContainer');
+        printContainer.innerHTML = '';
+
+        recipients.forEach((r, i) => {
+          const sheet = document.createElement('div');
+          sheet.className = 'print-sheet';
+          sheet.innerHTML = renderSvgFor(r, i);
+          printContainer.appendChild(sheet);
+        });
+
+        window.print();
+      });
+
+      // Google Drive Upload Engine (Dual-Stage Pipeline)
+      const inputFolderId = document.getElementById('inputGdriveFolderId');
+      const inputEndpoint = document.getElementById('inputGdriveEndpoint');
+      const progressWrap = document.getElementById('gdriveProgressWrap');
+
+      // Stage 1 Elements (Hijau)
+      const renderPhaseWrap = document.getElementById('gdriveRenderPhaseWrap');
+      const renderPercent = document.getElementById('gdriveRenderPercent');
+      const renderBarFill = document.getElementById('gdriveRenderBarFill');
+      const renderSubText = document.getElementById('gdriveRenderSubText');
+
+      // Stage 2 Elements (Ungu)
+      const uploadPhaseWrap = document.getElementById('gdriveUploadPhaseWrap');
+      const uploadPercent = document.getElementById('gdriveUploadPercent');
+      const uploadBarFill = document.getElementById('gdriveUploadBarFill');
+      const uploadSubText = document.getElementById('gdriveUploadSubText');
+
+      const resultBox = document.getElementById('gdriveResultBox');
+      const resultDetail = document.getElementById('gdriveResultDetail');
+      const btnOpenGdrive = document.getElementById('btnOpenGdriveLink');
+      const btnSync = document.getElementById('btnCloudSyncDrive');
+      const checkReplace = document.getElementById('checkGdriveReplace');
+      const eventNameDisplay = document.getElementById('gdriveEventNameDisplay');
+
+      let isTestMode = true;
+
+      // Update display label target agenda
+      if (eventNameDisplay) {
+        eventNameDisplay.textContent = `Target Agenda: ${eventData.name || 'Muktamar Anggota VI'}`;
+      }
+
+      // Restore saved settings & Agenda Folder Correspondence
+      const defaultEndpoint = 'https://script.google.com/macros/s/AKfycbytQmhQceAXJu3jbli3h2yOm8kKPtAC6QCTgWSlaToPJRqN4Y7BrciqyMVacC3WyIl4/exec';
+      const FOLDER_2026 = '1rSwN4pD_50ccpr2AFnQ0U-n2XARoJCFB';
+      const FOLDER_2027 = '1pQtnBpGvs4KKHmyBGmACzSEuqTL68tTj';
+      const eventYear = (eventData.date ? new Date(eventData.date).getFullYear() : 2026) || 2026;
+      const defaultFolder = eventYear >= 2027 ? FOLDER_2027 : FOLDER_2026;
+
+      // 1. Cek folder khusus untuk agenda yang dipilih
+      const eventFolderKey = 'rd_gdrive_folder_' + (eventData.id || 'default');
+      const savedEventFolder = eventData.gdriveFolderId || localStorage.getItem(eventFolderKey);
+
+      let initialFolder = savedEventFolder;
+      if (!initialFolder) {
+        if (eventData.id === 'evt-muktamar-vi' || (eventData.name && eventData.name.includes('Muktamar'))) {
+          initialFolder = eventYear >= 2027 ? FOLDER_2027 : FOLDER_2026;
+        } else {
+          initialFolder = localStorage.getItem('rd_gdrive_test_folder') || defaultFolder;
+        }
+      }
+
+      const savedEndpoint = localStorage.getItem('rd_gdrive_endpoint') || defaultEndpoint;
+      if (inputFolderId) inputFolderId.value = initialFolder;
+      if (inputEndpoint) inputEndpoint.value = savedEndpoint;
+
+      inputFolderId?.addEventListener('change', () => {
+        const val = inputFolderId.value.trim();
+        // Simpan korespondensi folder per agenda
+        if (eventData.id) {
+          localStorage.setItem('rd_gdrive_folder_' + eventData.id, val);
+        }
+        if (isTestMode) {
+          localStorage.setItem('rd_gdrive_test_folder', val);
+        } else {
+          localStorage.setItem('rd_gdrive_prod_folder', val);
+        }
+        // Sinkronkan ke database agenda di index.html jika ada
+        try {
+          const rawEvts = localStorage.getItem('rd_cert_events_catalog_v1');
+          if (rawEvts) {
+            let evts = JSON.parse(rawEvts);
+            const idx = evts.findIndex(e => e.id === eventData.id || e.name === eventData.name);
+            if (idx !== -1) {
+              evts[idx].gdriveFolderId = val;
+              localStorage.setItem('rd_cert_events_catalog_v1', JSON.stringify(evts));
+            }
+          }
+        } catch (e) {}
+      });
+
+      inputEndpoint?.addEventListener('change', () => {
+        localStorage.setItem('rd_gdrive_endpoint', inputEndpoint.value.trim());
+      });
+
+      btnSync?.addEventListener('click', async () => {
+        if (recipients.length === 0) return alert("Daftar nama masih kosong!");
+
+        if (!eventData.isLocked) {
+          const proceed = confirm("Perhatian: Nomor surat belum dikunci oleh Sekretaris! Apakah Anda yakin ingin mengupload ke Google Drive sekarang?");
+          if (!proceed) return;
+        }
+
+        const endpoint = inputEndpoint.value.trim();
+        const targetFolder = inputFolderId.value.trim() || 'root';
+        const shouldReplace = checkReplace ? checkReplace.checked : true;
+
+        // Tentukan mode: Apakah INCREMENTAL (hanya file yang berubah) atau FULL UPLOAD (semua)
+        const isIncremental = uploadSyncState.isUploaded && !uploadSyncState.isGlobalDirty && uploadSyncState.dirtyIndices.size > 0 && !window._forceUploadAll;
+        window._forceUploadAll = false; // Reset flag paksa
+
+        let targetList = [];
+        if (isIncremental) {
+          targetList = Array.from(uploadSyncState.dirtyIndices)
+            .filter(idx => idx >= 0 && idx < recipients.length)
+            .map(idx => ({ record: recipients[idx], index: idx }));
+        } else {
+          targetList = recipients.map((r, i) => ({ record: r, index: i }));
+        }
+
+        const total = targetList.length;
+        if (total === 0) return alert("Tidak ada data yang perlu diupload!");
+
+        btnSync.disabled = true;
+        btnSync.innerHTML = isIncremental ? `<span>⏳ Mengupload ${total} Pembaruan...</span>` : '<span>⏳ Memproses Pipeline...</span>';
+        resultBox.style.display = 'none';
+        progressWrap.style.display = 'flex';
+
+        // Reset Stage 1 (Hijau)
+        renderPhaseWrap.style.opacity = '1.0';
+        renderBarFill.style.width = '0%';
+        renderPercent.textContent = '0%';
+        renderSubText.textContent = isIncremental ? `Memulai render ${total} sertifikat yang diperbarui...` : `Memulai render lokal ${total} sertifikat...`;
+
+        // Reset Stage 2 (Ungu)
+        uploadPhaseWrap.style.opacity = '0.4';
+        uploadBarFill.style.width = '0%';
+        uploadPercent.textContent = '0%';
+        uploadSubText.textContent = `Menunggu tahap render selesai...`;
+
+        // ==========================================
+        // TAHAP 1: RENDER LOKAL (PROGRESS BAR HIJAU)
+        // ==========================================
+        const renderStartTime = Date.now();
+        const renderedQueue = [];
+
+        for (let i = 0; i < total; i++) {
+          const item = targetList[i];
+          const r = item.record;
+          const origIdx = item.index;
+          const safeName = r.nama.replace(/[^a-zA-Z0-9]/g, '_');
+          const safeRole = r.jabatan.replace(/[^a-zA-Z0-9]/g, '_');
+          const cleanNim = r.nim.replace(/[^a-zA-Z0-9]/g, '_');
+          const fileName = `${cleanNim}_${safeName}_${safeRole}.pdf`;
+
+          renderSubText.textContent = `Merender (${i + 1}/${total}): ${r.nama.split(' ')[0]}...`;
+
+          try {
+            const svgContent = renderSvgFor(r, origIdx);
+            const pdfBytes = await renderSvgToPdfBuffer(svgContent);
+            const b64 = uint8ToBase64(new Uint8Array(pdfBytes));
+
+            renderedQueue.push({
+              authKey: 'RD_CERT_2026_AMAN',
+              fileName,
+              mimeType: 'application/pdf',
+              folderId: targetFolder,
+              base64Data: b64,
+              replace: shouldReplace
+            });
+          } catch (renderErr) {
+            console.error(`Gagal render ${fileName}:`, renderErr);
+          }
+
+          const percent = Math.round(((i + 1) / total) * 100);
+          renderPercent.textContent = `${percent}%`;
+          renderBarFill.style.width = `${percent}%`;
+
+          // Yield ringan setiap 3 sertifikat agar browser tetap responsif & animasi berjalan mulus
+          if (i % 3 === 0) await new Promise(res => setTimeout(res, 4));
+        }
+
+        const renderElapsed = ((Date.now() - renderStartTime) / 1000).toFixed(1);
+        renderSubText.textContent = `✓ Render selesai: ${renderedQueue.length} PDF siap (${renderElapsed}s).`;
+        renderPhaseWrap.style.opacity = '0.85';
+
+        // ====================================================
+        // TAHAP 2: MULTI-WORKER UPLOAD PARALEL (BAR UNGU)
+        // ====================================================
+        uploadPhaseWrap.style.opacity = '1.0';
+        uploadSubText.textContent = `Menghubungkan 4 worker paralel ke GDrive...`;
+        btnSync.innerHTML = isIncremental ? `<span>⚡ Mengupload ${total} Pembaruan...</span>` : '<span>⚡ Mengupload 4x Paralel...</span>';
+
+        const isGoogleAppsScript = endpoint.includes('script.google.com');
+        let completedCount = 0;
+        let successCount = 0;
+        let failCount = 0;
+        const uploadStartTime = Date.now();
+
+        const CONCURRENCY = 4; // 4 koneksi upload simultan
+        let nextIndex = 0;
+
+        async function uploadWorker(workerId) {
+          while (nextIndex < renderedQueue.length) {
+            const itemIndex = nextIndex++;
+            const item = renderedQueue[itemIndex];
+
+            try {
+              const fetchOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(item)
+              };
+
+              if (isGoogleAppsScript) {
+                fetchOptions.mode = 'no-cors';
+              } else {
+                fetchOptions.mode = 'cors';
+              }
+
+              const res = await fetch(endpoint, fetchOptions);
+
+              if (isGoogleAppsScript) {
+                successCount++;
+              } else {
+                const data = await res.json();
+                if (data && data.success) {
+                  successCount++;
+                } else {
+                  failCount++;
+                  console.warn(`Gagal upload ${item.fileName}:`, data ? data.error : 'Gagal respon');
+                }
+              }
+            } catch (err) {
+              failCount++;
+              console.error(`Error worker ${workerId} upload ${item.fileName}:`, err);
+            }
+            // BEBASKAN MEMORI SEKETIKA DARI RAM (Zero Ghost Memory / Anti Memory Leak)
+            item.base64Data = null;
+
+            completedCount++;
+            const upPercent = Math.round((completedCount / total) * 100);
+            uploadPercent.textContent = `${upPercent}%`;
+            uploadBarFill.style.width = `${upPercent}%`;
+            const currentElapsed = ((Date.now() - uploadStartTime) / 1000).toFixed(0);
+            uploadSubText.textContent = `Upload (${completedCount}/${total}): ${successCount} sukses, ${failCount} gagal (${currentElapsed}s elapsed)...`;
+          }
+        }
+
+        // Jalankan worker pool paralel
+        const workerCount = Math.min(CONCURRENCY, renderedQueue.length);
+        const workers = [];
+        for (let w = 0; w < workerCount; w++) {
+          workers.push(uploadWorker(w + 1));
+        }
+        await Promise.all(workers);
+
+        // Kosongkan seluruh referensi antrean di RAM seketika
+        renderedQueue.length = 0;
+
+        const totalUploadElapsed = ((Date.now() - uploadStartTime) / 1000).toFixed(1);
+        uploadSubText.textContent = `✓ Upload selesai: ${successCount} berhasil diupload ke Google Drive (${totalUploadElapsed}s).`;
+
+        btnSync.disabled = false;
+        btnSync.innerHTML = '<span>☁️ Upload ke GDrive</span>';
+
+        // Update status sinkronisasi ke mode bersih
+        uploadSyncState.isUploaded = true;
+        uploadSyncState.dirtyIndices.clear();
+        uploadSyncState.isGlobalDirty = false;
+        uploadSyncState.lastUploadCount = successCount;
+        uploadSyncState.lastDuration = { render: renderElapsed, upload: totalUploadElapsed };
+        uploadSyncState.lastFolder = targetFolder;
+        updateGdriveResultBoxState();
+
+        const btnOpenGdrive = document.getElementById('btnOpenGdriveLink');
+        if (btnOpenGdrive) btnOpenGdrive.href = `https://drive.google.com/drive/folders/${targetFolder}`;
+
+        if (failCount > 0 && successCount === 0) {
+          alert(`Tidak dapat terhubung ke endpoint bridge (${endpoint}).\n\nPastikan koneksi internet stabil atau periksa konfigurasi Google Apps Script.`);
+        }
+      });
+
+      
+      // Excel File Upload Listener (SheetJS)
+      document.getElementById('inputExcelFile')?.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (typeof XLSX === 'undefined') {
+          return alert('Library Excel belum dimuat sempurna. Pastikan terhubung internet.');
+        }
+
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const data = new Uint8Array(evt.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+
+            if (!rows || rows.length === 0) return alert('Berkas Excel kosong!');
+
+            let added = 0;
+            let startIdx = 0;
+            const firstRowStr = (rows[0] || []).join(' ').toLowerCase();
+            if (firstRowStr.includes('nama') || firstRowStr.includes('name')) {
+              startIdx = 1;
+            }
+
+            for (let i = startIdx; i < rows.length; i++) {
+              const row = rows[i];
+              if (!row || !row[0]) continue;
+              const name = String(row[0]).trim();
+              const role = row[1] ? String(row[1]).trim() : (document.getElementById('selectDefaultRole')?.value || 'Peserta');
+              const instansi = row[2] ? String(row[2]).trim() : 'Umum';
+
+              if (name && !recipients.some(r => r.nama.toLowerCase() === name.toLowerCase())) {
+                recipients.push({
+                  nim: instansi || ('EXCEL-' + (recipients.length + 1)),
+                  nama: toTitleCase(name),
+                  jabatan: toTitleCase(role),
+                  divisionId: 'umum',
+                  isExternal: true
+                });
+                added++;
+              }
+            }
+
+            updateView();
+            alert('Sukses! ' + added + ' peserta berhasil diimpor dari berkas Excel: ' + file.name);
+            markGdriveDirty({ type: 'global', reason: 'impor ' + added + ' data dari Excel' });
+            e.target.value = '';
+          } catch (err) {
+            alert('Gagal membaca berkas Excel: ' + err.message);
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      });
+
+      // Download CSV / Excel Template Handler
+      document.getElementById('btnDlExcelTemplate')?.addEventListener('click', () => {
+        const csvContent = "Nama Lengkap,Jabatan/Peran,Instansi\nDr. Muhammad Fulan,Narasumber,STDIIS Jember\nAhmad Fauzi,Peserta Terbaik,Kajian Umum\nRidwan,Peserta,Umum";
+        const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
+        downloadBlob(blob, 'template-data-peserta-sertifikat.csv');
+      });
+
+      // Listener tombol Upload Paksa Semua
+      document.getElementById('btnForceUploadAll')?.addEventListener('click', () => {
+        window._forceUploadAll = true;
+        btnSync.click();
+      });
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      initSecurityGate();
+      init();
+    });
+  </script>
+</body>
+</html>

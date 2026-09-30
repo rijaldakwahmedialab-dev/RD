@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeRDificate • Dashboard Agenda &amp; Sertifikat Digital UKM Rijal Dakwah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070B14;
+      --card-bg: #0F172A;
+      --card-hover: #131F38;
+      --border-color: #1E293B;
+      --border-accent: #059669;
+      --primary: #10B981;
+      --primary-dark: #047857;
+      --sky: #38BDF8;
+      --gold: #F59E0B;
+      --danger: #EF4444;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Header Bar */
+    header {
+      background: #0A0F1D;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #047857 0%, #064E3B 100%);
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      color: #FFF;
+      box-shadow: 0 0 16px rgba(16,185,129,0.3);
+    }
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.4);
+      color: var(--primary);
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-input-wrap input {
+      background: #0F172A;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 7px 12px 7px 32px;
+      color: #FFF;
+      font-size: 12px;
+      width: 200px;
+      transition: all 0.2s ease;
+    }
+    .search-input-wrap input:focus {
+      outline: none;
+      border-color: var(--primary);
+      width: 240px;
+      box-shadow: 0 0 10px rgba(16,185,129,0.2);
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      color: var(--text-muted);
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* Auth Session Pill in Header */
+    .user-session-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-login-trigger {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #0F172A;
+      border: 1px solid #334155;
+      color: #CBD5E1;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-login-trigger:hover {
+      border-color: var(--sky);
+      color: #FFF;
+      background: #141F36;
+    }
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0F172A;
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+    .user-profile-badge.bph {
+      border-color: rgba(245,158,11,0.4);
+      background: rgba(245,158,11,0.08);
+    }
+    .user-profile-badge.kadiv {
+      border-color: rgba(56,189,248,0.4);
+      background: rgba(56,189,248,0.08);
+    }
+    .btn-logout {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .btn-logout:hover {
+      color: var(--danger);
+    }
+
+    .btn-create-event {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      border: 1px solid #10B981;
+      border-radius: 8px;
+      color: #FFF;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(5,150,105,0.4);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-create-event:hover {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(16,185,129,0.5);
+    }
+
+    /* Sub-Bar Filters & Stats */
+    .filter-bar {
+      background: #0B1120;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 2px;
+    }
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .month-pill {
+      background: #0F172A;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .month-pill:hover {
+      border-color: #334155;
+      color: #FFF;
+    }
+    .month-pill.active {
+      background: #047857;
+      border-color: var(--primary);
+      color: #FFF;
+      box-shadow: 0 2px 8px rgba(16,185,129,0.35);
+    }
+
+    .stats-chips {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .stat-chip {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: #0F172A;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+    .stat-chip strong {
+      color: var(--sky);
+      font-weight: 700;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      padding: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .section-header {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #FFF;
+    }
+    .section-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Event Grid */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    /* 3D Card Flip Architecture */
+    .event-card-wrapper {
+      perspective: 1200px;
+      min-height: 290px;
+      position: relative;
+    }
+
+    .event-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 290px;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+      border-radius: 16px;
+    }
+
+    .event-card-wrapper.flipped .event-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      border: 1.5px solid var(--border-color);
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .event-card-wrapper:hover .card-face {
+      border-color: var(--primary);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 20px rgba(16,185,129,0.25);
+    }
+
+    /* SISI DEPAN (FRONT FACE) */
+    .card-front {
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+
+    .card-top {
+      padding: 18px 20px 14px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .card-tags-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .tag-category {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(56,189,248,0.12);
+      color: var(--sky);
+      border: 1px solid rgba(56,189,248,0.3);
+    }
+    .tag-status {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .tag-status.active {
+      background: rgba(16,185,129,0.15);
+      color: #34D399;
+      border: 1px solid rgba(16,185,129,0.35);
+    }
+    .tag-status.done {
+      background: rgba(148,163,184,0.15);
+      color: #CBD5E1;
+      border: 1px solid rgba(148,163,184,0.3);
+    }
+    .tag-status.draft {
+      background: rgba(245,158,11,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+
+    .btn-flip-trigger {
+      background: rgba(15,23,42,0.6);
+      border: 1px solid #334155;
+      color: #94A3B8;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-flip-trigger:hover {
+      background: #1E293B;
+      color: #FFF;
+      border-color: var(--sky);
+      transform: rotate(30deg);
+    }
+
+    .card-event-name {
+      font-family: 'Cinzel', 'Plus Jakarta Sans', serif;
+      font-size: 18.5px;
+      font-weight: 700;
+      color: #FFF;
+      line-height: 1.35;
+      letter-spacing: 0.2px;
+      min-height: 48px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-cert-no {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      background: rgba(16,185,129,0.08);
+      padding: 3px 8px;
+      border-radius: 5px;
+      border: 1px solid rgba(16,185,129,0.25);
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .card-meta-details {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Split Buttons (Bottom: [ Pengurus | Peserta ]) */
+    .card-split-footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border-color);
+      background: #0A0F1D;
+    }
+    .split-btn {
+      padding: 11px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      color: #CBD5E1;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+    .split-btn:hover {
+      background: #141F36;
+      color: #FFF;
+    }
+    .split-btn.pengurus {
+      border-right: 1px solid var(--border-color);
+      color: #34D399;
+    }
+    .split-btn.pengurus:hover {
+      background: rgba(16,185,129,0.15);
+      color: #10B981;
+    }
+    .split-btn.peserta {
+      color: var(--sky);
+    }
+    .split-btn.peserta:hover {
+      background: rgba(56,189,248,0.15);
+      color: #38BDF8;
+    }
+
+    /* SISI BELAKANG (BACK FACE) */
+    .card-back {
+      transform: rotateY(180deg);
+      background: #090E1A;
+      border-color: #334155;
+      padding: 18px 20px;
+      justify-content: space-between;
+    }
+
+    .back-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1E293B;
+      padding-bottom: 10px;
+    }
+    .back-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #FFF;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-flip-back {
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #94A3B8;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .btn-flip-back:hover {
+      background: #334155;
+      color: #FFF;
+    }
+
+    .back-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 12px 0;
+      flex: 1;
+      justify-content: center;
+    }
+    .back-info-box {
+      background: #0F172A;
+      border: 1px solid #1E293B;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .back-info-title {
+      font-weight: 700;
+      color: #FFF;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Action Buttons (Icon Based: Edit | Delete) */
+    .admin-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .btn-icon-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .btn-icon-action.edit {
+      background: rgba(56,189,248,0.12);
+      border-color: rgba(56,189,248,0.35);
+      color: var(--sky);
+    }
+    .btn-icon-action.edit:hover {
+      background: rgba(56,189,248,0.25);
+      border-color: var(--sky);
+      color: #FFF;
+      transform: translateY(-1px);
+    }
+    .btn-icon-action.delete {
+      background: rgba(239,68,68,0.12);
+      border-color: rgba(239,68,68,0.35);
+      color: #F87171;
+    }
+    .btn-icon-action.delete:hover {
+      background: rgba(239,68,68,0.25);
+      border-color: var(--danger);
+      color: #FFF;
+      transform: translateY(-1px);
+    }
+
+    /* Locked indicator for non-BPH */
+    .admin-locked-box {
+      background: rgba(245,158,11,0.08);
+      border: 1px dashed rgba(245,158,11,0.35);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-quick-login-bph {
+      background: #D97706;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      color: #FFF;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+
+    .back-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #1E293B;
+      padding-top: 8px;
+      font-size: 10px;
+      color: #64748B;
+    }
+
+    /* Modal Backdrop & Box */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #0F172A;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+      animation: modalFadeIn 0.2s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      margin-bottom: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #CBD5E1;
+    }
+    .form-group input, .form-group select {
+      background: #0A0F1D;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #FFF;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .btn-cancel {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: #94A3B8;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-save-event {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      border: 1px solid #10B981;
+      border-radius: 8px;
+      padding: 8px 18px;
+      color: #FFF;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(5,150,105,0.4);
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 60px 20px;
+      text-align: center;
+      background: #0A0F1D;
+      border: 1px dashed var(--border-color);
+      border-radius: 16px;
+      color: var(--text-muted);
+    }
+    .empty-state h3 {
+      color: #FFF;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: #0A0F1D;
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 11px;
+      color: #64748B;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .header-actions { width: 100%; justify-content: space-between; }
+      .search-input-wrap input { width: 140px; }
+      .search-input-wrap input:focus { width: 180px; }
+      .event-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="brand-wrap">
+      <div class="brand-logo">RD</div>
+      <div>
+        <div class="brand-title">
+          SeRDificate • Dashboard Agenda
+          <span class="brand-badge">KAMPUS DAKWAH</span>
+        </div>
+        <div class="brand-sub">Pusat Pengajuan &amp; Penerbitan Sertifikat Resmi UKM Rijal Dakwah</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="inputSearchEvent" placeholder="Cari agenda kegiatan...">
+      </div>
+
+      <!-- User Auth State -->
+      <div id="userSessionContainer" class="user-session-wrap">
+        <!-- Rendered via JS: Login trigger or User Badge -->
+      </div>
+
+      <button id="btnOpenCreateModal" class="btn-create-event">
+        <span>+</span>
+        <span>Tambah Kegiatan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Filter Bar (Bulan & Status) -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">Bulan:</span>
+      <button class="month-pill active" data-month="all">Semua</button>
+      <button class="month-pill" data-month="01">Jan</button>
+      <button class="month-pill" data-month="02">Feb</button>
+      <button class="month-pill" data-month="03">Mar</button>
+      <button class="month-pill" data-month="04">Apr</button>
+      <button class="month-pill" data-month="05">Mei</button>
+      <button class="month-pill" data-month="06">Jun</button>
+      <button class="month-pill" data-month="07">Jul</button>
+      <button class="month-pill" data-month="08">Agu</button>
+      <button class="month-pill" data-month="09">Sep</button>
+      <button class="month-pill" data-month="10">Okt</button>
+      <button class="month-pill" data-month="11">Nov</button>
+      <button class="month-pill" data-month="12">Des</button>
+    </div>
+
+    <div class="stats-chips">
+      <div class="stat-chip">Total: <strong id="statTotalEvents">0</strong> Agenda</div>
+      <div class="stat-chip">Tampil: <strong id="statVisibleEvents">0</strong></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Daftar Agenda Kegiatan</h1>
+        <p class="section-desc">Pilih kegiatan untuk membuka portal sertifikat <strong>Pengurus</strong> atau <strong>Peserta</strong>. Klik ikon ⚙️ pada kartu untuk memutar (*flip*) kartu dan mengakses opsi kelola.</p>
+      </div>
+    </div>
+
+    <!-- Event Grid -->
+    <div id="eventGridContainer" class="event-grid">
+      <!-- Cards rendered via JS -->
+    </div>
+  </main>
+
+  <!-- Modal Tambah Kegiatan (Khusus BPH) -->
+  <div id="modalCreateEvent" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span>✨</span>
+        <span>Buat Kartu Kegiatan Baru (Khusus BPH)</span>
+      </div>
+      <div class="modal-sub">Tambahkan agenda kegiatan UKM Rijal Dakwah untuk mengaktifkan portal sertifikat.</div>
+
+      <form id="formCreateEvent">
+        <div class="form-group">
+          <label>Nama Kegiatan *</label>
+          <input type="text" id="newEvtName" placeholder="Contoh: Kajian Akbar Syiar Dakwah Kampus" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tanggal Kegiatan *</label>
+            <input type="date" id="newEvtDate" required>
+          </div>
+          <div class="form-group">
+            <label>Kode Surat / Nomor *</label>
+            <input type="text" id="newEvtCode" placeholder="Contoh: RD-KAS/X/2026" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="newEvtCategory">
+              <option value="Kajian & Syiar">Kajian &amp; Syiar</option>
+              <option value="Muktamar & BPH">Muktamar &amp; BPH</option>
+              <option value="Pelatihan & Skill">Pelatihan &amp; Skill</option>
+              <option value="Rihlah & Ukhuwah">Rihlah &amp; Ukhuwah</option>
+              <option value="Oprec & Kaderisasi">Oprec &amp; Kaderisasi</option>
+              <option value="Sosial & Dakwah">Sosial &amp; Dakwah</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Divisi Penyelenggara</label>
+            <select id="newEvtDiv">
+              <option value="Divisi Acara">Divisi Acara</option>
+              <option value="Badan Pengurus Harian (BPH)">Badan Pengurus Harian (BPH)</option>
+              <option value="Divisi Keilmuan">Divisi Keilmuan</option>
+              <option value="Divisi TPQ">Divisi TPQ</option>
+              <option value="Divisi Humas">Divisi Humas</option>
+              <option value="Divisi Media">Divisi Media</option>
+              <option value="Divisi Dakwah Digital">Divisi Dakwah Digital</option>
+              <option value="Divisi Dana Usaha">Divisi Dana Usaha</option>
+              <option value="Divisi Sarpras">Divisi Sarpras</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Estimasi Panitia</label>
+            <input type="number" id="newEvtStaff" value="25" min="1">
+          </div>
+          <div class="form-group">
+            <label>Estimasi Peserta</label>
+            <input type="number" id="newEvtAttendees" value="120" min="0">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:2px;">
+          <label style="display:flex; justify-content:space-between; align-items:center;">
+            <span>📁 Folder Google Drive</span>
+            <span style="font-size:9.5px; color:#10B981; font-weight:600;">✓ Otomatis Dibuat saat Disimpan</span>
+          </label>
+          <input type="text" id="newEvtFolderId" placeholder="Otomatis dibuat saat disimpan (atau tempel ID khusus jika ada)">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelModal" class="btn-cancel">Batal</button>
+          <button type="submit" class="btn-save-event" id="btnSubmitCreateEvent">
+            <span>💾</span><span>Simpan Kegiatan &amp; Buat Folder</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Edit Kegiatan (Khusus BPH) -->
+  <div id="modalEditEvent" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span>✏️</span>
+        <span>Edit Agenda Kegiatan</span>
+      </div>
+      <div class="modal-sub">Perbarui informasi agenda kegiatan resmi UKM Rijal Dakwah.</div>
+
+      <form id="formEditEvent">
+        <input type="hidden" id="editEvtId">
+
+        <div class="form-group">
+          <label>Nama Kegiatan *</label>
+          <input type="text" id="editEvtName" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tanggal Kegiatan *</label>
+            <input type="date" id="editEvtDate" required>
+          </div>
+          <div class="form-group">
+            <label>Kode Surat / Nomor *</label>
+            <input type="text" id="editEvtCode" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="editEvtCategory">
+              <option value="Kajian & Syiar">Kajian &amp; Syiar</option>
+              <option value="Muktamar & BPH">Muktamar &amp; BPH</option>
+              <option value="Pelatihan & Skill">Pelatihan &amp; Skill</option>
+              <option value="Rihlah & Ukhuwah">Rihlah &amp; Ukhuwah</option>
+              <option value="Oprec & Kaderisasi">Oprec &amp; Kaderisasi</option>
+              <option value="Sosial & Dakwah">Sosial &amp; Dakwah</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status Agenda</label>
+            <select id="editEvtStatus">
+              <option value="active">Aktif</option>
+              <option value="done">Selesai</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Divisi Penyelenggara</label>
+          <select id="editEvtDiv">
+            <option value="Divisi Acara">Divisi Acara</option>
+            <option value="Badan Pengurus Harian (BPH)">Badan Pengurus Harian (BPH)</option>
+            <option value="Divisi Keilmuan">Divisi Keilmuan</option>
+            <option value="Divisi TPQ">Divisi TPQ</option>
+            <option value="Divisi Humas">Divisi Humas</option>
+            <option value="Divisi Media">Divisi Media</option>
+            <option value="Divisi Dakwah Digital">Divisi Dakwah Digital</option>
+            <option value="Divisi Dana Usaha">Divisi Dana Usaha</option>
+            <option value="Divisi Sarpras">Divisi Sarpras</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Estimasi Panitia</label>
+            <input type="number" id="editEvtStaff" min="1">
+          </div>
+          <div class="form-group">
+            <label>Estimasi Peserta</label>
+            <input type="number" id="editEvtAttendees" min="0">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:2px;">
+          <label style="display:flex; justify-content:space-between; align-items:center;">
+            <span>📁 Folder Google Drive (Opsional)</span>
+            <span style="font-size:9.5px; color:#38BDF8; font-weight:normal;">ID atau Link Folder Drive</span>
+          </label>
+          <input type="text" id="editEvtFolderId" placeholder="Contoh: 1eeP-N4FlNPtJ9SYx4aAW_cnXWTY0dSas atau tempel link folder">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelEditModal" class="btn-cancel">Batal</button>
+          <button type="submit" class="btn-save-event">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Login Pengurus / BPH / Kadiv -->
+  <div id="modalLogin" class="modal-backdrop">
+    <div class="modal-box" style="max-width:440px;">
+      <div class="modal-title">
+        <span>🔐</span>
+        <span>Masuk Akun Pengurus RD</span>
+      </div>
+      <div class="modal-sub">Masuk untuk memverifikasi hak akses (BPH memiliki hak kelola event, Kadiv memiliki hak input SK).</div>
+
+      <form id="formLogin">
+        <div class="form-group">
+          <label>Peran Akses</label>
+          <select id="loginRole" style="background:#0A0F1D; border:1px solid #334155; border-radius:6px; padding:8px 10px; color:#FFF; font-size:12px; width:100%; box-sizing:border-box;">
+            <option value="bph">👑 BPH / Sekretaris (Hak Penuh & Kunci)</option>
+            <option value="kadiv">📋 Kadiv (Hak Input Panitia)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Passcode Editor (Sinkron Gantt Studio)</label>
+          <input type="password" id="loginPassword" placeholder="Contoh: bph2026 atau media2026" required style="font-family:monospace;">
+        </div>
+
+        <div id="loginErrorMsg" style="display:none; color:#F87171; font-size:11px; margin-bottom:8px;"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelLogin" class="btn-cancel">Batal</button>
+          <button type="submit" class="btn-save-event" style="background:#0284C7; border-color:#38BDF8;">Masuk Akun</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    UKM Rijal Dakwah • Lembaga Dakwah Kampus &copy; 2026/2027 • Portal Sertifikat Digital (RD-CERT)
+  </footer>
+
+  <script>
+    // Storage Keys
+    const STORAGE_KEY = 'rd_cert_events_catalog_v1';
+    const SESSION_KEY = 'rd_cert_user_session_v1';
+
+    // Auth Database (Embedded from auth-users.json)
+    // Default Fallback SHA-256 Hashes for Division Passcodes (Sinkron Live Cloud Firestore)
+    const DEFAULT_AUTH_HASHES = {
+      bph: "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e",
+      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      tpq: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      keilmuan: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      acara: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      humas: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      sarpras: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      digital: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      media: "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8",
+      danus: "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569"
+    };
+
+    let cloudHashes = null;
+
+    async function fetchLiveCloudHashes() {
+      if (cloudHashes) return cloudHashes;
+      try {
+        const cached = localStorage.getItem('RD_GANTT_AUTH_HASHES_CACHE');
+        if (cached) cloudHashes = JSON.parse(cached);
+      } catch(e) {}
+      try {
+        const res = await fetch('https://firestore.googleapis.com/v1/projects/rijal-dakwah-portal/databases/(default)/documents/settings/gantt_auth');
+        if (res.ok) {
+          const json = await res.json();
+          const fields = json.fields || {};
+          const parsed = {};
+          for (const k in fields) {
+            if (fields[k] && fields[k].stringValue) parsed[k] = fields[k].stringValue;
+          }
+          if (parsed.bph) {
+            cloudHashes = parsed;
+            localStorage.setItem('RD_GANTT_AUTH_HASHES_CACHE', JSON.stringify(cloudHashes));
+            return cloudHashes;
+          }
+        }
+      } catch(e) {}
+      return cloudHashes || DEFAULT_AUTH_HASHES;
+    }
+    fetchLiveCloudHashes();
+
+    async function calcSha256(str) {
+      const buf = new TextEncoder().encode(str);
+      const hash = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Pre-loaded Official Events
+    const DEFAULT_EVENTS = [
+      {
+        id: 'evt-muktamar-vi',
+        name: 'Muktamar Anggota VI UKM Rijal Dakwah',
+        code: 'RD-MA/IX/2026',
+        date: '2026-09-28',
+        displayDate: '28 September 2026',
+        category: 'Muktamar & BPH',
+        division: 'Badan Pengurus Harian (BPH)',
+        staffCount: 30,
+        attendeeCount: 150,
+        gdriveFolderId: '1eeP-N4FlNPtJ9SYx4aAW_cnXWTY0dSas',
+        status: 'done'
+      },
+      {
+        id: 'evt-kajian-akbar-syawal',
+        name: 'Kajian Akbar Syiar Dakwah Kampus',
+        code: 'RD-KAS/X/2026',
+        date: '2026-10-15',
+        displayDate: '15 Oktober 2026',
+        category: 'Kajian & Syiar',
+        division: 'Divisi Acara & Syiar',
+        staffCount: 25,
+        attendeeCount: 200,
+        status: 'active'
+      },
+      {
+        id: 'evt-pelatihan-desain-media',
+        name: 'Pelatihan Desain Grafis & Media Dakwah',
+        code: 'RD-PDG/X/2026',
+        date: '2026-10-24',
+        displayDate: '24 Oktober 2026',
+        category: 'Pelatihan & Skill',
+        division: 'Divisi Media & Digital',
+        staffCount: 15,
+        attendeeCount: 80,
+        status: 'active'
+      },
+      {
+        id: 'evt-rihlah-ukhuwah',
+        name: 'Rihlah Ukhuwah & Upgrading Pengurus RD',
+        code: 'RD-RU/XI/2026',
+        date: '2026-11-08',
+        displayDate: '08 November 2026',
+        category: 'Rihlah & Ukhuwah',
+        division: 'Divisi Humas & Sarpras',
+        staffCount: 20,
+        attendeeCount: 109,
+        status: 'active'
+      },
+      {
+        id: 'evt-daurah-tajwid-tpq',
+        name: 'Daurah Keilmuan Islam & Standarisasi Guru TPQ',
+        code: 'RD-DKI/XII/2026',
+        date: '2026-12-12',
+        displayDate: '12 Desember 2026',
+        category: 'Pelatihan & Skill',
+        division: 'Divisi TPQ & Keilmuan',
+        staffCount: 18,
+        attendeeCount: 95,
+        status: 'draft'
+      },
+      {
+        id: 'evt-oprec-2027',
+        name: 'Open Recruitment & Seleksi Pengurus 2027',
+        code: 'RD-OPREC/I/2027',
+        date: '2027-01-20',
+        displayDate: '20 Januari 2027',
+        category: 'Oprec & Kaderisasi',
+        division: 'BPH & Seluruh Divisi',
+        staffCount: 40,
+        attendeeCount: 250,
+        status: 'draft',
+        gdriveFolderId: '1pQtnBpGvs4KKHmyBGmACzSEuqTL68tTj'
+      }
+    ];
+
+    // State
+    let events = [];
+    let currentMonthFilter = 'all';
+    let searchQuery = '';
+    let currentUser = null; // null | { username, name, role, title, division }
+
+    // Auth Session Manager
+    function loadSession() {
+      try {
+        const serdRole = sessionStorage.getItem('serdificate_auth_role');
+        const isMaster = sessionStorage.getItem('serdificate_is_master') === 'true';
+        if (serdRole) {
+          currentUser = {
+            role: (serdRole === 'bph' || isMaster) ? 'bph' : 'kadiv',
+            name: isMaster ? 'Master BPH' : serdRole.toUpperCase(),
+            title: isMaster ? 'Pimpinan BPH' : 'Divisi ' + serdRole.toUpperCase()
+          };
+          saveSession(currentUser);
+        } else {
+          const stored = localStorage.getItem(SESSION_KEY);
+          if (stored) currentUser = JSON.parse(stored);
+        }
+      } catch (e) {
+        currentUser = null;
+      }
+      renderAuthHeader();
+    }
+
+    function saveSession(user) {
+      currentUser = user;
+      if (user) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      } else {
+        localStorage.removeItem(SESSION_KEY);
+      }
+      renderAuthHeader();
+      renderGrid();
+    }
+
+    function renderAuthHeader() {
+      const container = document.getElementById('userSessionContainer');
+      if (!container) return;
+
+      if (currentUser) {
+        const roleBadge = currentUser.role === 'bph' ? '👑 BPH' : '📋 Kadiv';
+        const roleClass = currentUser.role === 'bph' ? 'bph' : 'kadiv';
+        container.innerHTML = `
+          <div class="user-profile-badge ${roleClass}">
+            <span>${roleBadge}</span>
+            <strong style="color:#FFF;">${currentUser.name.split(' ')[0]}</strong>
+            <button class="btn-logout" title="Keluar / Logout" onclick="logout()">✕</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button class="btn-login-trigger" onclick="openLoginModal()">
+            <span>🔐</span>
+            <span>Masuk</span>
+          </button>
+        `;
+      }
+    }
+
+    function logout() {
+      saveSession(null);
+      alert('Anda telah keluar dari sesi.');
+    }
+    window.logout = logout;
+    window.loadSession = loadSession;
+    window.renderAuthHeader = renderAuthHeader;
+
+    // Check if user is BPH
+    function isBPH() {
+      return currentUser && currentUser.role === 'bph';
+    }
+    window.isBPH = isBPH;
+
+    // Check if user is BPH or Kadiv (Pengurus Portal Access)
+    function canAccessPengurusPortal() {
+      return currentUser && (currentUser.role === 'bph' || currentUser.role === 'kadiv');
+    }
+    window.canAccessPengurusPortal = canAccessPengurusPortal;
+
+    window.handlePengurusClick = function(targetUrl, evt) {
+      if (evt) evt.stopPropagation();
+      if (canAccessPengurusPortal()) {
+        window.location.href = targetUrl;
+      } else {
+        sessionStorage.setItem('rd_pending_redirect', targetUrl);
+        alert('Akses Terbatas & Dilindungi!\\n\\nPortal Sertifikat Pengurus (RD-CERT) hanya dapat diakses oleh Badan Pengurus Harian (BPH) dan Kepala Divisi (Kadiv) resmi UKM Rijal Dakwah guna mencegah pemalsuan sertifikat.\\n\\nSilakan masuk dengan akun pengurus Anda.');
+        openLoginModal('kadiv');
+      }
+    };
+
+    // Load Events from Storage
+    function loadEvents() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          events = JSON.parse(stored);
+          events.forEach(e => { delete e.highlight; });
+        } else {
+          events = [...DEFAULT_EVENTS];
+          saveEvents();
+        }
+      } catch (e) {
+        events = [...DEFAULT_EVENTS];
+      }
+    }
+
+    function saveEvents() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+      } catch (e) {
+        console.error('Failed to save events:', e);
+      }
+    }
+
+    // Helper Date Formatter (Indonesian)
+    function formatIndoDate(dateStr) {
+      if (!dateStr) return '';
+      const parts = dateStr.split('-');
+      if (parts.length < 3) return dateStr;
+      const y = parts[0];
+      const m = parts[1];
+      const d = parts[2];
+      const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      const mIdx = parseInt(m, 10) - 1;
+      return parseInt(d, 10) + ' ' + (months[mIdx] || m) + ' ' + y;
+    }
+
+    // Toggle 3D Flip Card
+    window.toggleFlipCard = function(id, evt) {
+      if (evt) evt.stopPropagation();
+      const wrapper = document.querySelector(`.event-card-wrapper[data-id="${id}"]`);
+      if (wrapper) {
+        wrapper.classList.toggle('flipped');
+      }
+    };
+
+    // Render Grid
+    function renderGrid() {
+      const container = document.getElementById('eventGridContainer');
+      container.innerHTML = '';
+
+      // Filter events
+      const filtered = events.filter(evt => {
+        if (currentMonthFilter !== 'all') {
+          const evtMonth = evt.date ? evt.date.split('-')[1] : '';
+          if (evtMonth !== currentMonthFilter) return false;
+        }
+
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const matchName = evt.name.toLowerCase().includes(q);
+          const matchCode = evt.code.toLowerCase().includes(q);
+          const matchCat = (evt.category || '').toLowerCase().includes(q);
+          const matchDiv = (evt.division || '').toLowerCase().includes(q);
+          if (!matchName && !matchCode && !matchCat && !matchDiv) return false;
+        }
+
+        return true;
+      });
+
+      document.getElementById('statTotalEvents').textContent = events.length;
+      document.getElementById('statVisibleEvents').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state"><h3>Tidak Ada Agenda Kegiatan</h3><p>Tidak ditemukan kegiatan untuk filter yang dipilih. Silakan tambah kegiatan baru atau ubah filter bulan.</p></div>';
+        return;
+      }
+
+      filtered.forEach(evt => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'event-card-wrapper';
+        wrapper.setAttribute('data-id', evt.id);
+
+        const statusClass = evt.status === 'done' ? 'done' : (evt.status === 'draft' ? 'draft' : 'active');
+        const statusLabel = evt.status === 'done' ? 'Selesai' : (evt.status === 'draft' ? 'Draft' : 'Aktif');
+
+        const params = new URLSearchParams({
+          id: evt.id,
+          event: evt.name,
+          code: evt.code,
+          date: evt.displayDate || formatIndoDate(evt.date),
+          folder: evt.gdriveFolderId || ''
+        }).toString();
+
+        const rdUrl = 'studio.html?' + params;
+        const ukmUrl = 'ukm.html?' + params;
+
+        const dateFormatted = evt.displayDate || formatIndoDate(evt.date);
+        const divName = evt.division || 'UKM Rijal Dakwah';
+        const staff = evt.staffCount || 25;
+        const att = evt.attendeeCount || 100;
+
+        // RBAC on Card Back: Only BPH gets Edit and Delete buttons
+        let backActionHtml = '';
+        if (isBPH()) {
+          backActionHtml = `
+            <div class="admin-actions-grid">
+              <button class="btn-icon-action edit" title="Edit Data Agenda" onclick="openEditEventModal('${evt.id}', event)">
+                <span style="font-size:14px;">✏️</span>
+                <span>Edit</span>
+              </button>
+              <button class="btn-icon-action delete" title="Hapus Agenda Ini" onclick="confirmDeleteEvent('${evt.id}', event)">
+                <span style="font-size:14px;">🗑️</span>
+                <span>Hapus</span>
+              </button>
+            </div>
+          `;
+        } else {
+          backActionHtml = `
+            <div class="admin-locked-box">
+              <span style="font-size:16px;">🔒</span>
+              <div>
+                <div style="font-weight:700; color:#FBBF24; font-size:11px;">Akses Khusus BPH</div>
+                <div style="font-size:10px; color:#94A3B8;">Hanya BPH yang dapat mengubah atau menghapus agenda.</div>
+              </div>
+              <button class="btn-quick-login-bph" onclick="openLoginModal('bph')">Masuk Akun BPH</button>
+            </div>
+          `;
+        }
+
+        wrapper.innerHTML = `
+          <div class="event-card-inner">
+            <!-- SISI DEPAN (FRONT) -->
+            <div class="card-face card-front">
+              <div class="card-top" onclick="toggleFlipCard('${evt.id}', event)">
+                <div class="card-tags-row">
+                  <span class="tag-category">${evt.category || 'Kegiatan RD'}</span>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="tag-status ${statusClass}">${statusLabel}</span>
+                    <button class="btn-flip-trigger" title="Putar Kartu (Opsi & Kelola)" onclick="toggleFlipCard('${evt.id}', event)">
+                      <span>⚙️</span>
+                    </button>
+                  </div>
+                </div>
+
+                <h2 class="card-event-name" title="${evt.name}">${evt.name}</h2>
+                <div><span class="card-cert-no">No: ${evt.code}</span></div>
+
+                <div class="card-meta-details">
+                  <div class="meta-row"><span>📅</span><span>${dateFormatted}</span></div>
+                  <div class="meta-row"><span>🏛️</span><span>${divName}</span></div>
+                  <div class="meta-row"><span>👥</span><span>${staff} Panitia • ${att} Peserta</span></div>
+                  ${evt.gdriveFolderId ? `<div class="meta-row" style="color:#38BDF8; font-weight:700;"><span>📁</span><span>GDrive Terhubung</span></div>` : ''}
+                </div>
+              </div>
+
+              <!-- Bottom Split Buttons -->
+              <div class="card-split-footer">
+                <button type="button" class="split-btn pengurus ${canAccessPengurusPortal() ? 'authorized' : 'locked'}" title="${canAccessPengurusPortal() ? 'Buka Portal Sertifikat Pengurus &amp; Relawan' : 'Akses Terbatas: Khusus BPH &amp; Kadiv (Klik untuk Masuk)'}" onclick="handlePengurusClick('${rdUrl}', event)">
+                  <span>${canAccessPengurusPortal() ? '👑' : '🔒'}</span>
+                  <span>Pengurus</span>
+                </button>
+                <a href="${ukmUrl}" class="split-btn peserta" title="Buka Generator Sertifikat Peserta (Tabel/CSV)" onclick="event.stopPropagation()">
+                  <span>👥</span><span>Peserta</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- SISI BELAKANG (BACK) -->
+            <div class="card-face card-back">
+              <div class="back-header">
+                <div class="back-title-wrap">
+                  <span>⚙️</span>
+                  <span>Kelola Agenda</span>
+                </div>
+                <button class="btn-flip-back" title="Balik ke Depan" onclick="toggleFlipCard('${evt.id}', event)">
+                  <span>↺ Balik</span>
+                </button>
+              </div>
+              <div class="back-body">
+                <div class="back-info-box">
+                  <div class="back-info-title">${evt.name}</div>
+                  <div style="font-size:10px; color:#38BDF8;">Nomor: ${evt.code}</div>
+                  <div style="font-size:10px; color:#94A3B8;">${dateFormatted} • ${divName}</div>
+                </div>
+
+                ${backActionHtml}
+              </div>
+
+              <div class="back-footer">
+                <span>RD-CERT Engine</span>
+                <span style="color:#34D399;">ID: ${evt.id.slice(0, 14)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(wrapper);
+      });
+    }
+
+    // Modal Create Event (Guarded for BPH)
+    const modalCreate = document.getElementById('modalCreateEvent');
+    const btnOpenCreateModal = document.getElementById('btnOpenCreateModal');
+    const btnCancelCreateModal = document.getElementById('btnCancelModal');
+    const formCreate = document.getElementById('formCreateEvent');
+
+    btnOpenCreateModal.addEventListener('click', () => {
+      if (!isBPH()) {
+        alert('Akses Terbatas: Hanya Badan Pengurus Harian (BPH) yang memiliki kewenangan menambah kegiatan baru.\n\nSilakan masuk dengan akun BPH terlebih dahulu.');
+        openLoginModal('bph');
+        return;
+      }
+      modalCreate.style.display = 'flex';
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('newEvtDate').value = today;
+      document.getElementById('newEvtName').focus();
+    });
+
+    function closeCreateModal() {
+      modalCreate.style.display = 'none';
+      formCreate.reset();
+    }
+    btnCancelCreateModal.addEventListener('click', closeCreateModal);
+    modalCreate.addEventListener('click', (e) => {
+      if (e.target === modalCreate) closeCreateModal();
+    });
+    function extractGdriveFolderId(input) {
+      if (!input) return '';
+      const trimmed = input.trim();
+      const match = trimmed.match(/folders\/([a-zA-Z0-9_-]+)/);
+      if (match) return match[1];
+      return trimmed;
+    }
+
+    formCreate.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!isBPH()) return alert('Akses ditolak. Sesi BPH dibutuhkan.');
+
+      const name = document.getElementById('newEvtName').value.trim();
+      const date = document.getElementById('newEvtDate').value;
+      const code = document.getElementById('newEvtCode').value.trim();
+      const category = document.getElementById('newEvtCategory').value;
+      const division = document.getElementById('newEvtDiv').value;
+      const staff = parseInt(document.getElementById('newEvtStaff').value) || 20;
+      const attendees = parseInt(document.getElementById('newEvtAttendees').value) || 100;
+      const rawFolder = document.getElementById('newEvtFolderId')?.value || '';
+      let gdriveFolderId = extractGdriveFolderId(rawFolder);
+
+      if (!name || !date || !code) return alert('Mohon lengkapi nama kegiatan, tanggal, dan kode surat!');
+
+      // Target Folder Induk Terverifikasi (Tempat Langsung Subfolder Baru):
+      const defaultParentFolder = '1rSwN4pD_50ccpr2AFnQ0U-n2XARoJCFB';
+      // OTOMASI PEMBUATAN SUBFOLDER GOOGLE DRIVE JIKA BELUM MEMILIKI FOLDER KHUSUS
+      const btnSubmit = formCreate.querySelector('button[type="submit"]');
+      const originalSubmitText = btnSubmit ? btnSubmit.textContent : '';
+
+      if (!gdriveFolderId) {
+        if (btnSubmit) {
+          btnSubmit.disabled = true;
+          btnSubmit.innerHTML = '<span>⏳</span><span>Membuat Folder GDrive &amp; Menyimpan...</span>';
+        }
+
+        const gdriveEndpoint = 'https://script.google.com/macros/s/AKfycbytQmhQceAXJu3jbli3h2yOm8kKPtAC6QCTgWSlaToPJRqN4Y7BrciqyMVacC3WyIl4/exec';
+        try {
+          const res = await fetch(gdriveEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              authKey: 'RD_CERT_2026_AMAN',
+              action: 'createFolder',
+              folderName: name,
+              parentFolderId: defaultParentFolder
+            })
+          });
+
+          let data = null;
+          try {
+            data = await res.json();
+          } catch(e) {
+            console.warn('[SeRDificate] Response createFolder:', e.message);
+          }
+          if (data && data.success && data.folderId) {
+            gdriveFolderId = data.folderId;
+            console.log('[SeRDificate] Subfolder otomatis dibuat:', gdriveFolderId);
+          } else {
+            gdriveFolderId = defaultParentFolder;
+          }
+        } catch(err) {
+          console.warn('[SeRDificate] Gagal otomatisasi folder:', err.message);
+          gdriveFolderId = defaultParentFolder;
+        } finally {
+          if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = originalSubmitText;
+          }
+        }
+      }
+
+      const newEvent = {
+        id: 'evt-' + Date.now(),
+        name,
+        code,
+        date,
+        displayDate: formatIndoDate(date),
+        category,
+        division,
+        staffCount: staff,
+        attendeeCount: attendees,
+        gdriveFolderId: gdriveFolderId || defaultParentFolder,
+        status: 'active'
+      };
+
+      events.unshift(newEvent);
+      saveEvents();
+      closeCreateModal();
+      renderGrid();
+    });
+
+    // Modal Edit Event
+    const modalEdit = document.getElementById('modalEditEvent');
+    const btnCancelEditModal = document.getElementById('btnCancelEditModal');
+    const formEdit = document.getElementById('formEditEvent');
+
+    window.openEditEventModal = function(id, evt) {
+      if (evt) evt.stopPropagation();
+      if (!isBPH()) {
+        alert('Akses Terbatas: Hanya BPH yang dapat mengedit agenda.');
+        openLoginModal('bph');
+        return;
+      }
+
+      const eventItem = events.find(e => e.id === id);
+      if (!eventItem) return alert('Data agenda tidak ditemukan.');
+
+      document.getElementById('editEvtId').value = eventItem.id;
+      document.getElementById('editEvtName').value = eventItem.name;
+      document.getElementById('editEvtDate').value = eventItem.date || '';
+      document.getElementById('editEvtCode').value = eventItem.code;
+      document.getElementById('editEvtCategory').value = eventItem.category || 'Kajian & Syiar';
+      document.getElementById('editEvtStatus').value = eventItem.status || 'active';
+      document.getElementById('editEvtDiv').value = eventItem.division || 'Divisi Acara';
+      document.getElementById('editEvtStaff').value = eventItem.staffCount || 25;
+      document.getElementById('editEvtAttendees').value = eventItem.attendeeCount || 100;
+      const folderEl = document.getElementById('editEvtFolderId');
+      if (folderEl) folderEl.value = eventItem.gdriveFolderId || '';
+
+      modalEdit.style.display = 'flex';
+    };
+
+    function closeEditModal() {
+      modalEdit.style.display = 'none';
+      formEdit.reset();
+    }
+    btnCancelEditModal.addEventListener('click', closeEditModal);
+    modalEdit.addEventListener('click', (e) => {
+      if (e.target === modalEdit) closeEditModal();
+    });
+
+    formEdit.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!isBPH()) return alert('Akses ditolak.');
+
+      const id = document.getElementById('editEvtId').value;
+      const name = document.getElementById('editEvtName').value.trim();
+      const date = document.getElementById('editEvtDate').value;
+      const code = document.getElementById('editEvtCode').value.trim();
+      const category = document.getElementById('editEvtCategory').value;
+      const status = document.getElementById('editEvtStatus').value;
+      const division = document.getElementById('editEvtDiv').value;
+      const staff = parseInt(document.getElementById('editEvtStaff').value) || 20;
+      const attendees = parseInt(document.getElementById('editEvtAttendees').value) || 100;
+      const rawEditFolder = document.getElementById('editEvtFolderId')?.value || '';
+      const gdriveFolderId = extractGdriveFolderId(rawEditFolder);
+
+      const idx = events.findIndex(e => e.id === id);
+      if (idx !== -1) {
+        events[idx] = {
+          ...events[idx],
+          name,
+          date,
+          displayDate: formatIndoDate(date),
+          code,
+          category,
+          status,
+          division,
+          staffCount: staff,
+          attendeeCount: attendees,
+          gdriveFolderId
+        };
+        saveEvents();
+      }
+
+      closeEditModal();
+      renderGrid();
+    });
+    window.confirmDeleteEvent = function(id, evt) {
+      if (evt) evt.stopPropagation();
+      if (!isBPH()) {
+        alert('Akses Terbatas: Hanya BPH yang dapat menghapus agenda.');
+        openLoginModal('bph');
+        return;
+      }
+
+      const eventItem = events.find(e => e.id === id);
+      if (!eventItem) return;
+
+      const hasFolder = eventItem.gdriveFolderId && eventItem.gdriveFolderId.length > 5;
+      const folderNote = hasFolder ? `\n\n⚠️ Folder Google Drive (${eventItem.gdriveFolderId}) juga akan dipindahkan ke Sampah (Trash).` : '';
+
+      const ok = confirm(`Hapus agenda: "${eventItem.name}"?${folderNote}\n\nTindakan ini tidak dapat dibatalkan.`);
+      if (ok) {
+        if (hasFolder) {
+          const gdriveEndpoint = 'https://script.google.com/macros/s/AKfycbytQmhQceAXJu3jbli3h2yOm8kKPtAC6QCTgWSlaToPJRqN4Y7BrciqyMVacC3WyIl4/exec';
+          fetch(gdriveEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            mode: 'no-cors',
+            body: JSON.stringify({
+              authKey: 'RD_CERT_2026_AMAN',
+              action: 'deleteFolder',
+              folderId: eventItem.gdriveFolderId
+            })
+          }).catch(e => console.warn('Gagal menghapus folder gdrive:', e));
+        }
+
+        events = events.filter(e => e.id !== id);
+        saveEvents();
+        renderGrid();
+        alert(`Agenda "${eventItem.name}" ${hasFolder ? 'beserta foldernya di Google Drive ' : ''}telah dihapus.`);
+      }
+    };
+
+    // Login Modal & Handler
+    const modalLogin = document.getElementById('modalLogin');
+    const btnCancelLogin = document.getElementById('btnCancelLogin');
+    const formLogin = document.getElementById('formLogin');
+    const loginError = document.getElementById('loginErrorMsg');
+
+    function openLoginModal(roleHint) {
+      modalLogin.style.display = 'flex';
+      loginError.style.display = 'none';
+      if (roleHint === 'bph') {
+        const sel = document.getElementById('loginRole');
+        if (sel) sel.value = 'bph';
+      }
+      const pwdInput = document.getElementById('loginPassword');
+      if (pwdInput) pwdInput.focus();
+    }
+    window.openLoginModal = openLoginModal;
+
+    function closeLoginModal() {
+      modalLogin.style.display = 'none';
+      formLogin.reset();
+      loginError.style.display = 'none';
+    }
+    btnCancelLogin.addEventListener('click', closeLoginModal);
+    modalLogin.addEventListener('click', (e) => {
+      if (e.target === modalLogin) closeLoginModal();
+    });
+
+    formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const role = document.getElementById('loginRole').value;
+      const p = document.getElementById('loginPassword').value.trim();
+
+      const enteredHash = await calcSha256(p);
+      const activeHashes = await fetchLiveCloudHashes();
+      const isMaster = enteredHash === activeHashes.bph || enteredHash === activeHashes.bph_alt;
+      const isRoleValid = enteredHash === activeHashes[role];
+
+      if (isMaster || isRoleValid) {
+        saveSession({
+          username: role,
+          name: isMaster ? 'Master BPH' : `Kadiv ${role.toUpperCase()}`,
+          role: (role === 'bph' || isMaster) ? 'bph' : 'kadiv',
+          title: isMaster ? 'Pimpinan BPH' : 'Divisi ' + role.toUpperCase()
+        });
+        loginError.style.display = 'none';
+        closeLoginModal();
+        renderGrid();
+
+        const pending = sessionStorage.getItem('rd_pending_redirect');
+        if (pending) {
+          sessionStorage.removeItem('rd_pending_redirect');
+          window.location.href = pending;
+        }
+      } else {
+        loginError.textContent = 'Passcode tidak valid. Gunakan passcode resmi Gantt Studio.';
+        loginError.style.display = 'block';
+      }
+    });
+
+
+    // Month Filters
+    const monthPills = document.querySelectorAll('.month-pill');
+    monthPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        monthPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentMonthFilter = pill.dataset.month;
+        renderGrid();
+      });
+    });
+
+    // Search Input
+    const searchInput = document.getElementById('inputSearchEvent');
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderGrid();
+    });
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSession();
+      loadEvents();
+      renderGrid();
+    });
+  </script>
+</body>
+</html>

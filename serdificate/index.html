@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SeRDificate — Portal Sertifikat Digital UKM Rijal Dakwah STDIIS</title>
+  <meta name="description" content="Platform Pembuatan & Pengarsipan Sertifikat Digital Resmi UKM Rijal Dakwah STDI Imam Syafi'i Jember. Tersedia Jalur Khusus Pengurus dan Jalur Umum Kajian." />
+  <link rel="icon" type="image/png" href="logo-rijal-dakwah.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepGreen: '#071A14',
+            forestGreen: '#0D2B21',
+            emeraldGreen: '#12372A',
+            gold: '#C59B27',
+            'gold-light': '#F3D58C',
+            'gold-dark': '#9A7818',
+            cream: {
+              50: '#FDFBF7',
+              100: '#F7F3EA',
+              200: '#EDE4D1',
+              300: '#DFD2B5',
+              400: '#C9B68F'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            arabic: ['"Amiri"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #071A14; color: #EDE4D1; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #071A14; }
+    ::-webkit-scrollbar-thumb { background: #C59B27; border-radius: 4px; }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF6E0 0%, #DFB76C 50%, #C59B27 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card-glow {
+      background: rgba(13, 43, 33, 0.7);
+      border: 1px solid rgba(197, 155, 39, 0.25);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-glow:hover {
+      transform: translateY(-4px);
+      border-color: rgba(243, 213, 140, 0.6);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(197, 155, 39, 0.15);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-gold selection:text-deepGreen">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-gold/20 bg-deepGreen/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3.5">
+        <a href="../" class="w-11 h-11 rounded-2xl bg-white/95 p-1.5 flex items-center justify-center border border-gold/40 shadow-lg hover:scale-105 transition-transform" title="Kembali ke Portal Utama RD">
+          <img src="logo-rijal-dakwah.png" alt="Logo UKM Rijal Dakwah" class="w-full h-full object-contain" />
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-serif font-bold text-base sm:text-lg text-white tracking-tight">SeRDificate</span>
+            <span class="text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-gold/20 text-gold-light border border-gold/40 font-bold">v1.0 Cloud</span>
+          </div>
+          <p class="text-[10px] text-cream-300">Portal Sertifikat Digital UKM Rijal Dakwah</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="../" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-cream-200 hover:text-gold border border-white/10 hover:border-gold/40 transition-colors">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          <span>Portal Utama</span>
+        </a>
+        <a href="../job/" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-gold border border-white/10 hover:border-gold/40 transition-colors">
+          <i class="fa-solid fa-timeline text-[10px] text-gold"></i>
+          <span>Gantt Studio</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 flex flex-col justify-center">
+
+    <!-- HERO TITLE -->
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-forestGreen/80 border border-gold/30 text-gold-light text-xs font-semibold mb-4">
+        <i class="fa-solid fa-shield-halved text-gold"></i>
+        <span>Integrated Client-Side Vector Engine & Google Drive Sync</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-serif font-bold gold-gradient-text tracking-tight mb-4">
+        Pilih Jalur Akses Sertifikat
+      </h1>
+      <p class="text-xs sm:text-sm text-cream-300 leading-relaxed">
+        Selamat datang di ekosistem generator sertifikat resmi UKM Rijal Dakwah. Silakan pilih jalur layanan yang sesuai dengan kebutuhan kepanitiaan atau pencarian Anda.
+      </p>
+    </div>
+
+    <!-- 3 DOORS ENTRANCE GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto w-full">
+
+      <!-- DOOR 1: JALUR KHUSUS RD (INTERNAL) -->
+      <div class="card-glow rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute -right-12 -top-12 w-32 h-32 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-all"></div>
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <span class="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              Internal Organisasi
+            </span>
+            <span class="text-xs text-gold/80 flex items-center gap-1 font-semibold">
+              <i class="fa-solid fa-lock text-[10px]"></i> Passcode Gantt
+            </span>
+          </div>
+
+          <div class="w-14 h-14 rounded-2xl bg-forestGreen flex items-center justify-center border border-gold/40 text-gold text-2xl mb-5 shadow-lg group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-landmark-dome"></i>
+          </div>
+
+          <h3 class="text-xl font-serif font-bold text-white mb-2">Jalur Khusus RD</h3>
+          <p class="text-xs text-cream-300/80 leading-relaxed mb-6">
+            Terhubung langsung dengan <strong>Master SK Pengurus (55 orang)</strong> &amp; <strong>Relawan Oprec (65+ orang)</strong>. Format penomoran surat resmi Sekretaris RD, kunci agenda, dan sinkronisasi Google Drive.
+          </p>
+
+          <ul class="text-[11px] text-cream-200/70 space-y-2 mb-8">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> 100% Anti Typo (Lookup Otomatis NIM)</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Penomoran Surat Resmi Auto-Romawi</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Password Terintegrasi Gantt Studio</li>
+          </ul>
+        </div>
+
+        <button id="btnOpenInternalModal" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-gold-dark via-gold to-gold-light hover:brightness-110 text-deepGreen font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-gold/10 transition-all">
+          <i class="fa-solid fa-table-cells-large text-[11px]"></i>
+          <span>Buka Dashboard Agenda (Kartu)</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+      <!-- DOOR 2: JALUR UMUM (EKSTERNAL / KAJIAN) -->
+      <div class="card-glow rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group border-gold/40">
+        <div class="absolute -right-12 -top-12 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl group-hover:bg-sky-500/20 transition-all"></div>
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <span class="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30">
+              Bebas Akses (0 Passcode)
+            </span>
+            <span class="text-xs text-sky-400/80 flex items-center gap-1 font-semibold">
+              <i class="fa-solid fa-bolt text-[10px]"></i> Instan
+            </span>
+          </div>
+
+          <div class="w-14 h-14 rounded-2xl bg-forestGreen flex items-center justify-center border border-sky-400/40 text-sky-400 text-2xl mb-5 shadow-lg group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+
+          <h3 class="text-xl font-serif font-bold text-white mb-2">Jalur Umum &amp; Kajian</h3>
+          <p class="text-xs text-cream-300/80 leading-relaxed mb-6">
+            Didedikasikan untuk kepanitiaan kajian umum, daurah terbuka, sertifikat pemateri/narasumber, juri, atau peserta dari luar ormawa RD. Bebas tanpa batas SK.
+          </p>
+
+          <ul class="text-[11px] text-cream-200/70 space-y-2 mb-8">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Tanpa Perlu Login / Passcode</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Nama Instansi &amp; Acara Bebas Kustom</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Ekspor PDF Cetak 300 DPI &amp; ZIP Masal</li>
+          </ul>
+        </div>
+
+        <a href="studio.html?mode=umum" class="w-full py-3.5 px-4 rounded-xl bg-forestGreen hover:bg-forestGreen/80 text-white font-bold text-xs flex items-center justify-center gap-2 border border-sky-400/40 hover:border-sky-400 transition-all shadow-lg">
+          <i class="fa-solid fa-pen-nib text-[11px] text-sky-400"></i>
+          <span>Mulai Buat Sertifikat Umum</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </div>
+
+      <!-- DOOR 3: CEK & UNDUH MANDIRI PESERTA -->
+      <div class="card-glow rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute -right-12 -top-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all"></div>
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <span class="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+              Khusus Mahasiswa
+            </span>
+            <span class="text-xs text-amber-400/80 flex items-center gap-1 font-semibold">
+              <i class="fa-solid fa-magnifying-glass text-[10px]"></i> Cek NIM
+            </span>
+          </div>
+
+          <div class="w-14 h-14 rounded-2xl bg-forestGreen flex items-center justify-center border border-amber-400/40 text-amber-400 text-2xl mb-5 shadow-lg group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-id-card-clip"></i>
+          </div>
+
+          <h3 class="text-xl font-serif font-bold text-white mb-2">Cek &amp; Unduh Mandiri</h3>
+          <p class="text-xs text-cream-300/80 leading-relaxed mb-6">
+            Layanan *self-service* bagi pengurus atau peserta. Masukkan Nomor Induk Mahasiswa (NIM) untuk memeriksa dan mengunduh berkas sertifikat yang pernah diterbitkan.
+          </p>
+
+          <!-- FORM PENCARIAN NIM -->
+          <div class="space-y-3 mb-6">
+            <div class="relative">
+              <input type="text" id="inputSearchNim" placeholder="Ketik NIM Anda (cth: 22051204001)" class="w-full bg-deepGreen/90 border border-gold/40 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold transition-colors font-mono" />
+            </div>
+            <button id="btnSearchNim" class="w-full py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cream-100 font-bold text-xs flex items-center justify-center gap-2 border border-gold/30 transition-all">
+              <i class="fa-solid fa-search text-[10px] text-gold"></i>
+              <span>Cari Sertifikat Saya</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="nimSearchResult" class="text-center text-[11px] text-cream-300/60 pt-2 border-t border-white/5">
+          <span>Ketik NIM untuk menampilkan riwayat sertifikat.</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL AUTH PENGURUS RD (CONNECTED TO GANTT PASSWORD MANAGER) -->
+  <div id="modalAuthRD" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-forestGreen border border-gold/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+      <button id="btnCloseModalAuth" class="absolute top-5 right-5 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl bg-deepGreen border border-gold/40 flex items-center justify-center text-gold text-lg">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <div>
+          <h3 class="font-serif font-bold text-white text-base">Autentikasi Pengurus RD</h3>
+          <p class="text-[11px] text-gold-light">Sinkron dengan Password Manager Gantt Studio</p>
+        </div>
+      </div>
+
+      <p class="text-xs text-cream-300/80 leading-relaxed mb-5">
+        Masukkan passcode divisi Anda atau passcode Master BPH untuk mengaktifkan izin modifikasi data dan penomoran resmi.
+      </p>
+
+      <form id="formAuthRD" class="space-y-4">
+        <div>
+          <label class="block text-[11px] font-bold text-cream-200 mb-1.5 uppercase tracking-wider">Peran Akses</label>
+          <select id="authSelectRole" class="w-full bg-deepGreen border border-gold/40 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-gold">
+            <option value="bph">BPH / Sekretaris (Akses Penuh Surat &amp; Kunci)</option>
+            <option value="media">Divisi Media (Kustom Desain SVG &amp; Ekspor GDrive)</option>
+            <option value="acara">Divisi Acara (Pengajuan Roster Panitia)</option>
+            <option value="tpq">Divisi TPQ</option>
+            <option value="keilmuan">Divisi Keilmuan</option>
+            <option value="humas">Divisi Humas</option>
+            <option value="sarpras">Divisi Sarpras</option>
+            <option value="digital">Divisi Digital &amp; IT</option>
+            <option value="danus">Divisi Danus</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-cream-200 mb-1.5 uppercase tracking-wider">Passcode Editor</label>
+          <div class="relative">
+            <input type="password" id="inputAuthPassword" placeholder="Contoh: bph2026 atau media2026" required class="w-full bg-deepGreen border border-gold/40 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold font-mono" />
+            <button type="button" id="btnTogglePassVisibility" class="absolute right-3 top-2.5 text-slate-400 hover:text-white text-xs">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="authErrorMsg" class="hidden text-rose-400 text-[11px] font-medium bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl">
+          Passcode tidak valid. Silakan gunakan passcode divisi resmi Gantt Studio.
+        </div>
+
+        <button type="submit" id="btnSubmitAuthRD" class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-dark via-gold to-gold-light hover:brightness-110 text-deepGreen font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all mt-6">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Masuk Studio Pengurus</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-gold/20 bg-deepGreen py-8 text-center text-xs text-cream-300/60 mt-12">
+    <p>&copy; 2026 UKM Rijal Dakwah STDI Imam Syafi'i Jember. Dipersembahkan untuk dakwah dan kemaslahatan umat.</p>
+  </footer>
+
+  <!-- FIREBASE COMPAT SDK V10 (Same as Gantt Studio) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 1. Firebase Config (Same project as Gantt Studio & Landing Page)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBuYpiqn65YUrs4kzeByHS6uHVYTZt1vTU",
+      authDomain: "rijal-dakwah-portal.firebaseapp.com",
+      projectId: "rijal-dakwah-portal",
+      storageBucket: "rijal-dakwah-portal.firebasestorage.app",
+      messagingSenderId: "638998738133",
+      appId: "1:638998738133:web:073e95ded4108ea3ce1e5c"
+    };
+
+    // Default Fallback SHA-256 Hashes for Division Passcodes (Sinkron Live Cloud Firestore)
+    const DEFAULT_AUTH_HASHES = {
+      bph: "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e",
+      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      tpq: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      keilmuan: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      acara: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      humas: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      sarpras: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      digital: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+      media: "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8",
+      danus: "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569"
+    };
+
+    let cloudHashes = null;
+
+    // Helper: Tarik Live Hash dari Cloud Firestore (Multi-Layer: Local Cache + REST API + SDK)
+    async function fetchLiveCloudHashes() {
+      if (cloudHashes) return cloudHashes;
+
+      // 1. Cek cache localStorage (dari Gantt Studio)
+      try {
+        const cached = localStorage.getItem('RD_GANTT_AUTH_HASHES_CACHE');
+        if (cached) {
+          cloudHashes = JSON.parse(cached);
+        }
+      } catch (e) {}
+
+      // 2. Tarik langsung via Firestore REST API (Instan & Tanpa Auth SDK overhead)
+      try {
+        const restUrl = 'https://firestore.googleapis.com/v1/projects/rijal-dakwah-portal/databases/(default)/documents/settings/gantt_auth';
+        const res = await fetch(restUrl);
+        if (res.ok) {
+          const json = await res.json();
+          const fields = json.fields || {};
+          const parsed = {};
+          for (const k in fields) {
+            if (fields[k] && fields[k].stringValue) {
+              parsed[k] = fields[k].stringValue;
+            }
+          }
+          if (parsed.bph) {
+            cloudHashes = parsed;
+            localStorage.setItem('RD_GANTT_AUTH_HASHES_CACHE', JSON.stringify(cloudHashes));
+            console.log('[SeRDificate] Live hash password berhasil disinkronkan via Firestore REST API');
+            return cloudHashes;
+          }
+        }
+      } catch (e) {
+        console.warn('[SeRDificate] REST API sync warning:', e.message);
+      }
+
+      // 3. Fallback: Firebase SDK dengan Autentikasi Internal (sama seperti Gantt Studio)
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        if (!auth.currentUser) {
+          await auth.signInWithEmailAndPassword("admin@rd.org", "medialab");
+        }
+        const db = firebase.firestore();
+        const doc = await db.collection('settings').doc('gantt_auth').get();
+        if (doc.exists) {
+          cloudHashes = doc.data();
+          localStorage.setItem('RD_GANTT_AUTH_HASHES_CACHE', JSON.stringify(cloudHashes));
+          console.log('[SeRDificate] Live hash password berhasil disinkronkan via Firebase SDK');
+          return cloudHashes;
+        }
+      } catch (err) {
+        console.warn('[SeRDificate] Menggunakan fallback hash lokal:', err.message);
+      }
+
+      return cloudHashes || DEFAULT_AUTH_HASHES;
+    }
+
+    // Preload live hash on page load
+    fetchLiveCloudHashes();
+
+    // SHA-256 helper
+    async function sha256(str) {
+      const buf = new TextEncoder().encode(str);
+      const hash = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Modal Controls
+    const modalAuthRD = document.getElementById('modalAuthRD');
+    const btnOpenInternalModal = document.getElementById('btnOpenInternalModal');
+    const btnCloseModalAuth = document.getElementById('btnCloseModalAuth');
+    const formAuthRD = document.getElementById('formAuthRD');
+    const authErrorMsg = document.getElementById('authErrorMsg');
+
+    btnOpenInternalModal?.addEventListener('click', () => {
+      modalAuthRD.classList.remove('hidden');
+      document.getElementById('inputAuthPassword').focus();
+    });
+
+    btnCloseModalAuth?.addEventListener('click', () => {
+      modalAuthRD.classList.add('hidden');
+      authErrorMsg.classList.add('hidden');
+    });
+
+    modalAuthRD?.addEventListener('click', (e) => {
+      if (e.target === modalAuthRD) {
+        modalAuthRD.classList.add('hidden');
+        authErrorMsg.classList.add('hidden');
+      }
+    });
+
+    // Toggle Password Visibility
+    document.getElementById('btnTogglePassVisibility')?.addEventListener('click', function() {
+      const inp = document.getElementById('inputAuthPassword');
+      const icon = this.querySelector('i');
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        inp.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+      }
+    });
+
+    // Submit Auth
+    formAuthRD?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      authErrorMsg.classList.add('hidden');
+      const btnSubmit = document.getElementById('btnSubmitAuthRD');
+      const originalBtnHtml = btnSubmit ? btnSubmit.innerHTML : '';
+
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span>⏳ Memverifikasi Cloud...</span>';
+      }
+
+      try {
+        const role = document.getElementById('authSelectRole').value;
+        const pass = document.getElementById('inputAuthPassword').value.trim();
+        const enteredHash = await sha256(pass);
+
+        // Tarik live hash terbaru dari cloud sebelum validasi
+        const activeHashes = await fetchLiveCloudHashes();
+
+        // Master BPH override (bph atau bph_alt)
+        const isMasterBph = enteredHash === activeHashes.bph || enteredHash === activeHashes.bph_alt;
+        const isRoleValid = enteredHash === activeHashes[role];
+
+        if (isMasterBph || isRoleValid) {
+          sessionStorage.setItem('serdificate_auth_role', role);
+          sessionStorage.setItem('serdificate_is_master', isMasterBph ? 'true' : 'false');
+          sessionStorage.setItem('serdificate_auth_token', enteredHash);
+
+          // Redirect ke Dashboard Agenda (Kartu-Kartu Kegiatan)
+          window.location.href = `dashboard.html?role=${role}&bph=${isMasterBph ? '1' : '0'}`;
+        } else {
+          authErrorMsg.textContent = 'Passcode tidak valid. Silakan gunakan passcode divisi resmi Gantt Studio.';
+          authErrorMsg.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error('Error saat verifikasi auth:', err);
+        authErrorMsg.textContent = 'Terjadi gangguan verifikasi. Silakan coba kembali.';
+        authErrorMsg.classList.remove('hidden');
+      } finally {
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = originalBtnHtml;
+        }
+      }
+    });
+
+    // Door 3: NIM Search Handler
+    document.getElementById('btnSearchNim')?.addEventListener('click', () => {
+      const nim = document.getElementById('inputSearchNim').value.trim();
+      const resContainer = document.getElementById('nimSearchResult');
+      if (!nim) {
+        resContainer.innerHTML = '<span class="text-rose-400">Silakan masukkan NIM Anda terlebih dahulu.</span>';
+        return;
+      }
+
+      resContainer.innerHTML = `<span class="text-gold">Mencari sertifikat untuk NIM ${nim}...</span>`;
+
+      // Cek apakah ada di master SK
+      fetch('data-sk.json').then(r => r.json()).then(data => {
+        const found = (data.members || []).find(m => m.nim === nim);
+        if (found) {
+          resContainer.innerHTML = `
+            <div class="bg-forestGreen/90 border border-emerald-500/40 p-3.5 rounded-2xl text-left mt-2">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-white text-xs">${found.nama}</span>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold">${found.division}</span>
+              </div>
+              <p class="text-[10px] text-cream-300">NIM: <span class="font-mono text-gold-light">${found.nim}</span> • Jabatan: ${found.role}</p>
+              <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                <span class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> Terverifikasi di SK</span>
+                <a href="https://drive.google.com/drive/folders/1rSwN4pD_50ccpr2AFnQ0U-n2XARoJCFB" target="_blank" class="text-xs text-white bg-emerald-600 hover:bg-emerald-500 font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-md">
+                  <i class="fa-brands fa-google-drive text-white text-xs"></i> <span>Buka Folder Drive Resmi</span>
+                </a>
+            </div>
+          `;
+        } else {
+          resContainer.innerHTML = `
+            <div class="bg-forestGreen/70 border border-white/10 p-3 rounded-2xl text-left mt-2">
+              <p class="text-slate-400 text-[11px] mb-1">NIM <strong>${nim}</strong> belum terindeks di sistem atau belum memiliki sertifikat yang diterbitkan.</p>
+              <p class="text-[10px] text-slate-500">Hubungi panitia kegiatan atau sekretaris RD jika ada kekeliruan.</p>
+            </div>
+          `;
+        }
+      }).catch(() => {
+        resContainer.innerHTML = `<span class="text-slate-400">Pencarian offline. Silakan coba kembali nanti.</span>`;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rijal Dakwah Gantt & Resource Studio v3.0</title>
+  <meta name="description" content="Sistem Manajemen Proker, Timeline Gantt WBS, dan Alokasi Beban Tugas 109 Pengurus Rijal Dakwah 2026-2027">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Inter & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Clean Dark Design System -->
+  <link rel="stylesheet" href="style.css?v=3.2">
+</head>
+<body>
+  <div id="appRoot">
+    
+    <!-- TOP APPLICATION BAR -->
+    <header class="app-header">
+      <div class="brand-section">
+        <img src="logo-rijal-dakwah.png" alt="Rijal Dakwah Logo" class="brand-logo" onerror="this.style.display='none'">
+        <div class="brand-title">
+          <span>Gantt Studio</span>
+          <span class="badge-version status-online" id="badgeVersion" title="Status Cloud: Memeriksa koneksi...">v3.0 PRO</span>
+        </div>
+      </div>
+
+      <!-- MAIN NAVIGATION VIEW TABS -->
+      <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab-btn active" data-view="gantt" role="tab" aria-selected="true" title="Timeline Gantt & NLE Runway">
+          <i class="fa-solid fa-chart-gantt"></i>
+          <span>Gantt</span>
+        </button>
+        <button class="nav-tab-btn" data-view="calendar" role="tab" aria-selected="false" title="Kalender Kegiatan Bulanan (1 Bulan, 3 Bulan, Roadmap)">
+          <i class="fa-regular fa-calendar-days"></i>
+          <span>Kalender</span>
+        </button>
+        <button class="nav-tab-btn" data-view="workload" role="tab" aria-selected="false" title="Distribusi Beban Kerja SDM (109 Pengurus SK)">
+          <i class="fa-solid fa-users-viewfinder"></i>
+          <span>SDM</span>
+        </button>
+        <button class="nav-tab-btn" data-view="board" role="tab" aria-selected="false" title="Papan Status Kanban">
+          <i class="fa-solid fa-table-columns"></i>
+          <span>Board</span>
+        </button>
+      </nav>
+
+      <!-- TOP ACTIONS & AUTH -->
+      <div class="header-actions">
+        <!-- Kelola Password (BPH Only) -->
+        <button id="btnOpenSecuritySettings" class="btn btn-icon-only" style="display: none; border-color: rgba(245, 158, 11, 0.4); color: #F59E0B;" title="Kelola Password & Keamanan Cloud (Khusus BPH)">
+          <i class="fa-solid fa-key"></i>
+        </button>
+
+        <!-- Auth Lock/Unlock Toggle -->
+        <button id="btnAuthToggle" class="btn btn-icon-only" title="Mode Publik (Terkunci) — Klik untuk Buka Kunci Editor">
+          <i class="fa-solid fa-lock" id="authLockIcon"></i>
+        </button>
+        
+        <!-- Tambah Event -->
+        <button id="btnNewEvent" class="btn btn-primary btn-icon-only" title="Tambah Program Kerja / Event Baru">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+        
+        <!-- Menu Cadangan & Opsi -->
+        <button id="btnExportMenu" class="btn btn-icon-only" title="Menu Cadangan JSON, Reset & Cetak PDF">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+
+        <!-- Sembunyikan Ribbon Atas (Fokus Gantt) -->
+        <button id="btnToggleHeaderRibbon" class="btn btn-icon-only btn-ribbon-toggle" title="Sembunyikan Menu Ribbon (Fokus Mode - Rasio Maksimal)">
+          <i class="fa-solid fa-chevron-up"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- FLOATING RIBBON RESTORE TRIGGER (MUNCUL SAAT RIBBON DISEMBUNYIKAN) -->
+    <button id="btnRestoreHeaderRibbon" class="btn-restore-ribbon" title="Tampilkan Kembali Menu Ribbon">
+      <i class="fa-solid fa-chevron-down"></i>
+      <span>Ribbon</span>
+    </button>
+
+    <!-- SECONDARY FILTER & CONTROLS TOOLBAR -->
+    <div class="filter-bar">
+      <div class="filter-group-left">
+        <!-- Live Search Box -->
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Cari kegiatan atau PIC...">
+        </div>
+
+        <!-- Division Filter Pills -->
+        <div class="division-pills" id="divisionPills">
+          <button class="div-pill active" data-div="all">
+            <span>Semua Divisi</span>
+            <span class="badge-count" id="countAll">40</span>
+          </button>
+          <!-- Dynamic division pills rendered by app.js -->
+        </div>
+      </div>
+
+      <div class="filter-group-right">
+        <!-- Mobile Pane Toggle (Tabel vs Timeline) -->
+        <div class="mobile-pane-toggle" id="mobilePaneToggle">
+          <button class="mobile-toggle-btn active" data-pane="table">Tabel</button>
+          <button class="mobile-toggle-btn" data-pane="timeline">Gantt</button>
+        </div>
+
+        <!-- Jump to Today button -->
+        <button id="btnJumpToday" class="btn" title="Lompatkan fokus ke tanggal hari ini">
+          <i class="fa-solid fa-crosshairs"></i>
+          <span>Hari Ini</span>
+        </button>
+
+        <!-- Gantt Zoom Scale (Daily, Weekly, Monthly) -->
+        <div class="zoom-controls" id="zoomControls">
+          <button class="zoom-btn active" data-zoom="day">Hari</button>
+          <button class="zoom-btn" data-zoom="week">Minggu</button>
+          <button class="zoom-btn" data-zoom="month">Bulan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN VIEWPORT PANES -->
+    <main class="main-viewport">
+      
+      <!-- =================================================================
+           VIEW 1: TIMELINE GANTT (DUAL-PANE)
+           ================================================================= -->
+      <section id="viewGantt" class="view-pane active">
+        <div class="gantt-container show-table" id="ganttContainer">
+          
+          <!-- LEFT PANE: Hierarchical Data Grid -->
+          <aside class="gantt-grid-pane" id="ganttGridPane">
+            <div class="grid-header-row">
+              <div class="grid-col-name">Program Kerja / Tugas</div>
+              <div class="grid-col-div">Divisi</div>
+              <div class="grid-col-assignee">PIC</div>
+              <div class="grid-col-dates">Jadwal</div>
+              <div class="grid-col-duration">Hari</div>
+            </div>
+            
+            <div class="grid-body" id="gridBody">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+          </aside>
+
+          <!-- RESIZABLE SPLITTER HANDLE -->
+          <div class="splitter-handle" id="splitterHandle" title="Geser untuk mengatur lebar tabel"></div>
+
+          <!-- RIGHT PANE: Interactive Timeline Canvas -->
+          <div class="gantt-timeline-pane" id="timelinePane">
+            <div class="timeline-content-wrapper" id="timelineContentWrapper">
+              
+              <!-- Sticky Time Scale Header -->
+              <div class="timeline-header" id="timelineHeader">
+                <div class="header-tier-primary" id="headerTierPrimary"></div>
+                <div class="header-tier-secondary" id="headerTierSecondary"></div>
+              </div>
+
+              <!-- Main Canvas Body -->
+              <div class="timeline-canvas-body" id="timelineCanvasBody">
+                
+                <!-- Background Vertical Day Columns -->
+                <div class="timeline-grid-columns" id="timelineGridColumns"></div>
+                
+                <!-- SVG Dependency Curves Layer -->
+                <svg class="timeline-links-svg" id="timelineLinksSvg">
+                  <defs>
+                    <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1 L 9 5 L 0 9 z" fill="#64748B"></path>
+                    </marker>
+                    <marker id="arrowhead-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1 L 9 5 L 0 9 z" fill="#3B82F6"></path>
+                    </marker>
+                  </defs>
+                  <g id="svgLinksGroup"></g>
+                </svg>
+
+                <!-- Today Marker Vertical Line -->
+                <div class="today-marker-line" id="todayMarkerLine" style="display: none;">
+                  <div class="today-marker-badge">HARI INI</div>
+                </div>
+
+                <!-- Interactive Task Bars Layer -->
+                <div class="timeline-rows-container" id="timelineRowsContainer">
+                  <!-- Rendered dynamically by app.js -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =================================================================
+           VIEW 2: KALENDER KEGIATAN
+           ================================================================= -->
+      <section id="viewCalendar" class="view-pane">
+        <div class="calendar-container">
+          <div class="calendar-nav-bar">
+            <div class="calendar-month-title" id="calendarMonthTitle">Oktober 2026</div>
+            
+            <!-- Calendar Multi-Scale Zoom Controls -->
+            <div class="zoom-controls" id="calendarZoomControls">
+              <button class="zoom-btn active" data-cal-zoom="1m" title="Tinjau 1 Bulan Penuh">1 Bulan</button>
+              <button class="zoom-btn" data-cal-zoom="3m" title="Tinjau 3 Bulan Berturut-turut">3 Bulan</button>
+              <button class="zoom-btn" data-cal-zoom="roadmap" title="Scout Seluruh Kegiatan Sep 2026 - Jun 2027">Roadmap Penuh</button>
+            </div>
+
+            <div style="display: flex; gap: 8px;" id="calendarMonthNavButtons">
+              <button class="btn" id="btnCalPrev"><i class="fa-solid fa-chevron-left"></i> Bulan Lalu</button>
+              <button class="btn" id="btnCalToday">Bulan Ini</button>
+              <button class="btn" id="btnCalNext">Bulan Depan <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Container 1: Standard / 3-Month Calendar Grid -->
+          <div id="calendarStandardContainer">
+            <div class="calendar-grid-header">
+              <div class="calendar-day-head">Ahad</div>
+              <div class="calendar-day-head">Senin</div>
+              <div class="calendar-day-head">Selasa</div>
+              <div class="calendar-day-head">Rabu</div>
+              <div class="calendar-day-head">Kamis</div>
+              <div class="calendar-day-head">Jum'at</div>
+              <div class="calendar-day-head">Sabtu</div>
+            </div>
+            <div class="calendar-grid-cells" id="calendarGridCells"></div>
+          </div>
+
+          <!-- Container 2: Multi-Month Roadmap Scouting View -->
+          <div id="calendarRoadmapContainer" class="cal-roadmap-grid" style="display: none;"></div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           VIEW 3: BEBAN TUGAS & RESOURCE MANAGEMENT
+           ================================================================= -->
+      <section id="viewWorkload" class="view-pane">
+        <div class="workload-container">
+          
+          <!-- Key Metric Stats Cards -->
+          <div class="workload-stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-title">Total Pengurus SK</div>
+              <div class="stat-card-value">109 <span class="stat-card-meta">Orang</span></div>
+              <div class="stat-card-meta">9 Divisi Resmi Periode 2026-2027</div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-card-title">Pengurus Terdistribusi</div>
+              <div class="stat-card-value" id="statAssignedMembers">94 <span class="stat-card-meta">Orang (86%)</span></div>
+              <div class="stat-card-meta">Memegang amanah proker aktif</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-title">Total Beban Tugas</div>
+              <div class="stat-card-value" id="statTotalTasks">194 <span class="stat-card-meta">Sub-tugas</span></div>
+              <div class="stat-card-meta">Terbagi di 40 Agenda Resmi</div>
+            </div>
+
+            <div class="stat-card stat-card-clickable" id="cardClashIndicator" title="Klik untuk langsung melompat ke personil yang mengalami bentrok">
+              <div class="stat-card-title">Indikasi Bentrok / Overload</div>
+              <div class="stat-card-value" id="statClashCount" style="color: #F87171;">0 <span class="stat-card-meta">Potensi Bentrok</span></div>
+              <div class="stat-card-meta">Tugas bertumpuk pada tanggal sama</div>
+              <div style="font-size: 10px; color: #F87171; display: inline-flex; align-items: center; gap: 4px; margin-top: 6px;">
+                <i class="fa-solid fa-crosshairs"></i> <span>Klik untuk telusuri bentrok</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 109 Pengurus Roster Card -->
+          <div class="workload-roster-card">
+            <div class="roster-card-header">
+              <div style="font-weight: 700; font-size: 14px;" id="rosterCardTitle">Daftar Alokasi Pengurus (109 Personil SK - Seluruh Divisi)</div>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="rosterSearchInput" class="search-input" style="width: 220px;" placeholder="Filter nama staf...">
+              </div>
+            </div>
+
+            <div style="overflow-x: auto; max-height: 520px;">
+              <table class="roster-table">
+                <thead>
+                  <tr>
+                    <th>Nama & NIM</th>
+                    <th>Divisi & Jabatan</th>
+                    <th>Beban Tugas</th>
+                    <th>Kapasitas</th>
+                    <th>Status Alokasi</th>
+                    <th>Agenda Terkait</th>
+                  </tr>
+                </thead>
+                <tbody id="rosterTableBody">
+                  <!-- Rows rendered by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =================================================================
+           VIEW 4: KANBAN BOARD
+           ================================================================= -->
+      <section id="viewBoard" class="view-pane">
+        <div class="board-container">
+          
+          <div class="board-column" data-status="scheduled">
+            <div class="column-header">
+              <span><i class="fa-regular fa-clock" style="color: var(--text-muted); margin-right: 6px;"></i> Terjadwal (Mendatang)</span>
+              <span class="badge-version" id="boardCountScheduled">0</span>
+            </div>
+            <div class="column-card-list" id="boardColScheduled"></div>
+          </div>
+
+          <div class="board-column" data-status="in_progress">
+            <div class="column-header">
+              <span><i class="fa-solid fa-spinner" style="color: #60A5FA; margin-right: 6px;"></i> Sedang Berjalan</span>
+              <span class="badge-version" id="boardCountInProgress">0</span>
+            </div>
+            <div class="column-card-list" id="boardColInProgress"></div>
+          </div>
+
+          <div class="board-column" data-status="completed">
+            <div class="column-header">
+              <span><i class="fa-solid fa-circle-check" style="color: #34D399; margin-right: 6px;"></i> Selesai (LPJ Terarsip)</span>
+              <span class="badge-version" id="boardCountCompleted">0</span>
+            </div>
+            <div class="column-card-list" id="boardColCompleted"></div>
+          </div>
+
+          <div class="board-column" data-status="postponed">
+            <div class="column-header">
+              <span><i class="fa-solid fa-triangle-exclamation" style="color: #FBBF24; margin-right: 6px;"></i> Ditunda / Reschedule</span>
+              <span class="badge-version" id="boardCountPostponed">0</span>
+            </div>
+            <div class="column-card-list" id="boardColPostponed"></div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =================================================================
+         MODAL 1: AUTHENTICATION (PASSWORD LOCK)
+         ================================================================= -->
+    <div class="modal-overlay" id="modalAuth">
+      <div class="modal-window" style="max-width: 400px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-key" style="color: #F59E0B;"></i>
+            <span>Akses Mode Editor</span>
+          </div>
+          <button class="modal-close-btn" data-modal="modalAuth">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+            Masukkan passcode divisi atau master BPH untuk mengaktifkan izin modifikasi timeline dan penugasan.
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="inputAuthPass">Passcode Editor</label>
+            <input type="password" id="inputAuthPass" class="form-input" placeholder="Contoh: bph2026 atau media2026" autofocus>
+          </div>
+          <div id="authErrorMessage" style="color: #F87171; font-size: 11px; display: none;">Passcode tidak sesuai. Silakan hubungi BPH.</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-modal="modalAuth">Batal</button>
+          <button class="btn btn-primary" id="btnSubmitAuth">Buka Kunci</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 2: FORM TAMBAH / EDIT EVENT
+         ================================================================= -->
+    <div class="modal-overlay" id="modalEvent">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-calendar-plus" style="color: #3B82F6;"></i>
+            <span id="modalEventTitle">Tambah Program Kerja Baru</span>
+          </div>
+          <button class="modal-close-btn" data-modal="modalEvent">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editEventId">
+          
+          <div class="form-group">
+            <label class="form-label">Nama Agenda / Program Kerja</label>
+            <input type="text" id="inputEventName" class="form-input" placeholder="Contoh: Kajian Akbar 1448H">
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Divisi Penanggung Jawab</label>
+              <select id="inputEventDivision" class="form-select"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <select id="inputEventCategory" class="form-select">
+                <option value="Kajian">Kajian & Mulazamah</option>
+                <option value="Pelatihan">Pelatihan & Daurah</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Webinar">Webinar</option>
+                <option value="Festival">Festival & Lomba</option>
+                <option value="Musyawarah">Musyawarah / Muktamar</option>
+                <option value="Makrab">Makrab</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Tanggal Hari-H</label>
+              <input type="date" id="inputEventDDay" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="inputEventStatus" class="form-select">
+                <option value="scheduled">Terjadwal</option>
+                <option value="in_progress">Sedang Berjalan</option>
+                <option value="completed">Selesai (LPJ Terarsip)</option>
+                <option value="postponed">Ditunda (Postponed)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Deskripsi & Catatan Operasional</label>
+            <textarea id="inputEventDesc" class="form-textarea" rows="3" placeholder="Rincian tujuan agenda, target audiens, dan kebutuhan khusus..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="btnDeleteEvent" style="color: #F87171; margin-right: auto; display: none;">
+            <i class="fa-solid fa-trash-can"></i> Hapus
+          </button>
+          <button class="btn" data-modal="modalEvent">Batal</button>
+          <button class="btn btn-primary" id="btnSaveEvent">Simpan Agenda</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 3: DETAIL TUGAS / WBS INSPECTOR
+    <!-- =================================================================
+         MODAL 3: DETAIL TUGAS & PENGALIHAN PIC (DELEGASI TANGGUNG JAWAB)
+         ================================================================= -->
+    <div class="modal-overlay" id="modalDetail">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-user-gear" style="color: #60A5FA;"></i>
+            <span id="detailTaskTitle">Detail & Alokasi Tugas</span>
+          </div>
+          <button class="modal-close-btn" data-modal="modalDetail">&times;</button>
+        </div>
+        <div class="modal-body" id="detailModalBody">
+          <!-- Dynamically filled by app.js -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="btnEditParentEvent" style="margin-right: auto; font-size: 11px;">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Agenda Induk
+          </button>
+          <button class="btn" data-modal="modalDetail">Batal</button>
+          <button class="btn btn-primary" id="btnSaveTaskPIC">
+            <i class="fa-solid fa-user-check"></i> Simpan Delegasi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 4: CADANGAN, EKSPOR & RESET
+         ================================================================= -->
+    <div class="modal-overlay" id="modalExport">
+      <div class="modal-window" style="max-width: 480px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-file-export" style="color: #10B981;"></i>
+            <span>Cadangan, Impor & Ekspor Data</span>
+          </div>
+          <button class="modal-close-btn" data-modal="modalExport">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+
+            <!-- SEKSI 1: FORMAT EXCEL SPREADSHEET & CSV -->
+            <div style="background: var(--bg-surface-0); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px;">
+              <div style="font-weight: 700; font-size: 13px; color: #10B981; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-file-excel" style="font-size: 16px;"></i> Spreadsheet Excel & CSV
+              </div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4;">
+                Unduh langsung berkas Excel terformat (pasti terbagi di kolom sel A, B, C...) atau berkas CSV dengan auto-separator.
+              </div>
+
+              <!-- Primary Action: Unduh Excel Langsung (.xls) -->
+              <button class="btn" id="btnDownloadExcel" style="width: 100%; height: 42px; margin-bottom: 10px; justify-content: flex-start; background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.5); color: #34D399; font-weight: 600;">
+                <i class="fa-solid fa-file-excel" style="font-size: 18px; margin-right: 10px;"></i>
+                <div style="text-align: left;">
+                  <div style="font-size: 12px; font-weight: 700;">Unduh Excel (.xls) — Pasti Terbagi di Kolom Sel</div>
+                  <div style="font-size: 9.5px; opacity: 0.85;">Langsung terbagi ke sel kolom A, B, C, D di Microsoft Excel</div>
+                </div>
+              </button>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; padding: 6px 0; border-top: 1px dashed var(--border-subtle);">
+                <span style="font-size: 11px; color: var(--text-secondary);">Opsi File CSV:</span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <span style="color: var(--text-muted); font-size: 10px;">Pemisah:</span>
+                  <select id="selectCsvDelimiter" class="form-select" style="width: auto; height: 26px; padding: 2px 6px; font-size: 11px; font-family: var(--font-mono); background: var(--bg-surface-2);">
+                    <option value=";" selected>; (Titik-koma Excel ID)</option>
+                    <option value=",">, (Koma Sheets / US)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button class="btn btn-secondary" id="btnDownloadCsv" style="height: 36px; font-size: 11px; justify-content: center;" title="Unduh CSV dilengkapi instruksi pemisah otomatis untuk Excel">
+                  <i class="fa-solid fa-file-csv" style="color: #10B981; margin-right: 4px;"></i> Unduh CSV
+                </button>
+
+                <label class="btn btn-secondary" style="height: 36px; font-size: 11px; justify-content: center; cursor: pointer; margin: 0;" title="Unggah CSV (auto-deteksi pemisah ; atau ,)">
+                  <i class="fa-solid fa-upload" style="color: #F59E0B; margin-right: 4px;"></i> Unggah CSV
+                  <input type="file" id="inputImportCsv" accept=".csv" style="display: none;">
+                </label>
+              </div>
+            </div>
+
+            <!-- SEKSI 2: FORMAT JSON CADANGAN SISTEM -->
+            <div style="background: var(--bg-surface-0); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px;">
+              <div style="font-weight: 700; font-size: 13px; color: #3B82F6; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-code" style="font-size: 14px;"></i> Cadangan JSON (Full System State)
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button class="btn btn-secondary" id="btnDownloadJson" style="height: 36px; font-size: 11px; justify-content: center;">
+                  <i class="fa-solid fa-download" style="color: #3B82F6; margin-right: 4px;"></i> Unduh JSON
+                </button>
+
+                <label class="btn btn-secondary" style="height: 36px; font-size: 11px; justify-content: center; cursor: pointer; margin: 0;">
+                  <i class="fa-solid fa-upload" style="color: #F59E0B; margin-right: 4px;"></i> Pulihkan JSON
+                  <input type="file" id="inputImportJson" accept=".json" style="display: none;">
+                </label>
+              </div>
+            </div>
+
+            <!-- SEKSI 3: CETAK DOKUMEN PDF RESMI -->
+            <button class="btn btn-primary" id="btnPrintPdf" style="justify-content: flex-start; height: 46px; background: #7C3AED; border-color: #8B5CF6; color: #FFFFFF;">
+              <i class="fa-solid fa-file-pdf" style="font-size: 18px; margin-right: 10px;"></i>
+              <div style="text-align: left;">
+                <div style="font-weight: 700; font-size: 12px;">Cetak Dokumen PDF Resmi (Kop Surat Kampus)</div>
+                <div style="font-size: 10px; opacity: 0.9;">Kop UKM resmi, rekapitulasi 9 divisi, jadwal A4 landscape & lembar tanda tangan</div>
+              </div>
+            </button>
+
+            <!-- SEKSI 4: RESET -->
+            <button class="btn" id="btnResetOfficialData" style="justify-content: flex-start; height: 38px; border-color: rgba(239, 68, 68, 0.35); color: #F87171;">
+              <i class="fa-solid fa-rotate-left" style="font-size: 14px; margin-right: 8px;"></i>
+              <div style="text-align: left;">
+                <div style="font-weight: 600; font-size: 11px;">Reset ke Kalender Resmi SK</div>
+                <div style="font-size: 9px; opacity: 0.8;">Kembalikan ke data 40 agenda murni awal 109 pengurus SK</div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-modal="modalExport">Tutup</button>
+        </div>
+      </div>
+    </div>
+    <!-- =================================================================
+         MODAL 5: RESOLUSI BENTROK JADWAL & OVERLOAD
+         ================================================================= -->
+    <div class="modal-overlay" id="modalClashResolver">
+      <div class="modal-window" style="max-width: 500px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-triangle-exclamation" style="color: #EF4444;"></i>
+            <span>Resolusi Bentrok Jadwal Tugas</span>
+          </div>
+          <button class="modal-close-btn" data-modal="modalClashResolver">&times;</button>
+        </div>
+        <div class="modal-body" id="clashModalBody">
+          <!-- Dynamically filled by app.js -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-modal="modalClashResolver">Tutup</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 6: PENGATURAN PASSWORD & KEAMANAN (BPH ONLY)
+         ================================================================= -->
+    <div class="modal-overlay" id="modalSecuritySettings">
+      <div class="modal-window" style="max-width: 580px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-shield-halved" style="color: #F59E0B;"></i>
+            <span>Pengaturan Password & Keamanan Cloud</span>
+          </div>
+          <button class="modal-close-btn" data-modal="modalSecuritySettings">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 14px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: var(--radius-sm); padding: 10px 12px; line-height: 1.5;">
+            <i class="fa-solid fa-circle-info" style="color: #60A5FA; margin-right: 5px;"></i>
+            Password tersimpan dalam bentuk enkripsi SHA-256 di Cloud Firestore (<code>settings/gantt_auth</code>). Masukkan kata sandi baru untuk divisi terkait lalu klik <strong>Simpan ke Cloud</strong>.
+          </div>
+
+          <div style="max-height: 380px; overflow-y: auto; padding-right: 4px;" id="securityDivisionsList">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content: space-between;">
+          <button class="btn" data-modal="modalSecuritySettings">Tutup</button>
+          <button class="btn btn-primary" id="btnSaveSecuritySettings">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Password ke Cloud
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+  </div>
+
+  <!-- Firebase SDK (Compat v10 for zero-build static hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Master Dataset (Cleaned) -->
+  <script src="data.js"></script>
+  <!-- Interactive Engine -->
+  <script src="app.js"></script>
+</body>
+</html>

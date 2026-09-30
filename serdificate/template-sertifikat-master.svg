@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3508 2480" width="3508" height="2480">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Cinzel:wght@600;700;800&amp;display=swap');
+      .title-font { font-family: 'Cinzel', 'Plus Jakarta Sans', serif; }
+      .sans-font { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064E3B" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="3508" height="2480" fill="#FFFFFF" />
+  
+  <!-- Subtle Inner Border -->
+  <rect x="80" y="80" width="3348" height="2320" fill="none" stroke="#E2E8F0" stroke-width="4" rx="16" />
+  
+  <!-- Outer Decorative Border (Target id for Visual Flex Feature) -->
+  <rect id="ACCENT_BORDER" x="120" y="120" width="3268" height="2240" fill="none" stroke="#064E3B" stroke-width="12" rx="12" />
+  
+  <!-- Golden Thin Accent Border -->
+  <rect x="148" y="148" width="3212" height="2184" fill="none" stroke="url(#goldGrad)" stroke-width="4" rx="8" />
+
+  <!-- Corner Geometric Ornaments -->
+  <!-- Top-Left -->
+  <path d="M 120 280 L 280 120 M 120 220 L 220 120 M 120 160 L 160 120" stroke="url(#goldGrad)" stroke-width="3" />
+  <!-- Top-Right -->
+  <path d="M 3388 280 L 3228 120 M 3388 220 L 3288 120 M 3388 160 L 3348 120" stroke="url(#goldGrad)" stroke-width="3" />
+  <!-- Bottom-Left -->
+  <path d="M 120 2200 L 280 2360 M 120 2260 L 220 2360 M 120 2320 L 160 2360" stroke="url(#goldGrad)" stroke-width="3" />
+  <!-- Bottom-Right -->
+  <path d="M 3388 2200 L 3228 2360 M 3388 2260 L 3288 2360 M 3388 2320 L 3348 2360" stroke="url(#goldGrad)" stroke-width="3" />
+
+  <!-- Header: Organization -->
+  <text class="sans-font" x="1754" y="320" text-anchor="middle" font-size="34" font-weight="700" fill="#047857" letter-spacing="8">
+    UKM RIJAL DAKWAH • LEMBAGA DAKWAH KAMPUS
+  </text>
+  <text class="sans-font" x="1754" y="370" text-anchor="middle" font-size="22" font-weight="500" fill="#64748B" letter-spacing="4">
+    KAMPUS PERJUANGAN DAKWAH &amp; PENGEMBANGAN DIRI
+  </text>
+
+  <!-- Divider Line -->
+  <line x1="1404" y1="415" x2="2104" y2="415" stroke="url(#goldGrad)" stroke-width="3" />
+
+  <!-- Certificate Main Title -->
+  <text class="title-font" x="1754" y="550" text-anchor="middle" font-size="92" font-weight="800" fill="#064E3B" letter-spacing="6">
+    PIAGAM PENGHARGAAN
+  </text>
+  
+  <!-- Certificate Number -->
+  <text class="sans-font" x="1754" y="630" text-anchor="middle" font-size="30" font-weight="600" fill="#475569" letter-spacing="2">
+    Nomor: {{VAR_NOMOR}}
+  </text>
+
+  <!-- Pre-Name Salutation -->
+  <text class="sans-font" x="1754" y="770" text-anchor="middle" font-size="36" font-weight="400" fill="#334155">
+    Diberikan dengan penuh hormat dan apresiasi setinggi-tingginya kepada:
+  </text>
+
+  <!-- Recipient Name (Hero Element) -->
+  <text class="sans-font" x="1754" y="960" text-anchor="middle" font-size="86" font-weight="800" fill="#064E3B" letter-spacing="1">
+    {{VAR_NAMA}}
+  </text>
+  
+  <!-- Name Underline Accent -->
+  <line x1="854" y1="1020" x2="2654" y2="1020" stroke="url(#goldGrad)" stroke-width="4" stroke-linecap="round" />
+
+  <!-- Appreciation Statement -->
+  <text class="sans-font" x="1754" y="1130" text-anchor="middle" font-size="36" font-weight="400" fill="#334155">
+    Atas dedikasi, integritas, dan kontribusi terbaik yang telah dicurahkan sebagai:
+  </text>
+
+  <!-- Role / Position Badge -->
+  <text class="sans-font" x="1754" y="1280" text-anchor="middle" font-size="64" font-weight="700" fill="#B45309" letter-spacing="2">
+    {{VAR_JABATAN}}
+  </text>
+
+  <!-- Event Description -->
+  <text class="sans-font" x="1754" y="1410" text-anchor="middle" font-size="36" font-weight="500" fill="#1E293B">
+    Dalam agenda kegiatan:
+  </text>
+  <text class="sans-font" x="1754" y="1480" text-anchor="middle" font-size="44" font-weight="700" fill="#064E3B">
+    {{VAR_KEGIATAN}}
+  </text>
+  <text class="sans-font" x="1754" y="1560" text-anchor="middle" font-size="32" font-weight="400" fill="#64748B">
+    Diselenggarakan oleh UKM Rijal Dakwah pada {{VAR_TANGGAL}}
+  </text>
+
+  <!-- Signature Section -->
+  <!-- Left: Ketua Umum -->
+  <g transform="translate(650, 1850)">
+    <text class="sans-font" x="250" y="0" text-anchor="middle" font-size="28" font-weight="500" fill="#475569">
+      Mengetahui,
+    </text>
+    <text class="sans-font" x="250" y="40" text-anchor="middle" font-size="30" font-weight="700" fill="#0F172A">
+      Ketua Umum Rijal Dakwah
+    </text>
+    
+    <!-- Dynamic E-Signature Zone -->
+    <g id="ZONE_TTD_KETUM">
+      <line x1="50" y1="210" x2="450" y2="210" stroke="#94A3B8" stroke-width="2" />
+    </g>
+    
+    <text class="sans-font" x="250" y="250" text-anchor="middle" font-size="30" font-weight="700" fill="#064E3B">
+      Muhammad Ilham Pratama
+    </text>
+    <text class="sans-font" x="250" y="290" text-anchor="middle" font-size="24" font-weight="500" fill="#64748B">
+      NIM. 22051204001
+    </text>
+  </g>
+
+  <!-- Center: Stempel Resmi RD -->
+  <g transform="translate(1604, 1860)">
+    <circle cx="150" cy="120" r="100" fill="none" stroke="#047857" stroke-width="4" stroke-dasharray="10, 6" opacity="0.6" />
+    <text class="sans-font" x="150" y="115" text-anchor="middle" font-size="20" font-weight="700" fill="#047857" opacity="0.7" letter-spacing="2">
+      STEMPEL RESMI
+    </text>
+    <text class="sans-font" x="150" y="145" text-anchor="middle" font-size="16" font-weight="600" fill="#047857" opacity="0.7">
+      RIJAL DAKWAH
+    </text>
+  </g>
+
+  <!-- Right: Sekretaris Umum / Pelaksana -->
+  <g transform="translate(2350, 1850)">
+    <text class="sans-font" x="250" y="0" text-anchor="middle" font-size="28" font-weight="500" fill="#475569">
+      Tertanda,
+    </text>
+    <text class="sans-font" x="250" y="40" text-anchor="middle" font-size="30" font-weight="700" fill="#0F172A">
+      Sekretaris Umum
+    </text>
+    
+    <!-- Dynamic E-Signature Zone -->
+    <g id="ZONE_TTD_SEKUM">
+      <line x1="50" y1="210" x2="450" y2="210" stroke="#94A3B8" stroke-width="2" />
+    </g>
+    
+    <text class="sans-font" x="250" y="250" text-anchor="middle" font-size="30" font-weight="700" fill="#064E3B">
+      Fathur Rahman Al-Fatih
+    </text>
+    <text class="sans-font" x="250" y="290" text-anchor="middle" font-size="24" font-weight="500" fill="#64748B">
+      NIM. 22051204018
+    </text>
+  </g>
+
+  <!-- Footer Verification Badge -->
+  <text class="sans-font" x="1754" y="2310" text-anchor="middle" font-size="20" font-weight="500" fill="#94A3B8">
+    Dokumen ini sah dan diterbitkan secara resmi melalui Portal Sertifikat Digital UKM Rijal Dakwah (RD-CERT)
+  </text>
+</svg>
