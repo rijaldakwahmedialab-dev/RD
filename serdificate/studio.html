@@ -712,20 +712,25 @@
 
           <!-- Cloud Sync Status Bar for Kadiv Roster -->
           <div style="background:#0B132B; border:1px solid #1E293B; border-radius:8px; padding:10px 12px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-            <div style="display:flex; flex-direction:column; gap:2px;">
+            <div style="display:flex; flex-direction:column; gap:2px; min-width:0; flex:1;">
               <div style="display:flex; align-items:center; gap:6px;">
                 <span style="font-size:11px; font-weight:700; color:#F8FAFC;">☁️ Sinkronisasi Roster Cloud</span>
-                <span id="badgeRosterCloudStatus" style="font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:4px; background:#1E293B; color:#94A3B8;">
+                <span id="badgeRosterCloudStatus" style="font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:4px; background:#1E293B; color:#94A3B8; cursor:pointer;" title="Klik untuk memuat data dari Cloud">
                   Memeriksa Cloud...
                 </span>
               </div>
-              <span style="font-size:9.5px; color:#64748B;">
+              <span id="subtextRosterCloudStatus" style="font-size:9.5px; color:#64748B;">
                 Klik tombol simpan untuk mengirim data roster ke Cloud agar langsung tersinkron di HP/Laptop panitia lain.
               </span>
             </div>
-            <button type="button" id="btnSubmitRosterCloud" style="background:#0284C7; border:1px solid #38BDF8; color:#FFF; font-size:11px; font-weight:700; padding:7px 14px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all 0.2s ease; white-space:nowrap;">
-              <span>💾</span><span>Simpan Roster ke Cloud</span>
-            </button>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button type="button" id="btnPullRosterCloud" style="background:#141F36; border:1px solid #334155; color:#38BDF8; font-size:11px; font-weight:700; padding:7px 12px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:5px; transition:all 0.2s ease; white-space:nowrap;" title="Tarik data terbaru dari Cloud">
+                <span>🔄</span><span>Tarik Data Terbaru</span>
+              </button>
+              <button type="button" id="btnSubmitRosterCloud" style="background:#0284C7; border:1px solid #38BDF8; color:#FFF; font-size:11px; font-weight:700; padding:7px 14px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all 0.2s ease; white-space:nowrap;">
+                <span>💾</span><span>Simpan Roster ke Cloud</span>
+              </button>
+            </div>
           </div>
           <div class="table-container">
             <table>
@@ -748,6 +753,24 @@
 
       <!-- VIEW 3: MEDIA & LIVE STUDIO -->
       <div id="viewMedia" style="display:none; flex-direction:column; gap:14px;">
+        <!-- Dedicated Pre-Render Cloud Roster Sync Bar for Media -->
+        <div id="mediaCloudRosterAlert" style="background:#0B132B; border:1px solid #1E293B; border-radius:8px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; transition:all 0.3s ease;">
+          <div style="display:flex; flex-direction:column; gap:2px; min-width:0; flex:1;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:11px; font-weight:700; color:#F8FAFC;">👥 Data Roster Cetak:</span>
+              <span id="mediaRosterCountBadge" style="font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:4px; background:#064E3B; color:#34D399;">
+                0 Orang
+              </span>
+            </div>
+            <span id="mediaRosterSyncNote" style="font-size:9.5px; color:#94A3B8;">
+              Pastikan data NIM &amp; nama panitia mutakhir sebelum melakukan render atau upload ke Drive.
+            </span>
+          </div>
+          <button type="button" id="btnMediaPullRoster" style="background:#0284C7; border:1px solid #38BDF8; color:#FFF; font-size:10.5px; font-weight:700; padding:6px 12px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:5px; white-space:nowrap; flex-shrink:0;" title="Perbarui data roster terkini dari Cloud">
+            <span>🔄</span><span>Update Roster</span>
+          </button>
+        </div>
+
         <div class="card-box">
           <div class="card-title emerald">
             <span>1. Template Master Inkscape</span>
@@ -936,6 +959,12 @@
         <!-- Agenda Folder Correspondence Indicator -->
         <div id="gdriveEventTargetLabel" style="font-size:10px; color:#38BDF8; background:#0B132B; padding:5px 8px; border-radius:4px; border:1px solid #1E293B; font-weight:600; display:flex; align-items:center; gap:6px;">
           <span>📁</span><span id="gdriveEventNameDisplay">Target Agenda: Muktamar Anggota VI</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:10px; color:#94A3B8; background:#0B132B; padding:6px 10px; border-radius:6px; border:1px solid #1E293B; margin-bottom:8px;">
+          <span>Roster Siap Cetak: <strong id="drawerRosterSummaryCount" style="color:#FFF;">0 Orang</strong></span>
+          <a href="javascript:void(0)" id="linkDrawerSyncRoster" style="color:#38BDF8; text-decoration:none; font-weight:700; display:flex; align-items:center; gap:3px;" title="Cek dan ambil update roster dari cloud">
+            <span>🔄</span><span>Tarik Data Terbaru</span>
+          </a>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:6px; background:#0A0F1D; padding:8px; border-radius:6px; border:1px solid #1E293B; font-size:10px;">
@@ -1483,59 +1512,214 @@ let masterSvgTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0
       }
     }
 
-    async function syncRosterFromCloud() {
-      const curId = eventData.id || 'default';
-      const badge = document.getElementById('badgeRosterCloudStatus');
-      try {
-        // 1. Local storage cache first
-        const cached = localStorage.getItem(getEventRosterKey());
-        if (cached) {
-          try {
-            const parsed = JSON.parse(cached);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              recipients = parsed;
-              window.recipients = recipients;
-              updateView();
-            }
-          } catch(e) {}
-        }
+    function showToast(msg, type = 'success') {
+      const toast = document.createElement('div');
+      const isSuccess = type === 'success';
+      toast.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px; z-index: 99999;
+        background: #0B132B; color: ${isSuccess ? '#34D399' : '#F87171'};
+        padding: 10px 16px; border-radius: 8px;
+        border: 1px solid ${isSuccess ? '#059669' : '#EF4444'};
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-size: 11px;
+        display: flex; align-items: center; gap: 8px; font-weight: 600;
+        animation: fadeIn 0.25s ease;
+      `;
+      toast.innerHTML = `<span>${isSuccess ? '✓' : '⚠️'}</span><span>${msg}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 350);
+      }, 3500);
+    }
 
-        // 2. REST API from Cloud Firestore (no SDK auth latency)
+    let lastKnownCloudHash = null;
+    let isCloudUpdateAvailable = false;
+
+    function resetCloudAlertsToSynced(count) {
+      const badge = document.getElementById('badgeRosterCloudStatus');
+      const subtext = document.getElementById('subtextRosterCloudStatus');
+      const btnPull = document.getElementById('btnPullRosterCloud');
+      const mediaAlert = document.getElementById('mediaCloudRosterAlert');
+      const mediaNote = document.getElementById('mediaRosterSyncNote');
+      const mediaBtn = document.getElementById('btnMediaPullRoster');
+      const mediaCount = document.getElementById('mediaRosterCountBadge');
+      const drawerCount = document.getElementById('drawerRosterSummaryCount');
+
+      if (badge) {
+        badge.innerHTML = `✓ Tersinkron Cloud (${count} Orang)`;
+        badge.style.background = '#064E3B';
+        badge.style.color = '#34D399';
+        badge.style.border = '1px solid #059669';
+      }
+      if (subtext) {
+        subtext.textContent = 'Klik tombol simpan untuk mengirim data roster ke Cloud agar langsung tersinkron di HP/Laptop panitia lain.';
+      }
+      if (btnPull) {
+        btnPull.style.background = '#141F36';
+        btnPull.style.borderColor = '#334155';
+        btnPull.style.color = '#38BDF8';
+      }
+      if (mediaAlert) {
+        mediaAlert.style.background = '#0B132B';
+        mediaAlert.style.borderColor = '#1E293B';
+      }
+      if (mediaNote) {
+        mediaNote.textContent = 'Data roster sinkron dengan versi cloud terkini. Siap dicetak atau diupload.';
+        mediaNote.style.color = '#94A3B8';
+      }
+      if (mediaBtn) {
+        mediaBtn.style.background = '#0284C7';
+        mediaBtn.style.borderColor = '#38BDF8';
+      }
+      if (mediaCount) mediaCount.textContent = `${count} Orang`;
+      if (drawerCount) drawerCount.textContent = `${count} Orang`;
+    }
+
+    function notifyCloudRosterUpdate(cloudRecipients, divName) {
+      isCloudUpdateAvailable = true;
+      const count = cloudRecipients.length;
+
+      // 1. Kadiv View: Update the Bubble to dynamic alert
+      const badge = document.getElementById('badgeRosterCloudStatus');
+      const subtext = document.getElementById('subtextRosterCloudStatus');
+      const btnPull = document.getElementById('btnPullRosterCloud');
+
+      if (badge) {
+        badge.innerHTML = `🔔 Ada Update Cloud (${count} Orang) • Klik Tarik`;
+        badge.style.background = '#78350F';
+        badge.style.color = '#FDE68A';
+        badge.style.border = '1px solid #F59E0B';
+      }
+      if (subtext) {
+        subtext.innerHTML = `<span style="color:#FBBF24; font-weight:700;">Terdeteksi pembaruan data (${count} orang) di Cloud.</span> Klik "Tarik Data Terbaru" untuk memperbarui tanpa mereset progres Anda.`;
+      }
+      if (btnPull) {
+        btnPull.style.background = '#D97706';
+        btnPull.style.borderColor = '#FBBF24';
+        btnPull.style.color = '#FFFFFF';
+      }
+
+      // 2. Media Studio View: Pre-render Alert
+      const mediaAlert = document.getElementById('mediaCloudRosterAlert');
+      const mediaNote = document.getElementById('mediaRosterSyncNote');
+      const mediaBtn = document.getElementById('btnMediaPullRoster');
+
+      if (mediaAlert) {
+        mediaAlert.style.background = 'rgba(217, 119, 6, 0.15)';
+        mediaAlert.style.borderColor = '#F59E0B';
+      }
+      if (mediaNote) {
+        mediaNote.innerHTML = `<span style="color:#FBBF24; font-weight:700;">⚠️ Ada data baru dari Cloud (${count} orang)!</span> Klik "Update Roster" untuk memutakhirkan sertifikat sebelum cetak/upload.`;
+      }
+      if (mediaBtn) {
+        mediaBtn.style.background = '#D97706';
+        mediaBtn.style.borderColor = '#FBBF24';
+      }
+    }
+
+    async function pullLatestRosterFromCloud(forceApply = false) {
+      const curId = eventData.id || 'default';
+      const btnPull = document.getElementById('btnPullRosterCloud');
+      const btnMediaPull = document.getElementById('btnMediaPullRoster');
+
+      if (btnPull) {
+        btnPull.disabled = true;
+        btnPull.innerHTML = '<span>⏳</span><span>Menarik...</span>';
+      }
+      if (btnMediaPull) {
+        btnMediaPull.disabled = true;
+        btnMediaPull.innerHTML = '<span>⏳</span><span>Memperbarui...</span>';
+      }
+
+      try {
         const restUrl = `https://firestore.googleapis.com/v1/projects/rijal-dakwah-portal/databases/(default)/documents/settings/serdificate_roster_${curId}`;
         const res = await fetch(restUrl);
         if (res.ok) {
           const json = await res.json();
           const payloadStr = json.fields?.recipients?.stringValue;
+          const updatedAtStr = json.fields?.updatedAt?.stringValue || '';
           if (payloadStr) {
             const cloudRecipients = JSON.parse(payloadStr);
-            if (Array.isArray(cloudRecipients) && cloudRecipients.length > 0) {
+            if (Array.isArray(cloudRecipients)) {
               recipients = cloudRecipients;
               window.recipients = recipients;
               localStorage.setItem(getEventRosterKey(), JSON.stringify(recipients));
+              
+              lastKnownCloudHash = updatedAtStr + '_' + cloudRecipients.length;
+              isCloudUpdateAvailable = false;
+
               updateView();
-              if (badge) {
-                badge.innerHTML = `✓ Tersinkron Cloud (${recipients.length} Orang)`;
-                badge.style.background = '#064E3B';
-                badge.style.color = '#34D399';
-                badge.style.border = '1px solid #059669';
+              if (typeof refreshChips === 'function') refreshChips();
+
+              resetCloudAlertsToSynced(cloudRecipients.length);
+              
+              if (forceApply) {
+                showToast(`✓ Berhasil memuat ${recipients.length} data panitia terbaru dari Cloud!`);
               }
-              console.log('[SeRDificate] Roster berhasil disinkronkan dari Cloud (' + recipients.length + ' orang)');
               return;
             }
           }
         }
-        if (badge) {
-          badge.innerHTML = `Lokal (${recipients.length} Orang)`;
-          badge.style.background = '#1E293B';
-          badge.style.color = '#94A3B8';
-          badge.style.border = '1px solid #334155';
-        }
+        resetCloudAlertsToSynced(recipients.length);
       } catch(e) {
-        console.warn('[SeRDificate] Sync roster warning:', e.message);
-        if (badge) {
-          badge.innerHTML = `Lokal (${recipients.length} Orang)`;
+        console.warn('[SeRDificate] Pull cloud roster error:', e.message);
+        if (forceApply) alert('Gagal menarik data dari cloud: ' + e.message);
+      } finally {
+        if (btnPull) {
+          btnPull.disabled = false;
+          btnPull.innerHTML = '<span>🔄</span><span>Tarik Data Terbaru</span>';
+          btnPull.style.background = '#141F36';
+          btnPull.style.borderColor = '#334155';
+          btnPull.style.color = '#38BDF8';
+        }
+        if (btnMediaPull) {
+          btnMediaPull.disabled = false;
+          btnMediaPull.innerHTML = '<span>🔄</span><span>Update Roster</span>';
+          btnMediaPull.style.background = '#0284C7';
+          btnMediaPull.style.borderColor = '#38BDF8';
         }
       }
+    }
+
+    let realtimeRosterUnsub = null;
+    function setupRosterRealtimeListener() {
+      const curId = eventData.id || 'default';
+      try {
+        if (!window.firebase) return;
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        if (realtimeRosterUnsub) realtimeRosterUnsub();
+
+        realtimeRosterUnsub = db.collection('settings').doc('serdificate_roster_' + curId).onSnapshot(doc => {
+          if (!doc.exists) return;
+          const data = doc.data();
+          if (!data || !data.recipients) return;
+
+          const cloudRecipients = JSON.parse(data.recipients);
+          const cloudHash = (data.updatedAt || '') + '_' + cloudRecipients.length;
+
+          if (!lastKnownCloudHash) {
+            lastKnownCloudHash = cloudHash;
+            return;
+          }
+
+          if (cloudHash !== lastKnownCloudHash) {
+            console.log('[SeRDificate] Realtime update terdeteksi di cloud:', cloudRecipients.length, 'orang');
+            notifyCloudRosterUpdate(cloudRecipients, data.lastUpdatedDivision);
+          }
+        }, err => {
+          console.warn('[SeRDificate] Realtime listener warning:', err.message);
+        });
+      } catch(err) {
+        console.warn('[SeRDificate] Setup realtime listener error:', err.message);
+      }
+    }
+
+    async function syncRosterFromCloud() {
+      await pullLatestRosterFromCloud(false);
+      setupRosterRealtimeListener();
     }
 
     let currentIndex = 0;
@@ -2037,6 +2221,10 @@ let masterSvgTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0
       document.getElementById('drawerSingleFileName').textContent = filename;
       document.getElementById('secTotalRecipients').textContent = `${recipients.length} Orang`;
       document.getElementById('recipientCountBadge').textContent = `${recipients.length} Orang`;
+      const mediaRosterCountBadge = document.getElementById('mediaRosterCountBadge');
+      if (mediaRosterCountBadge) mediaRosterCountBadge.textContent = `${recipients.length} Orang`;
+      const drawerRosterSummaryCount = document.getElementById('drawerRosterSummaryCount');
+      if (drawerRosterSummaryCount) drawerRosterSummaryCount.textContent = `${recipients.length} Orang`;
 
       renderTable();
       renderDivisionStats();
@@ -2393,7 +2581,12 @@ let masterSvgTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0
       // Cloud Roster Sync Buttons
       document.getElementById('btnSubmitRosterCloud')?.addEventListener('click', submitRosterToCloud);
       document.getElementById('btnQuickSubmitRosterCloud')?.addEventListener('click', submitRosterToCloud);
-
+      document.getElementById('btnPullRosterCloud')?.addEventListener('click', () => pullLatestRosterFromCloud(true));
+      document.getElementById('btnMediaPullRoster')?.addEventListener('click', () => pullLatestRosterFromCloud(true));
+      document.getElementById('linkDrawerSyncRoster')?.addEventListener('click', () => pullLatestRosterFromCloud(true));
+      document.getElementById('badgeRosterCloudStatus')?.addEventListener('click', () => {
+        if (isCloudUpdateAvailable) pullLatestRosterFromCloud(true);
+      });
       // Tab Switching
       const tabSec = document.getElementById('tabBtnSekretaris');
       const tabKad = document.getElementById('tabBtnKadiv');
