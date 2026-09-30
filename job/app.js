@@ -3392,6 +3392,10 @@
         const isHidden = branchContainer.style.display === 'none';
         branchContainer.style.display = isHidden ? 'block' : 'none';
         btnToggleBranch.innerHTML = isHidden ? '<i class="fa-solid fa-xmark"></i> Batal' : '<i class="fa-solid fa-plus"></i> Tambah Cabang Baru';
+        if (isHidden) {
+          const inputName = document.getElementById('inputNewBranchName');
+          if (inputName) setTimeout(() => inputName.focus(), 50);
+        }
       };
     }
 
@@ -3409,13 +3413,24 @@
         }
 
         const inputName = document.getElementById('inputNewBranchName');
+        const selectDiv = document.getElementById('selectNewBranchDiv');
+        const inputDur = document.getElementById('inputNewBranchDuration');
+
+        if (!inputName || !selectDiv || !inputDur) return;
+
+        const branchName = inputName.value.trim();
+        if (!branchName) {
+          showToast('Peringatan: Harap masukkan nama cabang tugas baru.');
+          inputName.focus();
+          return;
+        }
 
         const branchDiv = selectDiv.value;
         const duration = Math.max(1, parseInt(inputDur.value, 10) || 2);
         const newTaskId = `t-${Date.now()}`;
 
-        // Start date starts right when current task ends or parallel
-        const startD = task.endDate || task.startDate;
+        // Start date: finish-to-start (day after current task ends)
+        const startD = task.endDate ? addDays(task.endDate, 1) : (task.startDate || formatDateIso(new Date()));
         const endD = addDays(startD, duration - 1);
 
         // Pick available member in that division
@@ -3437,6 +3452,10 @@
           isMilestone: false
         };
 
+        if (!parentEvent) {
+          showToast('Error: Program kerja induk tidak ditemukan.');
+          return;
+        }
         if (!parentEvent.tasks) parentEvent.tasks = [];
         parentEvent.tasks.push(newBranchTask);
 
@@ -3447,6 +3466,17 @@
 
         showToast(`Cabang alur baru "${branchName}" berhasil dibuat dan dihubungkan!`);
       };
+
+      // Allow Enter key to submit new branch
+      const inputName = document.getElementById('inputNewBranchName');
+      if (inputName) {
+        inputName.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            btnSubmitBranch.click();
+          }
+        });
+      }
     }
 
     // Button Handler: Edit Parent Event
