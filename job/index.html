@@ -467,9 +467,14 @@
           <!-- Dynamically filled by app.js -->
         </div>
         <div class="modal-footer">
-          <button class="btn" id="btnEditParentEvent" style="margin-right: auto; font-size: 11px;">
-            <i class="fa-solid fa-pen-to-square"></i> Edit Agenda Induk
-          </button>
+          <div style="display: flex; gap: 8px; margin-right: auto;">
+            <button class="btn" id="btnEditParentEvent" style="font-size: 11px;">
+              <i class="fa-solid fa-pen-to-square"></i> Edit Agenda Induk
+            </button>
+            <button class="btn" id="btnDeleteTask" style="color: #F87171; border-color: rgba(248, 113, 113, 0.3); font-size: 11px; display: none;">
+              <i class="fa-solid fa-trash-can"></i> Hapus Cabang Ini
+            </button>
+          </div>
           <button class="btn" data-modal="modalDetail">Batal</button>
           <button class="btn btn-primary" id="btnSaveTaskPIC">
             <i class="fa-solid fa-user-check"></i> Simpan Delegasi

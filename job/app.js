@@ -379,6 +379,7 @@
     dom.detailTaskTitle = document.getElementById('detailTaskTitle');
     dom.detailModalBody = document.getElementById('detailModalBody');
     dom.btnEditParentEvent = document.getElementById('btnEditParentEvent');
+    dom.btnDeleteTask = document.getElementById('btnDeleteTask');
     dom.btnSaveTaskPIC = document.getElementById('btnSaveTaskPIC');
     dom.modalExport = document.getElementById('modalExport');
     dom.btnDownloadExcel = document.getElementById('btnDownloadExcel');
@@ -3484,6 +3485,54 @@
       dom.btnEditParentEvent.onclick = () => {
         closeModal(dom.modalDetail);
         if (parentEvent) openEventEditModal(parentEvent.id);
+      };
+    }
+
+    // Button Handler: Delete Task / Branch
+    if (dom.btnDeleteTask) {
+      dom.btnDeleteTask.style.display = state.isEditor ? 'inline-flex' : 'none';
+      dom.btnDeleteTask.onclick = () => {
+        if (!state.isEditor) {
+          showAuthRequiredToast();
+          return;
+        }
+        if (!canUserEditTask(task, parentEvent)) {
+          showToast('Akses Ditolak: Anda login sebagai Editor Divisi. Hanya dapat mengelola tugas divisi Anda.');
+          return;
+        }
+
+        const taskTypeLabel = task.isMilestone ? 'titik penting (Milestone)' : 'cabang tugas';
+        if (!confirm(`Hapus ${taskTypeLabel} "${task.name}"?\nAlur ketergantungan (dependensi) yang terhubung akan disesuaikan otomatis.`)) {
+          return;
+        }
+
+        if (parentEvent && parentEvent.tasks) {
+          // Relink successor tasks that depended on this task to this task's predecessor
+          parentEvent.tasks.forEach(t => {
+            if (t.predecessor === task.id) {
+              t.predecessor = task.predecessor || null;
+            }
+          });
+
+          // Remove the task
+          parentEvent.tasks = parentEvent.tasks.filter(t => t.id !== task.id);
+
+          // Auto-rollup parent event dates & progress
+          autoRollupEventDates(parentEvent.id);
+          if (parentEvent.tasks.length > 0) {
+            parentEvent.progress = Math.round(
+              parentEvent.tasks.reduce((sum, t) => sum + (t.progress || 0), 0) / parentEvent.tasks.length
+            );
+          } else {
+            parentEvent.progress = 0;
+          }
+        }
+
+        persistData();
+        closeModal(dom.modalDetail);
+        renderCurrentView();
+
+        showToast(`Cabang tugas "${task.name}" berhasil dihapus.`);
       };
     }
     openModal(dom.modalDetail);
