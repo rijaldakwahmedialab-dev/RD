@@ -1083,11 +1083,42 @@
     UKM Rijal Dakwah • Lembaga Dakwah Kampus &copy; 2026/2027 • Portal Sertifikat Digital (RD-CERT)
   </footer>
 
+  <!-- Firebase SDK for Realtime Cloud Sync across devices -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <script>
     // Storage Keys
     const STORAGE_KEY = 'rd_cert_events_catalog_v1';
     const SESSION_KEY = 'rd_cert_user_session_v1';
 
+    // Firebase Config (Sync Across Devices)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBuYpiqn65YUrs4kzeByHS6uHVYTZt1vTU",
+      authDomain: "rijal-dakwah-portal.firebaseapp.com",
+      projectId: "rijal-dakwah-portal",
+      storageBucket: "rijal-dakwah-portal.appspot.com",
+      messagingSenderId: "1055745145892",
+      appId: "1:1055745145892:web:6541fce3f7331980a316b2"
+    };
+
+    let fbDb = null;
+    async function getFirebaseDb() {
+      if (fbDb) return fbDb;
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        if (!auth.currentUser) {
+          await auth.signInWithEmailAndPassword("admin@rd.org", "medialab");
+        }
+        fbDb = firebase.firestore();
+        return fbDb;
+      } catch(e) {
+        console.warn('[SeRDificate] Firebase Auth Error:', e.message);
+        return null;
+      }
+    }
     // Auth Database (Embedded from auth-users.json)
     // Default Fallback SHA-256 Hashes for Division Passcodes (Sinkron Live Cloud Firestore)
     const DEFAULT_AUTH_HASHES = {
@@ -1309,7 +1340,7 @@
       }
     };
 
-    // Load Events from Storage
+    // Load Events from Storage & Sync from Cloud
     function loadEvents() {
       try {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -1318,19 +1349,59 @@
           events.forEach(e => { delete e.highlight; });
         } else {
           events = [...DEFAULT_EVENTS];
-          saveEvents();
         }
       } catch (e) {
         events = [...DEFAULT_EVENTS];
       }
     }
 
+    async function syncEventsFromCloud() {
+      try {
+        const restUrl = 'https://firestore.googleapis.com/v1/projects/rijal-dakwah-portal/databases/(default)/documents/settings/serdificate_events';
+        const res = await fetch(restUrl);
+        if (res.ok) {
+          const json = await res.json();
+          const payloadStr = json.fields?.payload?.stringValue;
+          if (payloadStr) {
+            const cloudEvents = JSON.parse(payloadStr);
+            if (Array.isArray(cloudEvents) && cloudEvents.length > 0) {
+              events = cloudEvents;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+              renderGrid();
+              console.log('[SeRDificate] Events tersinkron dari Cloud Firestore (' + events.length + ' kartu)');
+            }
+          }
+        }
+      } catch(e) {
+        console.warn('[SeRDificate] Sync events from cloud warning:', e.message);
+      }
+    }
+
+    let pushCloudDebounce = null;
     function saveEvents() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
       } catch (e) {
-        console.error('Failed to save events:', e);
+        console.error('Failed to save events locally:', e);
       }
+
+      // Debounce push to Cloud Firestore to prevent network churn
+      clearTimeout(pushCloudDebounce);
+      pushCloudDebounce = setTimeout(async () => {
+        try {
+          const db = await getFirebaseDb();
+          if (db) {
+            await db.collection('settings').doc('serdificate_events').set({
+              payload: JSON.stringify(events),
+              eventCount: events.length,
+              updatedAt: new Date().toISOString()
+            });
+            console.log('[SeRDificate] Events tersimpan di Cloud Firestore');
+          }
+        } catch(e) {
+          console.warn('[SeRDificate] Gagal push events ke Cloud:', e.message);
+        }
+      }, 500);
     }
 
     // Helper Date Formatter (Indonesian)
@@ -1826,6 +1897,7 @@
       loadSession();
       loadEvents();
       renderGrid();
+      syncEventsFromCloud();
     });
   </script>
 </body>
