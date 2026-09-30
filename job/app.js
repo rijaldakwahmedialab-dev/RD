@@ -73,6 +73,7 @@
     if (!state.isEditor) return false;
     if (state.activeAuthDiv === 'all') return true;
     if (event && event.divisionId === state.activeAuthDiv) return true;
+    if (task && task.divisionId === state.activeAuthDiv) return true;
     const member = (state.data.members || []).find(m => m.id === task.assigneeId);
     return member && member.divisionId === state.activeAuthDiv;
   }
@@ -811,7 +812,7 @@
                 <span title="${t.name}">${t.name}</span>
               </div>
               <div class="grid-col-div">
-                <span class="status-badge" style="background-color: ${tDiv.color}20; color: ${tDiv.color};">
+                <span class="status-badge" style="background-color: ${tDiv.color}25; color: ${tDiv.color}; border: 1px solid ${tDiv.color}50; font-weight: 600;">
                   ${tDiv.name.replace('Divisi ', '')}
                 </span>
               </div>
@@ -844,7 +845,7 @@
           } else {
             timelineRowsHtml += `
               <div class="timeline-row" data-row-id="${t.id}">
-                <div class="gantt-bar" style="left: ${tLeft}px; width: ${tWidth}px; border-left: 3px solid ${tDiv.color};" data-task-bar="${t.id}" data-task-id="${t.id}">
+                <div class="gantt-bar" style="left: ${tLeft}px; width: ${tWidth}px; border-left: 4px solid ${tDiv.color}; box-shadow: inset 3px 0 0 ${tDiv.color}40;" data-task-bar="${t.id}" data-task-id="${t.id}">
                   <!-- Left Resize Handle -->
                   <div class="bar-resize-handle left" data-resize-edge="left"></div>
                   
@@ -853,6 +854,7 @@
                   
                   <!-- Content Label -->
                   <div class="gantt-bar-content">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: ${tDiv.color}; display: inline-block; margin-right: 5px; flex-shrink: 0;" title="${tDiv.name}"></span>
                     <span class="gantt-bar-title">${t.name}</span>
                     <span class="gantt-bar-meta">(${t.progress || 0}%)</span>
                   </div>
@@ -983,9 +985,11 @@
             // Generate cubic Bézier path
             const dx = Math.max(16, Math.abs(x2 - x1) * 0.4);
             const pathD = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+            const toDiv = DIVISION_MAP[t.divisionId] || { color: '#60A5FA' };
+            const strokeColor = toDiv.color || '#60A5FA';
 
             svgPaths += `
-              <path d="${pathD}" class="dep-line" marker-end="url(#arrowhead)" data-from="${t.predecessor}" data-to="${t.id}"></path>
+              <path d="${pathD}" class="dep-line" style="stroke: ${strokeColor}; stroke-width: 1.8px; opacity: 0.85;" marker-end="url(#arrowhead)" data-from="${t.predecessor}" data-to="${t.id}"></path>
             `;
           }
         });
@@ -3146,6 +3150,11 @@
     const parentEvent = state.data.events.find(e => e.id === task.eventId);
     const divInfo = DIVISION_MAP[task.divisionId] || { name: 'Umum', color: '#64748B' };
     const currentPic = getMember(task.assigneeId);
+    const isOwner = canUserEditTask(task, parentEvent);
+    const userDivId = (state.activeAuthDiv && state.activeAuthDiv !== 'all') ? state.activeAuthDiv : null;
+    const userDivInfo = userDivId ? (DIVISION_MAP[userDivId] || { name: userDivId, color: '#3B82F6' }) : null;
+    const defaultBranchDivId = userDivId || task.divisionId;
+    const defaultBranchDivInfo = DIVISION_MAP[defaultBranchDivId] || divInfo;
 
     dom.detailTaskTitle.textContent = task.name;
 
@@ -3205,11 +3214,24 @@
     });
     dom.detailModalBody.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <span class="status-badge" style="background-color: ${divInfo.color}25; color: ${divInfo.color}; font-size: 11px;">
+        <span class="status-badge" style="background-color: ${divInfo.color}25; color: ${divInfo.color}; font-size: 11px; border: 1px solid ${divInfo.color}50; font-weight: 600;">
           ${divInfo.name}
         </span>
         <span class="status-badge ${task.status}">${task.status} (${task.progress || 0}%)</span>
       </div>
+
+      ${!isOwner ? `
+        <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="color: #93C5FD; display: flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-eye"></i> Mode Koordinasi: Tugas ini dikelola oleh <strong>${divInfo.name}</strong>
+          </span>
+          ${userDivInfo ? `
+            <span style="background: ${userDivInfo.color}25; color: ${userDivInfo.color}; padding: 2px 7px; border-radius: 4px; font-weight: 600; border: 1px solid ${userDivInfo.color}50;">
+              Login: ${userDivInfo.name}
+            </span>
+          ` : ''}
+        </div>
+      ` : ''}
 
       <div style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">
         ${task.name}
@@ -3235,9 +3257,9 @@
         <div class="form-group">
           <label class="form-label" style="display: flex; justify-content: space-between;">
             <span><i class="fa-solid fa-user-tag" style="margin-right: 4px; color: #60A5FA;"></i> Penanggung Jawab (PIC) / Alihkan Tugas:</span>
-            <span style="font-size: 10px; color: var(--text-muted);">Pilih personil yang 'Luang' untuk cegah overload</span>
+            <span style="font-size: 10px; color: var(--text-muted);">${!isOwner ? 'Hanya dapat diedit divisi pemilik' : 'Pilih personil yang "Luang"'}</span>
           </label>
-          <select id="selectReassignPIC" class="form-select" style="transition: border-color 0.2s ease, box-shadow 0.2s ease;">
+          <select id="selectReassignPIC" class="form-select" ${!isOwner ? 'disabled style="opacity: 0.65; cursor: not-allowed;"' : 'style="transition: border-color 0.2s ease, box-shadow 0.2s ease;"'}>
             ${picOptionsHtml}
           </select>
           <div id="selectedPicDivInfo" style="display: flex; align-items: center; justify-content: space-between; margin-top: 5px; font-size: 11px;"></div>
@@ -3247,9 +3269,9 @@
         <div class="form-group">
           <label class="form-label" style="display: flex; justify-content: space-between;">
             <span><i class="fa-solid fa-code-branch" style="margin-right: 4px; color: #8B5CF6;"></i> Relasi Cabang (Bercabang dari Tugas / Predecessor):</span>
-            <span style="font-size: 10px; color: var(--text-muted);">Menentukan garis panah alur kerja</span>
+            <span style="font-size: 10px; color: var(--text-muted);">${!isOwner ? 'Terkunci' : 'Menentukan garis panah alur kerja'}</span>
           </label>
-          <select id="selectTaskPredecessor" class="form-select">
+          <select id="selectTaskPredecessor" class="form-select" ${!isOwner ? 'disabled style="opacity: 0.65; cursor: not-allowed;"' : ''}>
             <option value="">-- Tanpa Prasyarat (Awal Alur / Root) --</option>
             ${(parentEvent && parentEvent.tasks ? parentEvent.tasks : [])
               .filter(t => t.id !== task.id)
@@ -3261,7 +3283,7 @@
         <div class="form-row-2">
           <div class="form-group">
             <label class="form-label"><i class="fa-solid fa-circle-dot" style="margin-right: 4px; color: #F59E0B;"></i> Status Tugas:</label>
-            <select id="selectTaskStatus" class="form-select">
+            <select id="selectTaskStatus" class="form-select" ${!isOwner ? 'disabled style="opacity: 0.65; cursor: not-allowed;"' : ''}>
               <option value="scheduled" ${task.status === 'scheduled' ? 'selected' : ''}>Terjadwal</option>
               <option value="in_progress" ${task.status === 'in_progress' ? 'selected' : ''}>Sedang Berjalan</option>
               <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>Selesai (Completed)</option>
@@ -3271,17 +3293,22 @@
 
           <div class="form-group">
             <label class="form-label"><i class="fa-solid fa-bars-progress" style="margin-right: 4px; color: #10B981;"></i> Progres Kerja (%):</label>
-            <input type="number" id="inputTaskProgress" class="form-input" min="0" max="100" value="${task.progress || 0}">
+            <input type="number" id="inputTaskProgress" class="form-input" min="0" max="100" value="${task.progress || 0}" ${!isOwner ? 'disabled style="opacity: 0.65; cursor: not-allowed;"' : ''}>
           </div>
         </div>
 
         <!-- Quick Add Child Branch Task Button & Form -->
         <div style="border-top: 1px dashed var(--border-medium); padding-top: 12px; margin-top: 4px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="font-weight: 600; font-size: 12px; color: var(--text-primary);">
-              <i class="fa-solid fa-diagram-project" style="color: #60A5FA; margin-right: 5px;"></i> Cabang Alur Lanjutan
+            <span style="font-weight: 600; font-size: 12px; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-diagram-project" style="color: #60A5FA;"></i> Cabang Alur Lanjutan
+              ${userDivInfo ? `
+                <span style="background: ${userDivInfo.color}20; color: ${userDivInfo.color}; font-size: 10px; padding: 2px 7px; border-radius: 4px; border: 1px solid ${userDivInfo.color}40; font-weight: 600;">
+                  Alokasi untuk ${userDivInfo.name}
+                </span>
+              ` : ''}
             </span>
-            <button type="button" class="btn" id="btnToggleNewBranchForm" style="font-size: 11px; padding: 3px 8px; height: 26px;">
+            <button type="button" class="btn ${!isOwner && userDivInfo ? 'btn-primary' : ''}" id="btnToggleNewBranchForm" style="font-size: 11px; padding: 3px 10px; height: 26px; ${userDivInfo && !isOwner ? `background: ${userDivInfo.color}; border-color: ${userDivInfo.color};` : ''}">
               <i class="fa-solid fa-plus"></i> Tambah Cabang Baru
             </button>
           </div>
@@ -3289,22 +3316,31 @@
           <div id="newBranchFormContainer" style="display: none; background: var(--bg-surface-0); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px; margin-top: 6px;">
             <div class="form-group" style="margin-bottom: 8px;">
               <label class="form-label">Nama Cabang Tugas Baru (Successor):</label>
-              <input type="text" id="inputNewBranchName" class="form-input" placeholder="Contoh: Briefing Lapangan & Soundcheck">
+              <input type="text" id="inputNewBranchName" class="form-input" placeholder="Contoh: Desain Feed, Soundcheck, atau Liputan">
             </div>
             <div class="form-row-2" style="margin-bottom: 8px;">
               <div class="form-group">
-                <label class="form-label">Divisi:</label>
-                <select id="selectNewBranchDiv" class="form-select">
-                  ${(state.data.divisions || []).map(d => `<option value="${d.id}" ${d.id === task.divisionId ? 'selected' : ''}>${d.name}</option>`).join('')}
+                <label class="form-label">Divisi Penanggung Jawab:</label>
+                <select id="selectNewBranchDiv" class="form-select" ${userDivId ? 'disabled' : ''}>
+                  ${(state.data.divisions || []).map(d => `
+                    <option value="${d.id}" ${d.id === defaultBranchDivId ? 'selected' : ''}>
+                      ${d.name} ${d.id === userDivId ? '★ (Divisi Anda)' : ''}
+                    </option>
+                  `).join('')}
                 </select>
+                ${userDivInfo ? `
+                  <div style="font-size: 10px; color: ${userDivInfo.color}; margin-top: 3px; display: flex; align-items: center; gap: 4px;">
+                    <i class="fa-solid fa-circle-check"></i> Cabang otomatis berkode warna ${userDivInfo.name}
+                  </div>
+                ` : ''}
               </div>
               <div class="form-group">
                 <label class="form-label">Durasi (Hari):</label>
                 <input type="number" id="inputNewBranchDuration" class="form-input" min="1" max="30" value="2">
               </div>
             </div>
-            <button type="button" class="btn btn-primary" id="btnSubmitNewBranch" style="width: 100%; height: 30px; font-size: 11px;">
-              <i class="fa-solid fa-code-branch"></i> Buat & Hubungkan Cabang Ini
+            <button type="button" class="btn btn-primary" id="btnSubmitNewBranch" style="width: 100%; height: 32px; font-size: 11px; ${userDivInfo ? `background: ${userDivInfo.color}; border-color: ${userDivInfo.color};` : ''}">
+              <i class="fa-solid fa-code-branch"></i> Buat & Hubungkan Cabang ${userDivInfo ? userDivInfo.name : 'Ini'}
             </button>
           </div>
         </div>
@@ -3342,6 +3378,7 @@
 
     // Button Handler: Save PIC, Status, Progress, and Predecessor
     if (dom.btnSaveTaskPIC) {
+      dom.btnSaveTaskPIC.style.display = isOwner ? 'inline-flex' : 'none';
       dom.btnSaveTaskPIC.onclick = () => {
         if (!state.isEditor) {
           showAuthRequiredToast();
@@ -3408,10 +3445,6 @@
           showAuthRequiredToast();
           return;
         }
-        if (!canUserEditTask(task, parentEvent)) {
-          showToast('Akses Ditolak: Anda login sebagai Editor Divisi. Hanya dapat menambah cabang tugas divisi Anda.');
-          return;
-        }
 
         const inputName = document.getElementById('inputNewBranchName');
         const selectDiv = document.getElementById('selectNewBranchDiv');
@@ -3426,7 +3459,12 @@
           return;
         }
 
-        const branchDiv = selectDiv.value;
+        // Branch division: locked to logged in division for division editor, or selected from dropdown for Master BPH
+        const branchDiv = (state.activeAuthDiv && state.activeAuthDiv !== 'all') 
+          ? state.activeAuthDiv 
+          : selectDiv.value;
+        const branchDivInfo = DIVISION_MAP[branchDiv] || { name: branchDiv, color: '#3B82F6' };
+
         const duration = Math.max(1, parseInt(inputDur.value, 10) || 2);
         const newTaskId = `t-${Date.now()}`;
 
@@ -3465,7 +3503,7 @@
         closeModal(dom.modalDetail);
         renderCurrentView();
 
-        showToast(`Cabang alur baru "${branchName}" berhasil dibuat dan dihubungkan!`);
+        showToast(`Cabang alur baru "${branchName}" berhasil dibuat untuk ${branchDivInfo.name}!`);
       };
 
       // Allow Enter key to submit new branch
@@ -3490,7 +3528,7 @@
 
     // Button Handler: Delete Task / Branch
     if (dom.btnDeleteTask) {
-      dom.btnDeleteTask.style.display = state.isEditor ? 'inline-flex' : 'none';
+      dom.btnDeleteTask.style.display = (state.isEditor && isOwner) ? 'inline-flex' : 'none';
       dom.btnDeleteTask.onclick = () => {
         if (!state.isEditor) {
           showAuthRequiredToast();
