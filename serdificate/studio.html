@@ -2548,9 +2548,11 @@ let masterSvgTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0
       const codeParam = urlParams.get('code');
       const dateParam = urlParams.get('date');
       const folderParam = urlParams.get('folder');
+      const durationParam = urlParams.get('duration');
 
       if (idParam) eventData.id = idParam;
       if (folderParam) eventData.gdriveFolderId = decodeURIComponent(folderParam);
+      if (durationParam) eventData.durationHours = parseFloat(durationParam) || 3.5;
       if (eventParam) {
         eventData.name = decodeURIComponent(eventParam);
         const nameEl = document.getElementById('secEventName');

@@ -1926,6 +1926,7 @@ Sistem Pengarsipan   : SeRDificate Cloud Bridge (UKM Rijal Dakwah)
           event: evt.name,
           code: evt.code,
           date: evt.displayDate || formatIndoDate(evt.date),
+          duration: evt.durationHours || 3.5,
           folder: evt.gdriveFolderId || ''
         }).toString();
 
