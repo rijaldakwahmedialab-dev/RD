@@ -256,25 +256,11 @@
       </p>
 
       <form id="formAuthRD" class="space-y-4">
-        <div>
-          <label class="block text-[11px] font-bold text-cream-200 mb-1.5 uppercase tracking-wider">Peran Akses</label>
-          <select id="authSelectRole" class="w-full bg-deepGreen border border-gold/40 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-gold">
-            <option value="bph">BPH / Sekretaris (Akses Penuh Surat &amp; Kunci)</option>
-            <option value="media">Divisi Media (Kustom Desain SVG &amp; Ekspor GDrive)</option>
-            <option value="acara">Divisi Acara (Pengajuan Roster Panitia)</option>
-            <option value="tpq">Divisi TPQ</option>
-            <option value="keilmuan">Divisi Keilmuan</option>
-            <option value="humas">Divisi Humas</option>
-            <option value="sarpras">Divisi Sarpras</option>
-            <option value="digital">Divisi Digital &amp; IT</option>
-            <option value="danus">Divisi Danus</option>
-          </select>
-        </div>
 
         <div>
-          <label class="block text-[11px] font-bold text-cream-200 mb-1.5 uppercase tracking-wider">Passcode Editor</label>
+          <label class="block text-[11px] font-bold text-cream-200 mb-1.5 uppercase tracking-wider">Passcode Pengurus / BPH / Kadiv</label>
           <div class="relative">
-            <input type="password" id="inputAuthPassword" placeholder="Contoh: bph2026 atau media2026" required class="w-full bg-deepGreen border border-gold/40 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold font-mono" />
+            <input type="password" id="inputAuthPassword" placeholder="Masukkan passcode divisi atau BPH (cth: bph2026, media2026)" required class="w-full bg-deepGreen border border-gold/40 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold font-mono" />
             <button type="button" id="btnTogglePassVisibility" class="absolute right-3 top-2.5 text-slate-400 hover:text-white text-xs">
               <i class="fa-regular fa-eye"></i>
             </button>
@@ -316,16 +302,18 @@
 
     // Default Fallback SHA-256 Hashes for Division Passcodes (Sinkron Live Cloud Firestore)
     const DEFAULT_AUTH_HASHES = {
-      bph: "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e",
-      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-      tpq: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      keilmuan: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      acara: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      humas: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      sarpras: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      digital: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      media: "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8",
-      danus: "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569"
+      bph: "4248e33b5e4b935c3918f98dca94f6287ac309202549e06e778833a1ef2fcd81",      // bph2026
+      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",  // 123456
+      bph_legacy: "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e",
+      tpq: "4ab3a838a92031b15087cc12ec592e233603927b36d9dabb90439f35cebef0a9",      // tpq2026
+      keilmuan: "c4ac89c233a9bf576501924857b263a35f410509470d7f8c041dbbc5016a8727", // ilmu2026
+      acara: "9d3fa1557d22337d871728dd05e5fd7ddd815daa1aa3306e2a675d106568e3f5",    // acara2026
+      humas: "420ed97a06f0b5fb5d2f0d37860d87505946716e5188bde67f7d5c91ac5a5137",    // humas2026
+      sarpras: "e65e55f7b7c8cdc28584f635607878b4e73c75fe6e6af5643e8e15a6571528e1",  // sarpras2026
+      digital: "cb3beaef05cdfa258903506a71dcbfb930b7224f4dccb35a6eaab81491f4435c",  // digital2026
+      media: "edc027fe40087110db7585b1fbbe9cabd8e711136d6d8e8adcf595463f9fcd52",    // media2026
+      media_alt: "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8", // medialab
+      danus: "65ea7c065f145628c50a2dc16ad7638fac158eb5df0faf29d332e5d7e03a9893"     // danus2026
     };
 
     let cloudHashes = null;
@@ -448,26 +436,60 @@
       }
 
       try {
-        const role = document.getElementById('authSelectRole').value;
         const pass = document.getElementById('inputAuthPassword').value.trim();
+        if (!pass) return;
         const enteredHash = await sha256(pass);
 
         // Tarik live hash terbaru dari cloud sebelum validasi
         const activeHashes = await fetchLiveCloudHashes();
 
-        // Master BPH override (bph atau bph_alt)
-        const isMasterBph = enteredHash === activeHashes.bph || enteredHash === activeHashes.bph_alt;
-        const isRoleValid = enteredHash === activeHashes[role];
+        let detectedRole = null;
+        let isMasterBph = false;
 
-        if (isMasterBph || isRoleValid) {
-          sessionStorage.setItem('serdificate_auth_role', role);
+        const isBphPass = enteredHash === activeHashes.bph ||
+                          enteredHash === activeHashes.bph_alt ||
+                          enteredHash === activeHashes.bph_legacy ||
+                          enteredHash === "4248e33b5e4b935c3918f98dca94f6287ac309202549e06e778833a1ef2fcd81" ||
+                          enteredHash === "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92" ||
+                          enteredHash === "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e";
+
+        if (isBphPass) {
+          detectedRole = 'bph';
+          isMasterBph = true;
+        } else if (enteredHash === activeHashes.media || enteredHash === activeHashes.media_alt || enteredHash === "edc027fe40087110db7585b1fbbe9cabd8e711136d6d8e8adcf595463f9fcd52" || enteredHash === "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8") {
+          detectedRole = 'media';
+        } else if (enteredHash === activeHashes.acara || enteredHash === "9d3fa1557d22337d871728dd05e5fd7ddd815daa1aa3306e2a675d106568e3f5") {
+          detectedRole = 'acara';
+        } else if (enteredHash === activeHashes.humas || enteredHash === "420ed97a06f0b5fb5d2f0d37860d87505946716e5188bde67f7d5c91ac5a5137") {
+          detectedRole = 'humas';
+        } else if (enteredHash === activeHashes.tpq || enteredHash === "4ab3a838a92031b15087cc12ec592e233603927b36d9dabb90439f35cebef0a9") {
+          detectedRole = 'tpq';
+        } else if (enteredHash === activeHashes.keilmuan || enteredHash === "c4ac89c233a9bf576501924857b263a35f410509470d7f8c041dbbc5016a8727") {
+          detectedRole = 'keilmuan';
+        } else if (enteredHash === activeHashes.sarpras || enteredHash === "e65e55f7b7c8cdc28584f635607878b4e73c75fe6e6af5643e8e15a6571528e1") {
+          detectedRole = 'sarpras';
+        } else if (enteredHash === activeHashes.digital || enteredHash === "cb3beaef05cdfa258903506a71dcbfb930b7224f4dccb35a6eaab81491f4435c") {
+          detectedRole = 'digital';
+        } else if (enteredHash === activeHashes.danus || enteredHash === "65ea7c065f145628c50a2dc16ad7638fac158eb5df0faf29d332e5d7e03a9893") {
+          detectedRole = 'danus';
+        } else {
+          for (const [rKey, rHash] of Object.entries(activeHashes)) {
+            if (enteredHash === rHash) {
+              detectedRole = rKey;
+              break;
+            }
+          }
+        }
+
+        if (detectedRole) {
+          sessionStorage.setItem('serdificate_auth_role', detectedRole);
           sessionStorage.setItem('serdificate_is_master', isMasterBph ? 'true' : 'false');
           sessionStorage.setItem('serdificate_auth_token', enteredHash);
 
           // Redirect ke Dashboard Agenda (Kartu-Kartu Kegiatan)
-          window.location.href = `dashboard.html?role=${role}&bph=${isMasterBph ? '1' : '0'}`;
+          window.location.href = `dashboard.html?role=${detectedRole}&bph=${isMasterBph ? '1' : '0'}`;
         } else {
-          authErrorMsg.textContent = 'Passcode tidak valid. Silakan gunakan passcode divisi resmi Gantt Studio.';
+          authErrorMsg.textContent = 'Passcode tidak valid. Silakan gunakan passcode resmi divisi atau BPH.';
           authErrorMsg.classList.remove('hidden');
         }
       } catch (err) {

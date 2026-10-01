@@ -790,11 +790,240 @@
       margin-top: auto;
     }
 
+    /* Cloud Sync Badge Button */
+    .btn-sync-cloud {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #0B132B;
+      border: 1px solid #1E293B;
+      color: #94A3B8;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-sync-cloud:hover {
+      border-color: #38BDF8;
+      color: #FFF;
+      background: #0F172A;
+    }
+    .btn-sync-cloud.synced {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+      color: #34D399;
+    }
+    .btn-sync-cloud.syncing {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.08);
+      color: #FBBF24;
+    }
+    .btn-sync-cloud.error {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.08);
+      color: #F87171;
+    }
+    .btn-sync-cloud .sync-icon {
+      font-size: 12px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .btn-sync-cloud.syncing .sync-icon {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Duration Chip Styling */
+    .meta-row.duration {
+      color: #FBBF24;
+      font-weight: 700;
+    }
+
+    /* Toast Notification */
+    .dashboard-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0F172A;
+      border: 1px solid #10B981;
+      color: #FFF;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .dashboard-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .dashboard-toast.info {
+      border-color: #38BDF8;
+      background: #0B132B;
+    }
+    .dashboard-toast.warn {
+      border-color: #F59E0B;
+    }
+
+    /* Responsive Mobile UI */
     @media (max-width: 768px) {
-      .header-actions { width: 100%; justify-content: space-between; }
-      .search-input-wrap input { width: 140px; }
-      .search-input-wrap input:focus { width: 180px; }
-      .event-grid { grid-template-columns: 1fr; }
+      header {
+        padding: 10px 14px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .brand-wrap {
+        gap: 8px;
+      }
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+      }
+      .brand-title {
+        font-size: 13px;
+        gap: 6px;
+      }
+      .brand-badge {
+        font-size: 9px;
+        padding: 1px 6px;
+      }
+      .brand-sub {
+        display: none;
+      }
+      .header-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .search-input-wrap {
+        width: 100%;
+        flex: 1 1 100%;
+      }
+      .search-input-wrap input {
+        width: 100% !important;
+        font-size: 13px;
+        padding: 8px 12px 8px 34px;
+      }
+      .search-input-wrap input:focus {
+        width: 100% !important;
+      }
+      .user-session-wrap {
+        flex: 1;
+        min-width: 0;
+      }
+      .user-profile-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .btn-create-event {
+        padding: 7px 12px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      .btn-sync-cloud {
+        padding: 6px 10px;
+        font-size: 10px;
+      }
+      .filter-bar {
+        padding: 8px 14px;
+        gap: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .filter-group {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+        gap: 6px;
+      }
+      .month-pill {
+        padding: 4px 10px;
+        font-size: 10px;
+      }
+      .stats-chips {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+      }
+      main {
+        padding: 14px;
+      }
+      .section-header {
+        margin-bottom: 16px;
+      }
+      .section-title {
+        font-size: 18px;
+      }
+      .section-desc {
+        font-size: 11px;
+      }
+      .event-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .event-card-wrapper {
+        min-width: 0;
+        width: 100%;
+      }
+      .card-face {
+        min-height: 250px;
+      }
+      .card-event-name {
+        font-size: 15px;
+      }
+      .modal-box {
+        width: 95vw;
+        max-width: 95vw;
+        padding: 16px;
+        border-radius: 12px;
+      }
+      .modal-title {
+        font-size: 15px;
+      }
+      .modal-sub {
+        font-size: 11px;
+        margin-bottom: 14px;
+      }
+      .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+      .modal-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+      }
+      .modal-actions button {
+        width: 100%;
+        justify-content: center;
+      }
+      .dashboard-toast {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        text-align: center;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -818,6 +1047,11 @@
         <span class="search-icon">🔍</span>
         <input type="text" id="inputSearchEvent" placeholder="Cari agenda kegiatan...">
       </div>
+      <!-- Cloud Sync Indicator & Manual Sync Button -->
+      <button type="button" id="btnManualSyncCloud" class="btn-sync-cloud synced" title="Status Sinkronisasi Cloud Firestore (Klik untuk Tarik Manual)">
+        <span id="syncCloudIcon" class="sync-icon">🟢</span>
+        <span id="syncCloudLabel">Cloud Live</span>
+      </button>
 
       <!-- User Auth State -->
       <div id="userSessionContainer" class="user-session-wrap">
@@ -869,6 +1103,10 @@
     <div id="eventGridContainer" class="event-grid">
       <!-- Cards rendered via JS -->
     </div>
+    <div id="dashboardToast" class="dashboard-toast">
+      <span id="toastIcon">⚡</span>
+      <span id="toastMessage">Pesan sistem</span>
+    </div>
   </main>
 
   <!-- Modal Tambah Kegiatan (Khusus BPH) -->
@@ -895,6 +1133,13 @@
             <label>Kode Surat / Nomor *</label>
             <input type="text" id="newEvtCode" placeholder="Contoh: RD-KAS/X/2026" required>
           </div>
+        </div>
+        <div class="form-group">
+          <label style="display:flex; justify-content:space-between; align-items:center;">
+            <span>⏱️ Durasi Acara (Jam) *</span>
+            <span style="font-size:9.5px; color:#FBBF24; font-weight:600;">Syarat Pengajuan Poin SAKTIFA</span>
+          </label>
+          <input type="number" step="0.5" min="0.5" id="newEvtDuration" value="3.5" placeholder="Contoh: 3.5 atau 4 (dalam jam)" required>
         </div>
 
         <div class="form-row">
@@ -981,6 +1226,13 @@
             <input type="text" id="editEvtCode" required>
           </div>
         </div>
+        <div class="form-group">
+          <label style="display:flex; justify-content:space-between; align-items:center;">
+            <span>⏱️ Durasi Acara (Jam) *</span>
+            <span style="font-size:9.5px; color:#FBBF24; font-weight:600;">Syarat Pengajuan Poin SAKTIFA</span>
+          </label>
+          <input type="number" step="0.5" min="0.5" id="editEvtDuration" placeholder="Contoh: 3.5 atau 4 (dalam jam)" required>
+        </div>
 
         <div class="form-row">
           <div class="form-group">
@@ -1057,15 +1309,8 @@
 
       <form id="formLogin">
         <div class="form-group">
-          <label>Peran Akses</label>
-          <select id="loginRole" style="background:#0A0F1D; border:1px solid #334155; border-radius:6px; padding:8px 10px; color:#FFF; font-size:12px; width:100%; box-sizing:border-box;">
-            <option value="bph">👑 BPH / Sekretaris (Hak Penuh & Kunci)</option>
-            <option value="kadiv">📋 Kadiv (Hak Input Panitia)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Passcode Editor (Sinkron Gantt Studio)</label>
-          <input type="password" id="loginPassword" placeholder="Contoh: bph2026 atau media2026" required style="font-family:monospace;">
+          <label>Passcode Editor / BPH / Kadiv (Sinkron Gantt Studio)</label>
+          <input type="password" id="loginPassword" placeholder="Masukkan passcode divisi atau BPH (cth: bph2026, media2026)" required style="font-family:monospace;">
         </div>
 
         <div id="loginErrorMsg" style="display:none; color:#F87171; font-size:11px; margin-bottom:8px;"></div>
@@ -1122,16 +1367,18 @@
     // Auth Database (Embedded from auth-users.json)
     // Default Fallback SHA-256 Hashes for Division Passcodes (Sinkron Live Cloud Firestore)
     const DEFAULT_AUTH_HASHES = {
-      bph: "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e",
-      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-      tpq: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      keilmuan: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      acara: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      humas: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      sarpras: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      digital: "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
-      media: "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8",
-      danus: "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569"
+      bph: "4248e33b5e4b935c3918f98dca94f6287ac309202549e06e778833a1ef2fcd81",      // bph2026
+      bph_alt: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",  // 123456
+      bph_legacy: "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e",
+      tpq: "4ab3a838a92031b15087cc12ec592e233603927b36d9dabb90439f35cebef0a9",      // tpq2026
+      keilmuan: "c4ac89c233a9bf576501924857b263a35f410509470d7f8c041dbbc5016a8727", // ilmu2026
+      acara: "9d3fa1557d22337d871728dd05e5fd7ddd815daa1aa3306e2a675d106568e3f5",    // acara2026
+      humas: "420ed97a06f0b5fb5d2f0d37860d87505946716e5188bde67f7d5c91ac5a5137",    // humas2026
+      sarpras: "e65e55f7b7c8cdc28584f635607878b4e73c75fe6e6af5643e8e15a6571528e1",  // sarpras2026
+      digital: "cb3beaef05cdfa258903506a71dcbfb930b7224f4dccb35a6eaab81491f4435c",  // digital2026
+      media: "edc027fe40087110db7585b1fbbe9cabd8e711136d6d8e8adcf595463f9fcd52",    // media2026
+      media_alt: "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8", // medialab
+      danus: "65ea7c065f145628c50a2dc16ad7638fac158eb5df0faf29d332e5d7e03a9893"     // danus2026
     };
 
     let cloudHashes = null;
@@ -1178,6 +1425,7 @@
         displayDate: '28 September 2026',
         category: 'Muktamar & BPH',
         division: 'Badan Pengurus Harian (BPH)',
+        durationHours: 4,
         staffCount: 30,
         attendeeCount: 150,
         gdriveFolderId: '1eeP-N4FlNPtJ9SYx4aAW_cnXWTY0dSas',
@@ -1191,6 +1439,7 @@
         displayDate: '15 Oktober 2026',
         category: 'Kajian & Syiar',
         division: 'Divisi Acara & Syiar',
+        durationHours: 3.5,
         staffCount: 25,
         attendeeCount: 200,
         status: 'active'
@@ -1203,6 +1452,7 @@
         displayDate: '24 Oktober 2026',
         category: 'Pelatihan & Skill',
         division: 'Divisi Media & Digital',
+        durationHours: 4.5,
         staffCount: 15,
         attendeeCount: 80,
         status: 'active'
@@ -1355,55 +1605,260 @@
       }
     }
 
-    async function syncEventsFromCloud() {
+    // Toast Notification Utility
+    let toastTimeout = null;
+    function showToast(msg, type = 'info') {
+      const toast = document.getElementById('dashboardToast');
+      const icon = document.getElementById('toastIcon');
+      const text = document.getElementById('toastMessage');
+      if (!toast || !text) return;
+
+      toast.className = 'dashboard-toast ' + type + ' show';
+      text.textContent = msg;
+      icon.textContent = type === 'warn' ? '⚠️' : (type === 'error' ? '❌' : '⚡');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    // Sync Badge Utility
+    function updateSyncBadge(status, label) {
+      const btn = document.getElementById('btnManualSyncCloud');
+      const icon = document.getElementById('syncCloudIcon');
+      const text = document.getElementById('syncCloudLabel');
+      if (!btn || !icon || !text) return;
+
+      btn.className = 'btn-sync-cloud ' + status;
+      if (status === 'synced') {
+        icon.textContent = '🟢';
+        text.textContent = label || 'Cloud Live';
+      } else if (status === 'syncing') {
+        icon.textContent = '🔄';
+        text.textContent = label || 'Menyinkronkan...';
+      } else if (status === 'error') {
+        icon.textContent = '⚠️';
+        text.textContent = label || 'Offline / Lokal';
+      }
+    }
+
+    // Hash Utility for Change Detection
+    function getEventsHash(evts) {
       try {
-        const restUrl = 'https://firestore.googleapis.com/v1/projects/rijal-dakwah-portal/databases/(default)/documents/settings/serdificate_events';
-        const res = await fetch(restUrl);
+        return JSON.stringify((evts || []).map(e => ({
+          id: e.id,
+          name: e.name,
+          date: e.date,
+          status: e.status,
+          code: e.code,
+          duration: e.durationHours,
+          folder: e.gdriveFolderId
+        })));
+      } catch(e) {
+        return '';
+      }
+    }
+
+    let lastKnownEventsHash = '';
+
+    // Load Events from Storage
+    function loadEvents() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          events = JSON.parse(stored);
+          events.forEach(e => { delete e.highlight; });
+        } else {
+          events = [...DEFAULT_EVENTS];
+        }
+      } catch (e) {
+        events = [...DEFAULT_EVENTS];
+      }
+      lastKnownEventsHash = getEventsHash(events);
+    }
+
+    // Push Events to Cloud Firestore
+    async function pushEventsToCloud(eventsToPush) {
+      updateSyncBadge('syncing', 'Menyimpan...');
+      try {
+        const db = await getFirebaseDb();
+        if (db) {
+          await db.collection('settings').doc('serdificate_events').set({
+            payload: JSON.stringify(eventsToPush),
+            eventCount: eventsToPush.length,
+            updatedAt: new Date().toISOString()
+          });
+          lastKnownEventsHash = getEventsHash(eventsToPush);
+          console.log('[SeRDificate] Events tersimpan di Cloud Firestore (' + eventsToPush.length + ' kartu)');
+          updateSyncBadge('synced', 'Cloud Live');
+          return true;
+        }
+      } catch(e) {
+        console.warn('[SeRDificate] Gagal push events ke Cloud:', e.message);
+        updateSyncBadge('error', 'Gagal Cloud');
+      }
+      return false;
+    }
+
+    // Sync Events from Cloud (with anti-cache)
+    async function syncEventsFromCloud(manual = false) {
+      if (manual) updateSyncBadge('syncing', 'Menarik...');
+      try {
+        const restUrl = 'https://firestore.googleapis.com/v1/projects/rijal-dakwah-portal/databases/(default)/documents/settings/serdificate_events?nocache=' + Date.now();
+        const res = await fetch(restUrl, { cache: 'no-store' });
         if (res.ok) {
           const json = await res.json();
           const payloadStr = json.fields?.payload?.stringValue;
           if (payloadStr) {
             const cloudEvents = JSON.parse(payloadStr);
             if (Array.isArray(cloudEvents) && cloudEvents.length > 0) {
-              events = cloudEvents;
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-              renderGrid();
+              const newHash = getEventsHash(cloudEvents);
+              if (newHash !== lastKnownEventsHash || manual) {
+                lastKnownEventsHash = newHash;
+                events = cloudEvents;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+                renderGrid();
+                if (manual) showToast('Data agenda cloud berhasil ditarik!', 'info');
+              }
+              updateSyncBadge('synced', 'Cloud Live');
               console.log('[SeRDificate] Events tersinkron dari Cloud Firestore (' + events.length + ' kartu)');
+              return;
             }
           }
         }
+        updateSyncBadge('synced', 'Cloud Live');
       } catch(e) {
         console.warn('[SeRDificate] Sync events from cloud warning:', e.message);
+        if (manual) showToast('Gagal menarik data cloud: ' + e.message, 'warn');
+        updateSyncBadge('error', 'Offline');
+      }
+    }
+
+    // Realtime Listener across devices via Firestore SDK
+    let realtimeUnsub = null;
+    async function setupRealtimeEventsListener() {
+      try {
+        const db = await getFirebaseDb();
+        if (!db) return;
+        if (realtimeUnsub) realtimeUnsub();
+
+        realtimeUnsub = db.collection('settings').doc('serdificate_events').onSnapshot((doc) => {
+          if (!doc.exists) return;
+          const data = doc.data();
+          if (data && data.payload) {
+            try {
+              const cloudEvents = JSON.parse(data.payload);
+              if (Array.isArray(cloudEvents) && cloudEvents.length > 0) {
+                const newHash = getEventsHash(cloudEvents);
+                if (newHash && newHash !== lastKnownEventsHash) {
+                  const isInitial = !lastKnownEventsHash;
+                  lastKnownEventsHash = newHash;
+                  events = cloudEvents;
+                  localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+                  renderGrid();
+                  updateSyncBadge('synced', 'Cloud Live');
+                  if (!isInitial) {
+                    showToast('⚡ Data agenda diperbarui dari perangkat lain!', 'info');
+                  }
+                  console.log('[SeRDificate] Realtime listener sync: ' + events.length + ' kartu');
+                }
+              }
+            } catch(err) {
+              console.warn('[SeRDificate] Realtime parse error:', err.message);
+            }
+          }
+        }, (err) => {
+          console.warn('[SeRDificate] Realtime listener error:', err.message);
+          updateSyncBadge('error', 'Offline');
+        });
+      } catch(e) {
+        console.warn('[SeRDificate] Failed to setup realtime listener:', e.message);
+      }
+    }
+
+    // Sync SAKTIFA info file to Google Drive
+    async function syncSaktifaInfoToGoogleDrive(eventData) {
+      if (!eventData.gdriveFolderId || eventData.gdriveFolderId === 'root' || eventData.gdriveFolderId.length < 5) {
+        return;
+      }
+
+      const duration = eventData.durationHours || 3.5;
+      const gdriveEndpoint = 'https://script.google.com/macros/s/AKfycbytQmhQceAXJu3jbli3h2yOm8kKPtAC6QCTgWSlaToPJRqN4Y7BrciqyMVacC3WyIl4/exec';
+
+      const fileContent = 
+`======================================================================
+INFORMASI RESMI AGENDA KEGIATAN & SYARAT POIN SAKTIFA
+UKM RIJAL DAKWAH — STDI IMAM SYAFI'I JEMBER
+======================================================================
+
+Nama Agenda Kegiatan : ${eventData.name}
+Kode / Nomor Surat   : ${eventData.code}
+Tanggal Pelaksanaan  : ${eventData.displayDate || formatIndoDate(eventData.date)}
+Kategori Agenda      : ${eventData.category || 'Kajian & Syiar'}
+Divisi Penyelenggara : ${eventData.division || 'UKM Rijal Dakwah'}
+Durasi Acara Efektif : ${duration} JAM
+Status Pelaksanaan   : ${eventData.status === 'done' ? 'Selesai' : 'Aktif / Resmi'}
+
+----------------------------------------------------------------------
+PANDUAN PENGAJUAN POIN SAKTIFA KEMAHASISWAAN (STDIIS):
+----------------------------------------------------------------------
+Bagi seluruh panitia maupun peserta yang mengajukan poin SAKTIFA:
+1. Berkas sertifikat digital resmi diterbitkan oleh UKM Rijal Dakwah
+   dan tersimpan dalam folder Google Drive ini.
+2. Durasi efektif kegiatan ini tercatat resmi: ${duration} JAM.
+3. Lampirkan sertifikat digital beserta lembar keterangan durasi resmi ini
+   saat pengajuan validasi poin SAKTIFA ke kemahasiswaan kampus.
+
+----------------------------------------------------------------------
+Data Kepanitiaan     : ${eventData.staffCount || 25} Panitia Terdaftar (SK)
+Estimasi Peserta     : ${eventData.attendeeCount || 100} Peserta
+ID Folder Cloud      : ${eventData.gdriveFolderId}
+Waktu Pembaruan      : ${new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })} WIB
+Sistem Pengarsipan   : SeRDificate Cloud Bridge (UKM Rijal Dakwah)
+======================================================================
+`;
+
+      try {
+        const textBase64 = btoa(unescape(encodeURIComponent(fileContent)));
+        await fetch(gdriveEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          mode: 'no-cors',
+          body: JSON.stringify({
+            authKey: 'RD_CERT_2026_AMAN',
+            folderId: eventData.gdriveFolderId,
+            fileName: 'DETAIL_ACARA_DAN_DURASI_SAKTIFA.txt',
+            mimeType: 'text/plain;charset=utf-8',
+            replace: true,
+            base64Data: textBase64
+          })
+        });
+        console.log('[SeRDificate] Detail acara SAKTIFA berhasil disinkronkan ke Google Drive');
+      } catch(err) {
+        console.warn('[SeRDificate] Gagal upload info SAKTIFA ke GDrive:', err.message);
       }
     }
 
     let pushCloudDebounce = null;
-    function saveEvents() {
+    function saveEvents(immediate = false) {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
       } catch (e) {
         console.error('Failed to save events locally:', e);
       }
 
+      if (immediate) {
+        clearTimeout(pushCloudDebounce);
+        return pushEventsToCloud(events);
+      }
+
       // Debounce push to Cloud Firestore to prevent network churn
       clearTimeout(pushCloudDebounce);
-      pushCloudDebounce = setTimeout(async () => {
-        try {
-          const db = await getFirebaseDb();
-          if (db) {
-            await db.collection('settings').doc('serdificate_events').set({
-              payload: JSON.stringify(events),
-              eventCount: events.length,
-              updatedAt: new Date().toISOString()
-            });
-            console.log('[SeRDificate] Events tersimpan di Cloud Firestore');
-          }
-        } catch(e) {
-          console.warn('[SeRDificate] Gagal push events ke Cloud:', e.message);
-        }
+      pushCloudDebounce = setTimeout(() => {
+        pushEventsToCloud(events);
       }, 500);
     }
-
     // Helper Date Formatter (Indonesian)
     function formatIndoDate(dateStr) {
       if (!dateStr) return '';
@@ -1530,6 +1985,7 @@
 
                 <div class="card-meta-details">
                   <div class="meta-row"><span>📅</span><span>${dateFormatted}</span></div>
+                  <div class="meta-row duration"><span>⏱️</span><span>Durasi: <strong>${evt.durationHours || 3.5} Jam</strong> <small style="color:#94A3B8; font-weight:normal;">(Poin SAKTIFA)</small></span></div>
                   <div class="meta-row"><span>🏛️</span><span>${divName}</span></div>
                   <div class="meta-row"><span>👥</span><span>${staff} Panitia • ${att} Peserta</span></div>
                   ${evt.gdriveFolderId ? `<div class="meta-row" style="color:#38BDF8; font-weight:700;"><span>📁</span><span>GDrive Terhubung</span></div>` : ''}
@@ -1563,6 +2019,7 @@
                 <div class="back-info-box">
                   <div class="back-info-title">${evt.name}</div>
                   <div style="font-size:10px; color:#38BDF8;">Nomor: ${evt.code}</div>
+                  <div style="font-size:10px; color:#FBBF24; font-weight:600;">⏱️ Durasi: ${evt.durationHours || 3.5} Jam (Poin SAKTIFA)</div>
                   <div style="font-size:10px; color:#94A3B8;">${dateFormatted} • ${divName}</div>
                 </div>
 
@@ -1628,6 +2085,7 @@
       const attendees = parseInt(document.getElementById('newEvtAttendees').value) || 100;
       const rawFolder = document.getElementById('newEvtFolderId')?.value || '';
       let gdriveFolderId = extractGdriveFolderId(rawFolder);
+      const duration = parseFloat(document.getElementById('newEvtDuration')?.value) || 3.5;
 
       if (!name || !date || !code) return alert('Mohon lengkapi nama kegiatan, tanggal, dan kode surat!');
 
@@ -1685,6 +2143,7 @@
         code,
         date,
         displayDate: formatIndoDate(date),
+        durationHours: duration,
         category,
         division,
         staffCount: staff,
@@ -1694,9 +2153,12 @@
       };
 
       events.unshift(newEvent);
-      saveEvents();
       closeCreateModal();
       renderGrid();
+      showToast('Menyimpan kegiatan ke Cloud & GDrive...', 'info');
+      await saveEvents(true);
+      syncSaktifaInfoToGoogleDrive(newEvent);
+      showToast(`Kegiatan "${newEvent.name}" berhasil dibuat & disinkronkan!`, 'info');
     });
 
     // Modal Edit Event
@@ -1718,6 +2180,7 @@
       document.getElementById('editEvtId').value = eventItem.id;
       document.getElementById('editEvtName').value = eventItem.name;
       document.getElementById('editEvtDate').value = eventItem.date || '';
+      document.getElementById('editEvtDuration').value = eventItem.durationHours || 3.5;
       document.getElementById('editEvtCode').value = eventItem.code;
       document.getElementById('editEvtCategory').value = eventItem.category || 'Kajian & Syiar';
       document.getElementById('editEvtStatus').value = eventItem.status || 'active';
@@ -1739,7 +2202,7 @@
       if (e.target === modalEdit) closeEditModal();
     });
 
-    formEdit.addEventListener('submit', (e) => {
+    formEdit.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!isBPH()) return alert('Akses ditolak.');
 
@@ -1747,6 +2210,7 @@
       const name = document.getElementById('editEvtName').value.trim();
       const date = document.getElementById('editEvtDate').value;
       const code = document.getElementById('editEvtCode').value.trim();
+      const duration = parseFloat(document.getElementById('editEvtDuration').value) || 3.5;
       const category = document.getElementById('editEvtCategory').value;
       const status = document.getElementById('editEvtStatus').value;
       const division = document.getElementById('editEvtDiv').value;
@@ -1763,6 +2227,7 @@
           date,
           displayDate: formatIndoDate(date),
           code,
+          durationHours: duration,
           category,
           status,
           division,
@@ -1770,13 +2235,17 @@
           attendeeCount: attendees,
           gdriveFolderId
         };
-        saveEvents();
+        closeEditModal();
+        renderGrid();
+        showToast('Menyimpan perubahan ke Cloud & GDrive...', 'info');
+        await saveEvents(true);
+        syncSaktifaInfoToGoogleDrive(events[idx]);
+        showToast(`Perubahan kegiatan "${name}" berhasil disimpan!`, 'info');
+      } else {
+        closeEditModal();
       }
-
-      closeEditModal();
-      renderGrid();
     });
-    window.confirmDeleteEvent = function(id, evt) {
+    window.confirmDeleteEvent = async function(id, evt) {
       if (evt) evt.stopPropagation();
       if (!isBPH()) {
         alert('Akses Terbatas: Hanya BPH yang dapat menghapus agenda.');
@@ -1807,9 +2276,9 @@
         }
 
         events = events.filter(e => e.id !== id);
-        saveEvents();
         renderGrid();
-        alert(`Agenda "${eventItem.name}" ${hasFolder ? 'beserta foldernya di Google Drive ' : ''}telah dihapus.`);
+        await saveEvents(true);
+        showToast(`Agenda "${eventItem.name}" telah dihapus.`, 'info');
       }
     };
 
@@ -1819,13 +2288,9 @@
     const formLogin = document.getElementById('formLogin');
     const loginError = document.getElementById('loginErrorMsg');
 
-    function openLoginModal(roleHint) {
+    function openLoginModal() {
       modalLogin.style.display = 'flex';
       loginError.style.display = 'none';
-      if (roleHint === 'bph') {
-        const sel = document.getElementById('loginRole');
-        if (sel) sel.value = 'bph';
-      }
       const pwdInput = document.getElementById('loginPassword');
       if (pwdInput) pwdInput.focus();
     }
@@ -1843,24 +2308,60 @@
 
     formLogin.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const role = document.getElementById('loginRole').value;
       const p = document.getElementById('loginPassword').value.trim();
+      if (!p) return;
 
       const enteredHash = await calcSha256(p);
       const activeHashes = await fetchLiveCloudHashes();
-      const isMaster = enteredHash === activeHashes.bph || enteredHash === activeHashes.bph_alt;
-      const isRoleValid = enteredHash === activeHashes[role];
+      let detectedRole = null;
+      let isMaster = false;
 
-      if (isMaster || isRoleValid) {
+      const isBphPass = enteredHash === activeHashes.bph ||
+                        enteredHash === activeHashes.bph_alt ||
+                        enteredHash === activeHashes.bph_legacy ||
+                        enteredHash === "4248e33b5e4b935c3918f98dca94f6287ac309202549e06e778833a1ef2fcd81" ||
+                        enteredHash === "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92" ||
+                        enteredHash === "327a7380d2cc7cf09ed5820e1ecdb8abe585d696b5b5526986dfebe70acec59e";
+
+      if (isBphPass) {
+        detectedRole = 'bph';
+        isMaster = true;
+      } else if (enteredHash === activeHashes.media || enteredHash === activeHashes.media_alt || enteredHash === "edc027fe40087110db7585b1fbbe9cabd8e711136d6d8e8adcf595463f9fcd52" || enteredHash === "ffe20e00ebfab099527ee1dbb05d39735cc43776cf75754d0dc183986a66d0a8") {
+        detectedRole = 'media';
+      } else if (enteredHash === activeHashes.acara || enteredHash === "9d3fa1557d22337d871728dd05e5fd7ddd815daa1aa3306e2a675d106568e3f5") {
+        detectedRole = 'acara';
+      } else if (enteredHash === activeHashes.humas || enteredHash === "420ed97a06f0b5fb5d2f0d37860d87505946716e5188bde67f7d5c91ac5a5137") {
+        detectedRole = 'humas';
+      } else if (enteredHash === activeHashes.tpq || enteredHash === "4ab3a838a92031b15087cc12ec592e233603927b36d9dabb90439f35cebef0a9") {
+        detectedRole = 'tpq';
+      } else if (enteredHash === activeHashes.keilmuan || enteredHash === "c4ac89c233a9bf576501924857b263a35f410509470d7f8c041dbbc5016a8727") {
+        detectedRole = 'keilmuan';
+      } else if (enteredHash === activeHashes.sarpras || enteredHash === "e65e55f7b7c8cdc28584f635607878b4e73c75fe6e6af5643e8e15a6571528e1") {
+        detectedRole = 'sarpras';
+      } else if (enteredHash === activeHashes.digital || enteredHash === "cb3beaef05cdfa258903506a71dcbfb930b7224f4dccb35a6eaab81491f4435c") {
+        detectedRole = 'digital';
+      } else if (enteredHash === activeHashes.danus || enteredHash === "65ea7c065f145628c50a2dc16ad7638fac158eb5df0faf29d332e5d7e03a9893") {
+        detectedRole = 'danus';
+      } else {
+        for (const [rKey, rHash] of Object.entries(activeHashes)) {
+          if (enteredHash === rHash) {
+            detectedRole = rKey;
+            break;
+          }
+        }
+      }
+
+      if (detectedRole) {
         saveSession({
-          username: role,
-          name: isMaster ? 'Master BPH' : `Kadiv ${role.toUpperCase()}`,
-          role: (role === 'bph' || isMaster) ? 'bph' : 'kadiv',
-          title: isMaster ? 'Pimpinan BPH' : 'Divisi ' + role.toUpperCase()
+          username: detectedRole,
+          name: isMaster ? 'Master BPH / Sekretaris' : `Kadiv ${detectedRole.toUpperCase()}`,
+          role: (detectedRole === 'bph' || isMaster) ? 'bph' : 'kadiv',
+          title: isMaster ? 'Pimpinan BPH' : 'Divisi ' + detectedRole.toUpperCase()
         });
         loginError.style.display = 'none';
         closeLoginModal();
         renderGrid();
+        showToast(`Selamat datang, ${isMaster ? 'Master BPH / Sekretaris' : 'Kadiv ' + detectedRole.toUpperCase()}!`, 'info');
 
         const pending = sessionStorage.getItem('rd_pending_redirect');
         if (pending) {
@@ -1868,7 +2369,7 @@
           window.location.href = pending;
         }
       } else {
-        loginError.textContent = 'Passcode tidak valid. Gunakan passcode resmi Gantt Studio.';
+        loginError.textContent = 'Passcode tidak valid. Gunakan passcode resmi divisi atau BPH.';
         loginError.style.display = 'block';
       }
     });
@@ -1893,12 +2394,23 @@
     });
 
     // Init
-    document.addEventListener('DOMContentLoaded', () => {
+    function initApp() {
       loadSession();
       loadEvents();
       renderGrid();
       syncEventsFromCloud();
-    });
+      setupRealtimeEventsListener();
+
+      document.getElementById('btnManualSyncCloud')?.addEventListener('click', () => {
+        syncEventsFromCloud(true);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
   </script>
 </body>
 </html>
