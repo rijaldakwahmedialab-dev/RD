@@ -473,43 +473,86 @@
     .card-split-footer {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border-top: 1px solid var(--border-color);
-      background: #0A0F1D;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #080D1A;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
     .split-btn {
-      padding: 11px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      text-align: center;
-      color: #CBD5E1;
-      text-decoration: none;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
+      gap: 7px;
+      padding: 9px 12px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-decoration: none;
+      border: 1px solid transparent;
       cursor: pointer;
-      background: transparent;
-      border: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
     }
-    .split-btn:hover {
-      background: #141F36;
-      color: #FFF;
+    .split-btn .btn-icon {
+      font-size: 13px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
     }
+    .split-btn .btn-arrow {
+      font-size: 9px;
+      opacity: 0.5;
+      margin-left: auto;
+      transition: all 0.2s ease;
+    }
+    .split-btn:hover .btn-icon {
+      transform: scale(1.15);
+    }
+    .split-btn:hover .btn-arrow {
+      opacity: 1;
+      transform: translateX(2px);
+    }
+
+    /* Pengurus Button - Emerald Theme */
     .split-btn.pengurus {
-      border-right: 1px solid var(--border-color);
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.22);
       color: #34D399;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
     .split-btn.pengurus:hover {
-      background: rgba(16,185,129,0.15);
-      color: #10B981;
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #6EE7B7;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+      transform: translateY(-1px);
     }
+    .split-btn.pengurus:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 4px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Peserta Button - Sky Theme */
     .split-btn.peserta {
-      color: var(--sky);
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.22);
+      color: #38BDF8;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
     .split-btn.peserta:hover {
-      background: rgba(56,189,248,0.15);
-      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.18);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: #7DD3FC;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+      transform: translateY(-1px);
+    }
+    .split-btn.peserta:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 4px rgba(56, 189, 248, 0.2);
     }
 
     /* SISI BELAKANG (BACK FACE) */
@@ -1996,11 +2039,14 @@ Sistem Pengarsipan   : SeRDificate Cloud Bridge (UKM Rijal Dakwah)
               <!-- Bottom Split Buttons -->
               <div class="card-split-footer">
                 <button type="button" class="split-btn pengurus ${canAccessPengurusPortal() ? 'authorized' : 'locked'}" title="${canAccessPengurusPortal() ? 'Buka Portal Sertifikat Pengurus &amp; Relawan' : 'Akses Terbatas: Khusus BPH &amp; Kadiv (Klik untuk Masuk)'}" onclick="handlePengurusClick('${rdUrl}', event)">
-                  <span>${canAccessPengurusPortal() ? '👑' : '🔒'}</span>
+                  <span class="btn-icon">${canAccessPengurusPortal() ? '👑' : '🔒'}</span>
                   <span>Pengurus</span>
+                  <span class="btn-arrow">→</span>
                 </button>
                 <a href="${ukmUrl}" class="split-btn peserta" title="Buka Generator Sertifikat Peserta (Tabel/CSV)" onclick="event.stopPropagation()">
-                  <span>👥</span><span>Peserta</span>
+                  <span class="btn-icon">👥</span>
+                  <span>Peserta</span>
+                  <span class="btn-arrow">→</span>
                 </a>
               </div>
             </div>
